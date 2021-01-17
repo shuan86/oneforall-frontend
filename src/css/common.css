@@ -1,0 +1,25 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+div {
+    display: block;
+}
+
+.none {
+    display: none;
+}
+
+:root {
+    --navy-blue: #2066A6;
+    --light-blue: #EAF5FF;
+    --yellow: #FFE39D;
+    --gray: #979797;
+    --black: #4a4a4a;
+    --gray-border: rgb(151, 151, 151, .4);
+    --green: #4AAB86;
+    --red: #AB4A4A;
+}
