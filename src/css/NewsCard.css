@@ -1,33 +1,59 @@
+@import "common.css";
+
+
+/*filter*/
+.filter {
+    width: 100%;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--gray-border);
+}
+
+.filter a {
+    display: inline-block;
+    color: var(--black);
+    margin-left: 10px;
+    padding: 5px 10px;
+}
+
+.filter a:first-child {
+    color: var(--navy-blue);
+    border-bottom: 3px solid var(--navy-blue);
+}
+
+/*content*/
+.content {
+    /* padding: 30px 15px 0 15px; */
+    padding-top: 30px;
+    margin-bottom: 25px;
+}
+
 .card {
     display: block;
     position: relative;
     max-width: 620px;
     border: 1px solid var(--gray-border);
     border-radius: 20px;
-    padding: 30px;
-    margin: 25px 0;
+    margin: 40px 10px;
 }
 
 .status {
     display: inline-block;
     position: absolute;
     top: -20px;
-    left: 0;
+    left: -1px;
     padding: 10px;
     background-color: var(--yellow);
 }
 
-
-
-
-/*content*/
-.content {
-    margin-bottom: 25px;
+.post-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding: 20px 15px 0 15px;
 }
 
 .user-info {
     display: flex;
-    margin-bottom: 30px;
 }
 
 .user-photo {
@@ -48,7 +74,19 @@
     font-size: 0.75rem;
 }
 
+.history {
+    /* display: inline-block; */
+    background-color: var(--navy-blue);
+    padding: 0 20px;
+    border-radius: 5px;
+}
+
+.history img {
+    margin-top: 10px;
+}
+
 .hashtag {
+    padding: 0 15px;
     margin-bottom: 10px;
 }
 
@@ -60,25 +98,31 @@
     background-color: var(--navy-blue);
 }
 
-.article {
-    margin-bottom: 25px;
-}
-
 .article h3 {
     font-size: 1.5rem;
     margin-bottom: 20px;
+    padding: 0 15px;
 }
 
 .article p {
     line-height: 1.8rem;
     margin-bottom: 20px;
+    padding: 0 15px;
+}
+
+.article img {
+    width: 100%;
 }
 
 .article a {
+    display: block;
+    padding: 15px 15px;
+    /* margin-top: 15px; */
     color: var(--black);
 }
 
 .like {
+    padding: 15px 15px;
     display: flex;
     justify-content: space-between;
 }
@@ -98,6 +142,9 @@
 
 
 /*comment*/
+.comment {
+    padding: 0 15px 15px 15px;
+}
 
 .comment a {
     font-size: 14px;
@@ -115,6 +162,7 @@
     background-color: var(--light-blue);
     border: none;
     border-radius: 5px;
+    outline: none;
 }
 
 .user-input a {
@@ -139,6 +187,7 @@
     width: 100%;
     padding: 15px 10px;
     background-color: var(--light-blue);
+    border-radius: 5px;
 }
 
 .user-comment span .user-id {
@@ -178,4 +227,25 @@
 .vote a:first-child {
     margin-right: 20px;
     background-color: var(--green);
+}
+
+.vote-result {
+    width: 300px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.vote-result a {
+    width: 70%;
+    display: inline-block;
+    background-color: var(--red);
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 0 5px 5px 0;
+}
+
+.vote-result a:first-child {
+    width: 30%;
+    background-color: var(--green);
+    border-radius: 5px 0 0 5px;
 }
