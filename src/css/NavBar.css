@@ -1,0 +1,70 @@
+.navBar {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navLeft{
+    width: 158px;
+}
+
+.logo{
+    margin-left: 60px;
+    margin-top: 14px;
+}
+
+.navRight{
+  width: 450px;
+  align-self: flex-end;
+}
+
+.navFeature{
+margin-top: 10px;
+margin-right: 60px;
+}
+
+
+.searchBar{ 
+    width: 240px;
+    height: 40px;
+    border: 1px solid var(--navy-blue);
+    border-radius: 5px;
+    line-height: 40px;
+    background-color: #fff;
+    background-image: url('../SearchIcon.svg');
+    background-repeat: no-repeat;
+    padding-left: 60px;
+    color: var(--navy-blue);
+    background-position:20px 50%;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+}
+
+
+
+
+.signupButton{
+    margin-left: 32px;
+    width: 60px;
+    height: 40px;
+    background-color: #fff;
+    border: none;
+    font-size: 16px;
+    color:var(--navy-blue);
+    line-height: 40px;
+
+}
+
+.signinButton{
+    margin-left: 20px;
+    width: 60px;
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid var(--navy-blue);
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 40px;
+    color:var(--navy-blue);
+
+}

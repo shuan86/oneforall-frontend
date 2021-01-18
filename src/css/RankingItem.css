@@ -1,0 +1,31 @@
+.rankingPosition{
+    margin-top: 22px;
+    border-bottom: solid 1px var(--gray);
+    padding-bottom: 7px;
+}
+.rankAccount{
+    float: left;
+    width: 116px;
+    padding-right: 60px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+  color: var(--black);
+}
+
+.rankAccount>span{
+    padding-left: 10px;
+
+}
+
+
+.rankScore{
+    float: left;
+    width: 60px;
+    padding-right: 30px;
+color: var(--black);
+}
+
+.rankSequence{
+    color: var(--black);
+}
