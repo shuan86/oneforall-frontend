@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { NewsCardUnreviewed, NewsCardUnderReview, NewsCardReviewed } from './NewsCard';
 import NavBar from './NavBar';
-import RankingTable from './RankingTable';
+// import RankingTable from './RankingTable';
 
 class App extends Component {
     state = { loading: false };
@@ -30,11 +30,12 @@ class App extends Component {
             // </div>
             <div>
                 <NavBar />
-                <RankingTable />
+                {/* <MemberContainer /> */}
+
+                {/* <RankingTable /> */}
                 <NewsCardUnreviewed />
                 <NewsCardUnderReview />
                 <NewsCardReviewed />
-
             </div>
         );
     }

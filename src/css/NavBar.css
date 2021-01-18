@@ -3,16 +3,18 @@
     height: 60px;
     display: flex;
     justify-content: space-between;
+
 }
 
 .navLeft{
     width: 158px;
 }
 
-.logo{
+.logoImg{
     margin-left: 60px;
     margin-top: 14px;
 }
+
 
 .navRight{
   width: 450px;
@@ -23,6 +25,8 @@
 margin-top: 10px;
 margin-right: 60px;
 }
+
+
 
 
 .searchBar{ 
@@ -44,7 +48,7 @@ margin-right: 60px;
 
 
 
-.signupButton{
+.signupButton,.memberBtn{
     margin-left: 32px;
     width: 60px;
     height: 40px;
