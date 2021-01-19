@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import HomePage from './HomePage';
+// import { NewsCardUnreviewed, NewsCardUnderReview, NewsCardReviewed } from './NewsCard';
+import NavBar from './NavBar';
+// import RankingTable from './RankingTable';
+import { MemberContainer } from './MemberCard';
 
 class App extends Component {
     state = { loading: false };
@@ -27,7 +30,12 @@ class App extends Component {
             //     </p> */}
             // </div>
             <div>
-                <HomePage />
+                <NavBar />
+                <MemberContainer />
+                {/* <RankingTable /> */}
+                {/* <NewsCardUnreviewed />
+                <NewsCardUnderReview />
+                <NewsCardReviewed /> */}
             </div>
         );
     }

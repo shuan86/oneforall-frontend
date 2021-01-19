@@ -30,19 +30,21 @@ margin: 40px auto;
 }
 
 .infoContent>p{
-    font-size: 16px;
+    font-size: 13px;
     letter-spacing: 1.1px;
     color: var(--gray);
 letter-spacing: 1.75px;
-margin-bottom: 17px;
+margin-bottom: 5px;
+margin-top: 15px;
 }
 
 .infoContent>p:nth-child(even){
     font-size: 16px;
     letter-spacing: 1.75px;
     color: var(--black);
+    padding-bottom: 15px;
     border-bottom: solid 1.5px var(--gray-border);
-  
+  margin-top: 5px;
 }
 
 .infoContent>p:nth-child(2){
@@ -77,22 +79,22 @@ color: var(--black);
 }
 
 .memberScore{
-    width: 201px;
-    border-right: solid 1px var(--gray-border);
+    width: 200px;
 }
 
 .memberFollower{
-width: 200px;
+width: 201px;
+border-left: solid 1px var(--gray-border);
 }
 
-.memberScore p:nth-child(1),.memberFollower p:nth-child(1){
+.memberScore p:nth-child(1),.memberFollower p:nth-child(1),.memberPost p:nth-child(1){
     font-size: 16px;
     color: var(--gray);
     letter-spacing: 1.05px;
     text-align: center;
 }
 
-.memberScore p:nth-child(2),.memberFollower p:nth-child(2){
+.memberScore p:nth-child(2),.memberFollower p:nth-child(2),.memberPost p:nth-child(2){
 font-size: 45px;
     color: var(--navy-blue);
     letter-spacing: 2.05px;
@@ -113,16 +115,16 @@ font-size: 45px;
     margin: 15px 0 10px 20px;
 }
 
-.informContainer,.missionContent{
-    margin: 5px 20px;
+.informContainer,.missionContent,.voteContainer{
+    margin: 10px 20px;
 }
 
-.informContainer p:nth-child(1),.missionContent>p{
+.informContainer p:nth-child(1),.missionContent>p,.voteContainer p:nth-child(1){
     font-size: 14px;
     color: var(--black);
 }
 
-.informContainer p:nth-child(2){
+.informContainer p:nth-child(2),.voteContainer p:nth-child(2){
 color: var(--gray);
 font-size: 14px;
 margin-top: 5px;
@@ -138,11 +140,16 @@ margin-top: 5px;
 }
 
 .missionBtn>button{
-   line-height: 70px;
+line-height: 70px;
 border: none;
 background-color: white;
 font-size: 20px;
 letter-spacing: 1.75px;
 color: var(--black);
+}
+
+.memberPost{
+    width: 200px;
+    margin: 25px auto;
 }
 

@@ -7,7 +7,9 @@ const MemberContainer = () => {
     return (
         <div className={'memberContainer'}>
             <MemberCard />
-            <MemberScore />
+            <AdviserRight />
+            <ViewerRight />
+            {/* <AuthorRight /> */}
         </div>
     );
 };
@@ -15,7 +17,7 @@ const MemberContainer = () => {
 
 const MemberCard = () => {
     console.log('MemberCard');
-    return (<div>
+    return (
         <div className={'personalInfo'}>
             <div className={'personalPhoto'}>
                 <img src="favicon.ico" alt="" />
@@ -32,11 +34,11 @@ const MemberCard = () => {
                 <p>錢包地址</p>
                 <p>***********</p>
             </div>
-        </div>
-    </div>);
+
+        </div>);
 };
 
-const MemberScore = () => {
+const AdviserRight = () => {
     console.log('memberTable');
     return (
         <div>
@@ -90,5 +92,78 @@ const MissionContent = () => {
         </div>
     );
 };
+
+const VoteContent = () => {
+    console.log('VoteContent');
+    return (
+        <div className={'voteContainer'}>
+            <p>您在「因原物料做口罩，衛生紙將成為下一波缺貨物資」一文中投下了支持</p>
+            <p>12-15 21:30</p>
+        </div>
+    );
+};
+
+
+const ViewerRight = () => {
+    console.log('ViewerRight');
+    return (
+        <div>
+            <div className={'memberTable'}>
+                <p>觀看者</p>
+                <div className={'tablePosition'}>
+                    <div className={'memberScore'}>
+                        <p>積分</p>
+                        <p>1283</p>
+                    </div>
+
+                    <div className={'memberFollower'}>
+                        <p>已追蹤</p>
+                        <p>83</p>
+                    </div>
+                </div>
+            </div>
+            <div className={'memberInform'}>
+                <p>投票紀錄</p>
+                <VoteContent />
+                <VoteContent />
+                <VoteContent />
+            </div>
+            <div className={'missionBtn'}>
+                <button>我想成為審核者</button>
+            </div>
+            <div className={'missionBtn'}>
+                <button>我想成為發文者</button>
+            </div>
+        </div>
+    );
+};
+
+// const AuthorRight = () => {
+//     console.log('AuthorRight');
+//     return (
+//         <div>
+//             <div className={'memberTable'}>
+//                 <p>發文者</p>
+
+//                 <div className={'memberPost'}>
+//                     <p>已提交新聞數</p>
+//                     <p>128</p>
+//                 </div>
+
+//             </div>
+//             <div className={'memberInform'}>
+//                 <p>投票紀錄</p>
+//                 <VoteContent />
+//                 <VoteContent />
+//                 <VoteContent />
+//             </div>
+//             <div className={'missionBtn'}>
+//                 <button>我要上傳最新消息</button>
+//             </div>
+
+//         </div>
+//     );
+// };
+
 
 export { MemberContainer };
