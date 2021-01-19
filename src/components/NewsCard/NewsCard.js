@@ -1,9 +1,9 @@
 import React from 'react';
-import './css/NewsCard.css';
-import author from './public/images/author.jpg';
-import audience from './public/images/audience.jpg';
-import history from './public/images/HistoryIcon.svg';
-import articleImg from './public/images/articleImg.jpg';
+import '../../public/css/NewsCard.css';
+import author from '../../public/images/author.jpg';
+import audience from '../../public/images/audience.jpg';
+import history from '../../public/images/HistoryIcon.svg';
+import articleImg from '../../public/images/articleImg.jpg';
 
 const NewsCardContent = ({ status }) => {
     console.log('NewsCardContent');

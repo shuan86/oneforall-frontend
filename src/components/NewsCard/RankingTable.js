@@ -1,6 +1,6 @@
 import React from 'react';
-import './css/common.css';
-import './css/RankingTable.css';
+import '../../public/css/common.css';
+import '../../public/css/RankingTable.css';
 import RankingItem from './RankingItem';
 
 const RankingTable = () => (

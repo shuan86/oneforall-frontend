@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/NewsCard.css';
+import '../../public/css/NewsCard.css';
 
 const Filter = () => (
     <div className="filter">

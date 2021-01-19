@@ -33,7 +33,7 @@
     border-radius: 5px;
     line-height: 40px;
     background-color: #fff;
-    background-image: url('../SearchIcon.svg');
+    background-image: url('../svg/SearchIcon.svg');
     background-repeat: no-repeat;
     padding-left: 60px;
     color: var(--navy-blue);

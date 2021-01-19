@@ -1,6 +1,7 @@
 import React from 'react';
-import './css/common.css';
-import './css/NavBar.css';
+import '../../public/css/common.css';
+import '../../public/css/NavBar.css';
+import Logo from '../../Logo.svg';
 
 
 const NavBar = () => (
@@ -9,7 +10,7 @@ const NavBar = () => (
             <div className="navContent">
                 <div className={'navLeft'}>
                     <div className={'logo'}>
-                        <img className={'logoImg'} src="Logo.png" alt="logoImg" width={'158px'} />
+                        <img className={'logoImg'} src={Logo} alt="logoImg" width={'158px'} />
                     </div>
                 </div>
                 <div className={'leftRight'}>

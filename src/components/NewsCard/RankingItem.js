@@ -1,7 +1,7 @@
 import React from 'react';
-import './css/common.css';
-import './css/RankingItem.css';
-import inspector from './public/images/inspector.jpg';
+import '../../public/css/common.css';
+import '../../public/css/RankingItem.css';
+import inspector from '../../public/images/inspector.jpg';
 
 const RankingItem = () => (
     <div>
