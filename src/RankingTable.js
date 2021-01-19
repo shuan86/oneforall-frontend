@@ -14,7 +14,6 @@ const RankingTable = () => (
             <span className={'rankingName'}>名稱</span>
             <span className={'rankingScore'}>分數</span>
             <span className={'rankingSequence'}>排序</span>
-
         </div>
         <RankingItem />
         <RankingItem />

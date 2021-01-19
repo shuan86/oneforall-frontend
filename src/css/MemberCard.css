@@ -1,0 +1,148 @@
+.memberContainer{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 60px;
+}
+
+.personalInfo{
+    width: 500px;
+    height: 700px;
+    border: solid 1.5px var(--gray-border);
+    border-radius: 20px;
+    margin-top: 30px;
+}
+
+.personalPhoto{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.personalPhoto>img{
+    border-radius: 75px;
+    width: 150px;
+    height: 150px;
+}
+
+.infoContent{
+width: 400px;
+margin: 40px auto;
+}
+
+.infoContent>p{
+    font-size: 16px;
+    letter-spacing: 1.1px;
+    color: var(--gray);
+letter-spacing: 1.75px;
+margin-bottom: 17px;
+}
+
+.infoContent>p:nth-child(even){
+    font-size: 16px;
+    letter-spacing: 1.75px;
+    color: var(--black);
+    border-bottom: solid 1.5px var(--gray-border);
+  
+}
+
+.infoContent>p:nth-child(2){
+color: var(--black);
+font-size: 25px;
+font-weight: 400;
+}
+
+.memberTable{
+    margin-top: 30px;
+    width: 430px;
+    height: 180px;
+    border: solid 1px var(--gray-border);
+    border-radius: 20px;
+    align-content: flex-end;
+}
+
+.memberTable>p{
+text-align: center;
+font-size: 25px;
+margin-top: 15px;
+letter-spacing: 1.75px;
+white-space:nowrap;
+color: var(--black);
+}
+
+.tablePosition{
+    width: 401px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.memberScore{
+    width: 201px;
+    border-right: solid 1px var(--gray-border);
+}
+
+.memberFollower{
+width: 200px;
+}
+
+.memberScore p:nth-child(1),.memberFollower p:nth-child(1){
+    font-size: 16px;
+    color: var(--gray);
+    letter-spacing: 1.05px;
+    text-align: center;
+}
+
+.memberScore p:nth-child(2),.memberFollower p:nth-child(2){
+font-size: 45px;
+    color: var(--navy-blue);
+    letter-spacing: 2.05px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.memberInform,.adviseMission,.missionBtn{
+    width: 430px;
+    height: 280px;
+    border-radius: 20px;
+    border: solid 1px var(--gray-border);
+    margin-top: 20px;
+}
+
+.memberInform>p,.adviseMission>p{
+    color: var(--gray);
+    margin: 15px 0 10px 20px;
+}
+
+.informContainer,.missionContent{
+    margin: 5px 20px;
+}
+
+.informContainer p:nth-child(1),.missionContent>p{
+    font-size: 14px;
+    color: var(--black);
+}
+
+.informContainer p:nth-child(2){
+color: var(--gray);
+font-size: 14px;
+margin-top: 5px;
+}
+
+.adviseMission{
+    height: 100px;
+}
+
+.missionBtn{
+    height: 70px;
+    text-align: center;
+}
+
+.missionBtn>button{
+   line-height: 70px;
+border: none;
+background-color: white;
+font-size: 20px;
+letter-spacing: 1.75px;
+color: var(--black);
+}
+
