@@ -5,6 +5,7 @@
 .filter {
     width: 100%;
     margin: 0 auto;
+    margin-top: 30px;
     border-bottom: 1px solid var(--gray-border);
 }
 
@@ -45,18 +46,18 @@
     background-color: var(--yellow);
 }
 
-.post-info {
+.postInfo {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
     padding: 20px 15px 0 15px;
 }
 
-.user-info {
+.userInfo {
     display: flex;
 }
 
-.user-photo {
+.userPhoto {
     width: 40px;
     height: 40px;
     box-sizing: border-box;
@@ -65,12 +66,12 @@
     margin-right: 10px;
 }
 
-.user-id {
+.userId {
     font-size: 1rem;
     font-weight: 700;
 }
 
-.article-time {
+.articleTime {
     font-size: 0.75rem;
 }
 
@@ -151,12 +152,12 @@
     color: var(--gray);
 }
 
-.user-input {
+.userInput {
     display: flex;
     justify-content: space-between;
 }
 
-.user-input input {
+.userInput input {
     width: 100%;
     padding: 0 10px;
     background-color: var(--light-blue);
@@ -165,7 +166,7 @@
     outline: none;
 }
 
-.user-input a {
+.userInput a {
     display: inline;
     color: #fff;
     width: 10%;
@@ -177,31 +178,31 @@
     border-radius: 5px;
 }
 
-.user-comment {
+.userComment {
     display: flex;
     justify-content: space-between;
     margin: 20px 0;
 }
 
-.user-comment span {
+.userComment span {
     width: 100%;
     padding: 15px 10px;
     background-color: var(--light-blue);
     border-radius: 5px;
 }
 
-.user-comment span .user-id {
+.userComment span .user-id {
     font-size: 14px;
 }
 
-.user-comment span p {
+.userComment span p {
     font-size: 16px;
     margin: 0;
     width: 100%;
 }
 
 
-.user-comment p {
+.userComment p {
     width: 10%;
     font-size: 12px;
     margin-right: 20px;
@@ -229,13 +230,13 @@
     background-color: var(--green);
 }
 
-.vote-result {
+.voteResult {
     width: 300px;
     display: flex;
     justify-content: flex-end;
 }
 
-.vote-result a {
+.voteResult a {
     width: 70%;
     display: inline-block;
     background-color: var(--red);
@@ -244,7 +245,7 @@
     border-radius: 0 5px 5px 0;
 }
 
-.vote-result a:first-child {
+.voteResult a:first-child {
     width: 30%;
     background-color: var(--green);
     border-radius: 5px 0 0 5px;

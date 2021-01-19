@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import HomePage from './Homepage';
+import HomePage from './HomePage';
 
 class App extends Component {
     state = { loading: false };

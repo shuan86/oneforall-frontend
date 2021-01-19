@@ -1,0 +1,22 @@
+.rankingTable{
+    width: 300px;
+    height: 500px;
+    color: var(--navy-blue);
+    margin: 30px auto;
+}
+
+.rankingName,.rankingScore,.rankingSequence{
+    color: var(--gray);
+}
+
+.rankingItem{
+    margin-top: 25px;
+}
+
+.rankingName{
+    padding-right: 142px;
+}
+
+.rankingScore{
+    padding-right: 58px;
+}

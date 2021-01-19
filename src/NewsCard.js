@@ -9,12 +9,12 @@ const NewsCardContent = ({ status }) => {
     console.log('NewsCardContent');
     return (
         <div className="content">
-            <div className="post-info">
-                <div className="user-info">
-                    <img src={author} alt="Background" className="user-photo" />
+            <div className="postInfo">
+                <div className="userInfo">
+                    <img src={author} alt="Background" className="userPhoto" />
                     <div className="article-data">
-                        <div className="user-id">abc12345678</div>
-                        <div className="article-time">2020-11-06 21:24:08</div>
+                        <div className="userId">abc12345678</div>
+                        <div className="articleTime">2020-11-06 21:24:08</div>
                     </div>
                 </div>
                 <a href="" className={status ? 'none' : 'history'}>
@@ -49,15 +49,15 @@ const NewsCardComment = () => {
     console.log('NewsCardComment');
     return (
         <div className="comment">
-            <div className="user-input">
-                <img src={audience} alt="Background" className="user-photo" />
+            <div className="userInput">
+                <img src={audience} alt="Background" className="userPhoto" />
                 <input type="text" placeholder="告訴我們你的想法" />
                 <a href="">傳送</a>
             </div>
-            <div className="user-comment">
-                <img src={audience} alt="Background" className="user-photo" />
+            <div className="userComment">
+                <img src={audience} alt="Background" className="userPhoto" />
                 <span>
-                    <div className="user-id">abc12345678</div>
+                    <div className="userId">abc12345678</div>
                     <p>大問號？！！！</p>
                 </span>
                 <p>20min</p>
