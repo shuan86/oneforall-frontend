@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-// import HomePage from './views/HomePage/HomePage';
-import MemberPage from './views/MemberPage/MemberPage';
+import HomePage from './views/HomePage/HomePage';
+// import MemberPage from './views/MemberPage/MemberPage';
 
 class App extends Component {
     state = { loading: false };
@@ -27,7 +27,7 @@ class App extends Component {
             //     </p> */}
             // </div>
             <div>
-                <MemberPage />
+                <HomePage />
             </div>
         );
     }

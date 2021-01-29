@@ -7,8 +7,10 @@ const MemberPage = () => (
     <div>
         <NavBar />
         <div className="container">
-            <MemberCard />
-            <InspectorRight />
+            <div className="memberContainer">
+                <MemberCard />
+                <InspectorRight />
+            </div>
         </div>
     </div>
     );
