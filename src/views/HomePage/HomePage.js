@@ -7,7 +7,7 @@ import RankingTable from '../../components/NewsCard/RankingTable';
 
 const HomePage = () => (
     <div>
-        <NavBar />
+
         <Filter />
         <div className="container">
             <div className="homePageContent">
@@ -22,6 +22,6 @@ const HomePage = () => (
             </div>
         </div>
     </div>
-    );
+);
 
 export default HomePage;

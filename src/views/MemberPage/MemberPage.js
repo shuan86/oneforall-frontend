@@ -5,7 +5,7 @@ import NavBar from '../../components/Nav/NavBar';
 
 const MemberPage = () => (
     <div>
-        <NavBar />
+
         <div className="container">
             <div className="memberContainer">
                 <MemberCard />
@@ -13,6 +13,6 @@ const MemberPage = () => (
             </div>
         </div>
     </div>
-    );
+);
 
 export default MemberPage;
