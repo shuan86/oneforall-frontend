@@ -1,8 +1,8 @@
 {
     "name": "oneforall-frontend",
     "dependencies": {
-        "react": "^15.5.4",
-        "react-dom": "^15.5.4",
+        "react": "^16.8",
+        "react-dom": "^16.8",
         "react-router-dom": "^5.2.0"
     },
     "version": "0.1.0",

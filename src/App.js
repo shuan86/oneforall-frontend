@@ -3,6 +3,7 @@ import { Link, BrowserRouter, Switch, Route } from 'react-router-dom';
 import Navbar from './components/Nav/NavBar';
 import HomePage from './views/HomePage/HomePage';
 import MemberPage from './views/MemberPage/MemberPage';
+import EnrollPage from './views/EnrollPage/EnrollPage'
 
 const App = () => (
     <div>
@@ -12,6 +13,7 @@ const App = () => (
                 <Navbar />
                 <Switch>
                     <Route path="/member" component={MemberPage} />
+                    <Route path="/enroll" component={EnrollPage} />
                     <Route path="/" component={HomePage} />
                 </Switch>
             </div>
