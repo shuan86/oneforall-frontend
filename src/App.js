@@ -6,19 +6,19 @@ import MemberPage from './views/MemberPage/MemberPage';
 import EnrollPage from './views/EnrollPage/EnrollPage'
 
 const App = () => (
-    <div>
 
-        <BrowserRouter>
-            <div>
-                <Navbar />
-                <Switch>
-                    <Route path="/member" component={MemberPage} />
-                    <Route path="/enroll" component={EnrollPage} />
-                    <Route path="/" component={HomePage} />
-                </Switch>
-            </div>
-        </BrowserRouter>
-    </div>
+
+    <BrowserRouter>
+        <div>
+            <Navbar />
+            <Switch>
+                <Route path="/member" component={MemberPage} />
+                <Route path="/enroll" component={EnrollPage} />
+                <Route path="/" component={HomePage} />
+            </Switch>
+        </div>
+    </BrowserRouter>
+
 );
 
 
