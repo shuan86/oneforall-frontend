@@ -2,6 +2,7 @@
     "name": "oneforall-frontend",
     "dependencies": {
         "axios": "^0.21.1",
+        "jsencrypt": "^3.0.0",
         "react": "^16.8",
         "react-dom": "^16.8",
         "react-router-dom": "^5.2.0"

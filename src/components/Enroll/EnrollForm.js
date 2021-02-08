@@ -1,66 +1,108 @@
-import React, { useState } from 'react';
-import axios from 'axios'
+import React, { useState } from "react";
+import axios from "axios";
 import configData from "../../config.json";
-
-
-
+import { EnrollLoginFiled as Field } from "../FormField/FormField";
+import { encrypt } from "../../modules/encrypt";
 const EnrollForm = () => {
+  const [userId, setUserId] = useState("a");
+  const [password, setPassword] = useState("123");
+  const [userName, setUserName] = useState("a");
+  const [email, setEmail] = useState("da@gmail.com");
+  const [publicKey, setPublicKey] = useState("123");
+  const [errorMessage, setErrorMessage] = useState({
+    userId: "",
+    password: "",
+    userName: "",
+    email: "",
+    publicKey: "",
+  });
 
-    const [userId, setUserId] = useState("a");
-    const [password, setPassword] = useState("123");
-    const [userName, setUserName] = useState("a");
-    const [email, setEmail] = useState('da@gmail.com');
-    const [publicKey, setPublicKey] = useState('123');
-
-    const onClickPost = async () => {
-        //console.log('configData.SERVER_URL:', configData.SERVER_URL);
-        const data = {
-            id: 0,
-            userId: userId,
-            password: password,
-            userName: userName,
-            email: email,
-            publicKey: publicKey,
-        }
-        try {
-            const result = await axios.post(configData.SERVER_URL + '/enroll', data)
-            console.log('result:', result);
-        }
-        catch (e) {
-            console.log('error:', e);
-
-        }
-
-
+  const onClickSubmit = async () => {
+    const data = {
+      id: 0,
+      userId: userId,
+      password: password,
+      userName: userName,
+      email: email,
+      publicKey: publicKey,
+      token: "",
+    };
+    try {
+      const dataStr = JSON.stringify(data);
+      const rsaData = await encrypt(dataStr);
+      const result = await axios.post(configData.SERVER_URL + "/enroll", {
+        rsaData,
+      });
+      console.log("result:", result);
+    } catch (e) {
+      console.log(e);
     }
-    return (
-        <div>
+  };
+  return (
+    <div>
+      <Field
+        htmlFor="userId"
+        labelContent="userId:"
+        type="text"
+        name="userId"
+        id="userId"
+        value={userId}
+        setValue={setUserId}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+        thisFieldErrorMsg={errorMessage.userId}
+      />
+      <Field
+        htmlFor="password"
+        labelContent="password:"
+        type="password"
+        name="password"
+        id="password"
+        value={password}
+        setValue={setPassword}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+        thisFieldErrorMsg={errorMessage.password}
+      />
+      <Field
+        htmlFor="userName"
+        labelContent="userName:"
+        type="text"
+        name="userName"
+        id="userName"
+        value={userName}
+        setValue={setUserName}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+        thisFieldErrorMsg={errorMessage.userName}
+      />
+      <Field
+        htmlFor="email"
+        labelContent="email:"
+        type="email"
+        name="email"
+        id="email"
+        value={email}
+        setValue={setEmail}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+        thisFieldErrorMsg={errorMessage.email}
+      />
+      <Field
+        htmlFor="publicKey"
+        labelContent="publicKey:"
+        type="text"
+        name="publicKey"
+        id="publicKey"
+        value={publicKey}
+        setValue={setPublicKey}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+        thisFieldErrorMsg={errorMessage.publicKey}
+      />
 
-            <div>
-                <label htmlFor="userId">userId: </label>
-                <input type="text" name="userId" id="userId" value={userId} onChange={v => setUserId(v.target.value)} />
-            </div>
-            <div>
-                <label htmlFor="password">password: </label>
-                <input type="password" name="password" id="password" value={password} onChange={(v) => setPassword(v.target.value)} />
-            </div>
-            <div>
-                <label htmlFor="userName">userName: </label>
-                <input type="text" name="userName" id="userName" value={userName} onChange={(v) => setUserName(v.target.value)} />
-            </div>
-            <div>
-                <label htmlFor="email">email: </label>
-                <input type="email" name="email" id="email" value={email} onChange={(v) => setEmail(v.target.value)} />
-            </div>
-            <div>
-                <label htmlFor="publicKey">publicKey: </label>
-                <input type="text" name="publicKey" id="publicKey" value={publicKey} onChange={(v) => setPublicKey(v.target.value)} />
-            </div>
-
-            <button onClick={onClickPost}>submit</button>
-
-        </div>
-    )
-
-}
+      <button onClick={onClickSubmit}>submit</button>
+    </div>
+  );
+};
 export default EnrollForm;
