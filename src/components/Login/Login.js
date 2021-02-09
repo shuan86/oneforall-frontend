@@ -21,6 +21,9 @@ const LoginForm = () => {
       const result = await axios.post(configData.SERVER_URL + "/login", {
         rsaData,
       });
+      localStorage.setItem("token", result);
+      const t = localStorage.getItem("token");
+      console.log("token:", t);
       console.log("result:", result);
     } catch (error) {
       console.error("error:", error);
