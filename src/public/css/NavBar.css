@@ -69,3 +69,9 @@
     color: var(--navy-blue);
 
 }
+.navDisplayBlock{
+    display: block;
+}
+.navDisplayNone{
+    display: none;
+}

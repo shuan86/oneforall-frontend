@@ -3,12 +3,14 @@ import axios from "axios";
 import configData from "../../config.json";
 import { EnrollLoginFiled as Field } from "../FormField/FormField";
 import { encrypt } from "../../modules/encrypt";
+import { useHistory } from "react-router-dom";
 const EnrollForm = () => {
   const [userId, setUserId] = useState("a");
   const [password, setPassword] = useState("123");
   const [userName, setUserName] = useState("a");
   const [email, setEmail] = useState("da@gmail.com");
   const [publicKey, setPublicKey] = useState("123");
+  const history = useHistory();
   const [errorMessage, setErrorMessage] = useState({
     userId: "",
     password: "",
@@ -18,6 +20,7 @@ const EnrollForm = () => {
   });
 
   const onClickSubmit = async () => {
+
     const data = {
       id: 0,
       userId: userId,
@@ -33,9 +36,14 @@ const EnrollForm = () => {
       const result = await axios.post(configData.SERVER_URL + "/enroll", {
         rsaData,
       });
-      console.log("result:", result);
+      console.log("enroll result:", result.status);
+      if (result.status == 200) {
+        console.log("enroll result: successful");
+        history.push('/login')
+      }
     } catch (e) {
       console.log(e);
+      alert('enroll fail')
     }
   };
   return (

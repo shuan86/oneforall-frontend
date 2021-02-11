@@ -6,7 +6,7 @@ import history from '../../public/images/HistoryIcon.svg';
 import articleImg from '../../public/images/articleImg.jpg';
 
 const NewsCardContent = ({ status }) => {
-    console.log('NewsCardContent');
+
     return (
         <div className="content">
             <div className="postInfo">
@@ -46,7 +46,7 @@ const NewsCardContent = ({ status }) => {
 };
 
 const NewsCardComment = () => {
-    console.log('NewsCardComment');
+    //console.log('NewsCardComment');
     return (
         <div className="comment">
             <div className="userInput">
@@ -68,8 +68,8 @@ const NewsCardComment = () => {
 };
 
 const NewsCard = ({ status }) => {
-    console.log('NewsCard');
-    console.log('NewsCardUnreviewed', status);
+    /*  console.log('NewsCard');
+      console.log('NewsCardUnreviewed', status);*/
     return (
         <div className="card">
             <div className={status ? 'status' : 'none'}>未審核</div>
@@ -80,14 +80,14 @@ const NewsCard = ({ status }) => {
 };
 
 const NewsCardUnreviewed = () => {
-    console.log('NewsCard');
-    console.log('NewsCardUnreviewed', status);
+    /* console.log('NewsCard');
+     console.log('NewsCardUnreviewed', status);*/
     return (
         <NewsCard status />
     );
 };
 const NewsCardUnderReview = () => {
-    console.log('NewsCard');
+    //   console.log('NewsCard');
     return (
         <div className="card">
             <div className="status">審核中</div>
@@ -99,7 +99,7 @@ const NewsCardUnderReview = () => {
     );
 };
 const NewsCardReviewed = () => {
-    console.log('NewsCard');
+    //  console.log('NewsCard');
     return (
         <div className="card">
             <div className="status">審核後</div>
