@@ -4,7 +4,7 @@ import Web3 from 'web3';
 const Tx = require('ethereumjs-tx').Transaction
 
 //import Tx from "ethereumjs-tx";
-const web3 = new Web3('http://localhost:7545');//web3.currentProvider
+const web3 = new Web3('ws://localhost:7545');//web3.currentProvider
 const abi = platformABI
 const address = platformAddr
 const contract = new web3.eth.Contract(abi, address)
@@ -61,7 +61,7 @@ const transactionPeopole = (sender, receiver, prikey) => {
 }
 
 const transactionContract = async (sender, contractAddress, contractData, prikey) => {
-    web3.eth.getTransactionCount(sender, (err, txCount) => {
+    await web3.eth.getTransactionCount(sender, (err, txCount) => {
 
         const txObject = {
             nonce: web3.utils.toHex(txCount),
@@ -78,15 +78,57 @@ const transactionContract = async (sender, contractAddress, contractData, prikey
         const raw = '0x' + serializedTx.toString('hex')
 
         web3.eth.sendSignedTransaction(raw, (err, txHash) => {
-            console.log('err:', err, 'transactionContract txHash:', txHash)
-            // Use this txHash to find the contract on Etherscan!
+            if (err) {
+                console.log('transactionContract err:', err)
+            }
+            else {
+                console.log('transactionContract txHash:', txHash)
+            }
         })
     })
 }
-//transactionPeopole(account1, account2, privateKey1)
-test();
-transactionContract(account1, address, contract.methods.enrollVistor(10, '0xDA5171250d171562559ee4Bde245DB86cb13AE34', true).encodeABI(), privateKey1)
-//transactionContract(account1, address, contract.methods.getVistors().encodeABI(), privateKey1)
+
+
+
+
+const getPastEvent = async (eventName, filterData) => {
+    try {
+        const result = await contract.getPastEvents(eventName, { filter: { ...filterData }, fromBlock: 0 })
+        console.log(`getPastEvent ${eventName}:`, result);
+        console.log(`getPastEvent ${eventName}:`, result.returnValues);
+
+    }
+    catch (e) {
+        console.log(`getPastEvent error ${eventName}:`, e);
+    }
+}
+const subscribeTestEvent = () => {
+    contract.events.TestEvent({ from: 0 }).on('data', event => (console.log('subscribeTestEvent:', event)))
+}
+
+
+const execute = async () => {
+    subscribeTestEvent();
+    await test();
+    await transactionContract(account1, address, contract.methods.setTestEvent(10).encodeABI(), privateKey1)
+    await transactionContract(account1, address, contract.methods.setTestEvent(15).encodeABI(), privateKey1)
+    await getPastEvent("TestEvent", { id: 102 });
+    await new Promise((resolve, reject) => {
+        setTimeout(() => {
+
+            resolve(transactionContract(account1, address, contract.methods.setTestEvent(10).encodeABI(), privateKey1))
+
+        }, 200)
+    })
+
+    // await getPastEvent("NewsEvent");
+
+}
+execute()
+
+
+
+
 
 
 //let contract = null;

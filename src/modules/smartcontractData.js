@@ -1,4 +1,4 @@
-export const platformAddr = "0x377cE8B7ea6ed2683B59bfb51615DEa2d495F01E"
+export const platformAddr = "0xD3EA59dF5eb3587b6A09cE4326bE784ee3cc7F98"
 
 
 export const platformABI = [
@@ -6,6 +6,45 @@ export const platformABI = [
         "inputs": [],
         "stateMutability": "nonpayable",
         "type": "constructor"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "data",
+                "type": "uint256"
+            }
+        ],
+        "name": "TestEvent",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "source",
+                "type": "string"
+            }
+        ],
+        "name": "stringToBytes32",
+        "outputs": [
+            {
+                "internalType": "bytes32",
+                "name": "result",
+                "type": "bytes32"
+            }
+        ],
+        "stateMutability": "pure",
+        "type": "function",
+        "constant": true
     },
     {
         "inputs": [
@@ -238,9 +277,9 @@ export const platformABI = [
                 "type": "bytes32"
             },
             {
-                "internalType": "bytes20",
+                "internalType": "uint256",
                 "name": "time",
-                "type": "bytes20"
+                "type": "uint256"
             }
         ],
         "name": "postNews",
@@ -272,9 +311,9 @@ export const platformABI = [
                 "type": "bytes32"
             },
             {
-                "internalType": "bytes20",
+                "internalType": "uint256",
                 "name": "time",
-                "type": "bytes20"
+                "type": "uint256"
             }
         ],
         "name": "comment",
@@ -309,6 +348,25 @@ export const platformABI = [
         "stateMutability": "view",
         "type": "function",
         "constant": true
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "data",
+                "type": "uint256"
+            }
+        ],
+        "name": "setTestEvent",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
     }
 ]
 

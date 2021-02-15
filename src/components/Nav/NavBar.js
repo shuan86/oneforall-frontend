@@ -4,8 +4,7 @@ import "../../public/css/common.css";
 import "../../public/css/NavBar.css";
 import Logo from "../../Logo.svg";
 import { useSelector, useDispatch } from 'react-redux';
-import axios from "axios";
-import configData from "../../config.json";
+import { logout } from "../../modules/member";
 import { initialMember, wontUpdateMember, updateMember } from "../../actions/actions";
 const NavBar = () => {
   const history = useHistory();
@@ -23,22 +22,9 @@ const NavBar = () => {
   }, [])
   const onClickLogout = async () => {
     let data = wontUpdateMember();
-    const JWTtoken = localStorage.getItem('token')
-    const config = {
-      headers: { Authorization: `Bearer ${JWTtoken}` }
-    };
-    const bodyParameters = {
-      id
-    };
-    const result = await axios.post(configData.SERVER_URL + '/logout', bodyParameters, config)
-    if (result.status == 200) {
-      data = initialMember()
-      localStorage.clear('id');
-      localStorage.clear('name');
-      localStorage.clear('toekn');
-    }
+    const result = await logout();
+    data = initialMember()
     dispatch(data)
-    console.log('result:', result);
   }
 
   return (
