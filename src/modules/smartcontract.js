@@ -1,46 +1,44 @@
+const Web3 = require("Web3");
 import {
-  platformABI,
-  platformAddr,
-  simpleABI,
-  simpleAddr,
-} from "./smartcontractData";
-import Web3 from "web3";
-const Tx = require("ethereumjs-tx").Transaction;
+  contractABI,
+  contractAddr,
+  ownerAddr,
+  ownerPriKey,
+  memberAddr1,
+  memberPriKey1,
+  memberAddr2,
+  memberPriKey2,
+} from "./mockdata";
 
+const Tx = require("ethereumjs-tx").Transaction;
+const INewEvent = {
+  dbId: 0,
+  newsId: 0,
+  index: 0,
+  newsType: 0,
+  publisherAddr: "",
+  author: "",
+  content: "",
+  time: "",
+  deposit: "",
+};
 //import Tx from "ethereumjs-tx";
 const web3 = new Web3("ws://localhost:7545"); //web3.currentProvider
-const abi = platformABI;
-const address = platformAddr;
-const contract = new web3.eth.Contract(abi, address);
-
-const account1 = "0xF657eC39ECf4e91af656EaEC910F558D0A76c768"; // Your account address 1
-const account2 = "0x6Fbb55C83380E2a4D2a12A2f838497Fe3f7727a1"; // Your account address 2
-
-const privateKey1 = Buffer.from(
-  "6bdc88382e72d81424b4c08265dce453928730b71d7a3c4a76bf7d2a47da75be",
-  "hex"
-);
-const privateKey2 = Buffer.from(
-  "59a26c2dde6ff726f96518d9f9907762f7ddfd82d1f82afc312ae5e9468acd21",
-  "hex"
-);
+const contract = new web3.eth.Contract(contractABI, contractAddr);
+console.log("init web3.js");
 
 const test = async () => {
   console.log("web3.version:", web3.version);
-
-  // contract = new web3.eth.Contract(abi, address)
   const vistors = await contract.methods.getVistors().call();
   console.log("vistors:", vistors);
   const ownerR = await contract.methods.getOwnerAddr().call();
   console.log("owner:", ownerR);
   const lastSender = await contract.methods.getLastSender().call();
   console.log("lastSender:", lastSender);
-
-  //const contract = new web3.eth.contract(abi, address)
 };
 
-const transactionPeopole = (sender, receiver, prikey) => {
-  web3.eth.getTransactionCount(sender, (err, txCount) => {
+const transactionPeopole = async (sender, receiver, prikey) => {
+  await web3.eth.getTransactionCount(sender, (err, txCount) => {
     // Build the transaction
     const txObject = {
       nonce: web3.utils.toHex(txCount),
@@ -49,14 +47,11 @@ const transactionPeopole = (sender, receiver, prikey) => {
       gasLimit: web3.utils.toHex(21000),
       gasPrice: web3.utils.toHex(web3.utils.toWei("10", "gwei")),
     };
-
     // Sign the transaction
     const tx = new Tx(txObject);
     tx.sign(prikey);
-
     const serializedTx = tx.serialize();
     const raw = "0x" + serializedTx.toString("hex");
-
     // Broadcast the transaction
     web3.eth.sendSignedTransaction(raw, (err, txHash) => {
       console.log("txHash:", txHash);
@@ -68,6 +63,7 @@ const transactionPeopole = (sender, receiver, prikey) => {
 const transactionContract = async (
   sender,
   contractAddress,
+  value,
   contractData,
   prikey
 ) => {
@@ -75,8 +71,9 @@ const transactionContract = async (
     const txObject = {
       nonce: web3.utils.toHex(txCount),
       gasLimit: web3.utils.toHex(800000), // Raise the gas limit to a much higher amount
-      gasPrice: web3.utils.toHex(web3.utils.toWei("0", "gwei")),
+      gasPrice: web3.utils.toHex(web3.utils.toWei("1", "wei")),
       to: contractAddress,
+      value: web3.utils.toHex(web3.utils.toWei(value, "wei")),
       data: contractData,
     };
 
@@ -114,38 +111,84 @@ const subscribeTestEvent = () => {
     .on("data", (event) => console.log("subscribeTestEvent:", event));
 };
 
-const execute = async () => {
+export const execute = async () => {
   subscribeTestEvent();
   await test();
   await transactionContract(
-    account1,
-    address,
+    memberAddr1,
+    contractAddr,
+    "0",
     contract.methods.setTestEvent(10).encodeABI(),
-    privateKey1
+    memberPriKey1
   );
   await transactionContract(
-    account1,
-    address,
+    memberAddr2,
+    contractAddr,
+    "0",
     contract.methods.setTestEvent(15).encodeABI(),
-    privateKey1
+    memberPriKey2
   );
   await getPastEvent("TestEvent", { id: 102 });
-  await new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(
-        transactionContract(
-          account1,
-          address,
-          contract.methods.setTestEvent(10).encodeABI(),
-          privateKey1
-        )
-      );
-    }, 200);
-  });
-
-  // await getPastEvent("NewsEvent");
 };
-execute();
 
-//let contract = null;
-export { contract };
+export const postNewsToContract = async (data) => {
+  const {
+    m_publicKey,
+    a_id,
+    a_newsId,
+    a_index,
+    a_newsType,
+    a_authorName,
+    a_content,
+    a_time,
+    a_deposit,
+  } = data;
+  try {
+    await transactionContract(
+      ownerAddr,
+      contractAddr,
+      "10000",
+      contract.methods
+        .postNewsForOwner(
+          a_id,
+          a_newsId,
+          m_publicKey,
+          a_authorName,
+          a_content,
+          a_time
+        )
+        .encodeABI(),
+      ownerPriKey
+    );
+  } catch (error) {
+    console.log("postNews error:", error);
+  }
+};
+
+export const getNewsContractByNewsId = async (newsId) => {
+  const eventName = "NewsEvent";
+  try {
+    const result = await contract.getPastEvents(eventName, {
+      fromBlock: 0,
+      filter: { newsId },
+    });
+    console.log(`getNewsContractByNewsId ${eventName}:`, result);
+    console.log(
+      `getNewsContractByNewsId ${eventName}:`,
+      result[0].returnValues[0]
+    );
+    let data = { ...INewEvent };
+    data.dbId = result[0].returnValues[0];
+    data.newsId = result[0].returnValues[1];
+    data.index = result[0].returnValues[2];
+    data.newsType = result[0].returnValues[3];
+    data.publisherAddr = result[0].returnValues[4];
+    data.author = result[0].returnValues[5];
+    data.content = result[0].returnValues[6];
+    data.time = result[0].returnValues[7];
+    data.deposit = result[0].returnValues[8];
+    return data;
+  } catch (e) {
+    console.log(`getNewsContractByNewsId error ${eventName}:`, e);
+  }
+};

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { EnrollLoginFiled as Field } from "../FormField/FormField";
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { login, loginBodyData } from "../../modules/member";
 import { initialMember, updateMember } from "../../actions/actions";
 const LoginForm = () => {
@@ -19,15 +19,15 @@ const LoginForm = () => {
     const formData = { ...loginBodyData };
     formData.userId = userId;
     formData.password = password;
-    const result = await login(formData)
+    const result = await login(formData);
     if (result != null && result.status == 200) {
-      data = updateMember({ id: result.id, name: result.userName })
-      history.push('/index')
+      data = updateMember({ id: result.id, userId: result.userId });
+      history.push("/index");
     }
-    dispatch(data)
+    dispatch(data);
   };
   return (
-    < div >
+    <div>
       <Field
         htmlFor="userId"
         labelContent="userId:"
@@ -53,7 +53,7 @@ const LoginForm = () => {
         thisFieldErrorMsg={errorMessage.password}
       />
       <button onClick={onClickSubmit}>submit</button>
-    </div >
+    </div>
   );
 };
 export default LoginForm;
