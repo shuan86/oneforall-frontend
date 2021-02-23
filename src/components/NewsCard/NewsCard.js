@@ -79,18 +79,20 @@ const NewsCard = ({ status, articleContent }) => {
 };
 
 const NewsCardUnreviewed = ({ articleContent }) => {
-  /* console.log('NewsCard');
-     console.log('NewsCardUnreviewed', status);*/
-  return <NewsCard status articleContent={articleContent} />;
+  return (
+    <div className="card">
+      <div className="status">未審核</div>
+      <NewsCardContent status={status} articleContent={articleContent} />
+      <NewsCardComment />
+    </div>
+  );
 };
 const NewsCardUnderReview = () => {
   //   console.log('NewsCard');
   return (
     <div className="card">
       <div className="status">審核中</div>
-      {/* <h1>NewsCard</h1> */}
       <NewsCardContent />
-      <NewsCard status={false} />
       <NewsCardComment />
     </div>
   );

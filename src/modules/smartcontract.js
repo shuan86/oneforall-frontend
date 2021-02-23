@@ -12,14 +12,13 @@ import {
 
 const Tx = require("ethereumjs-tx").Transaction;
 const INewEvent = {
-  dbId: 0,
   newsId: 0,
   index: 0,
   newsType: 0,
-  publisherAddr: "",
+  title: "",
   author: "",
   content: "",
-  time: "",
+  content_time: "",
   deposit: "",
 };
 //import Tx from "ethereumjs-tx";
@@ -178,15 +177,14 @@ export const getNewsContractByNewsId = async (newsId) => {
       result[0].returnValues[0]
     );
     let data = { ...INewEvent };
-    data.dbId = result[0].returnValues[0];
-    data.newsId = result[0].returnValues[1];
-    data.index = result[0].returnValues[2];
-    data.newsType = result[0].returnValues[3];
-    data.publisherAddr = result[0].returnValues[4];
-    data.author = result[0].returnValues[5];
-    data.content = result[0].returnValues[6];
-    data.time = result[0].returnValues[7];
-    data.deposit = result[0].returnValues[8];
+
+    data.newsId = result[0].returnValues[0];
+    data.index = result[0].returnValues[1];
+    data.newsType = result[0].returnValues[2];
+    data.title = result[0].returnValues[3];
+    data.author = result[0].returnValues[4];
+    data.content_time = result[0].returnValues[5];
+    data.deposit = result[0].returnValues[6];
     return data;
   } catch (e) {
     console.log(`getNewsContractByNewsId error ${eventName}:`, e);

@@ -19,19 +19,16 @@ const NewsCard = ({ newsStatus }) => {
 const HomePage = () => {
   let newsData = [];
   const [list, setList] = useState([]);
-  let arrLists = ["打文章", "寫程式", "耍廢"];
-  const [articleContent, setArticleContent] = useState("123");
   useEffect(() => {
     const contractFunc = async () => {
-      for (let i = 1; i < 4; i++) {
+      for (let i = 3; i > 0; i--) {
         newsData.push(await getNewsContractByNewsId(i));
-        setArticleContent(i);
-        console.log("newsData:", i);
+
+        console.log("newsData123:", i);
       }
       setList(newsData);
     };
     contractFunc();
-
     return () => {};
   }, []);
 
@@ -42,9 +39,15 @@ const HomePage = () => {
       <div className="container">
         <div className="homePageContent">
           <div className="NewsCard">
-            {list.map((_, index) => (
-              <NewsCardUnreviewed key={index} articleContent={articleContent} />
-            ))}
+            {list.map((v, index) => {
+              if (v.newsType == 0)
+                return <NewsCardUnreviewed key={index} data={v} />;
+              else if (v.newsType == 1)
+                return <NewsCardUnderReview key={index} data={v} />;
+              else if (v.newsType == 2) {
+                return <NewsCardReviewed key={index} data={v} />;
+              }
+            })}
           </div>
 
           <div className="Ranking">

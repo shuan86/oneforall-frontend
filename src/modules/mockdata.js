@@ -1,4 +1,4 @@
-export const contractAddr = "0xc1836861E15f51dec7A875e74828109D2B8a9f61";
+export const contractAddr = "0x2d97FCe2EF9357C9767c7f9394d93c90Cf95D3E8";
 
 export const ownerAddr = "0xF657eC39ECf4e91af656EaEC910F558D0A76c768";
 export const ownerPriKey = Buffer.from(
@@ -63,37 +63,31 @@ export const contractABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "dbId",
-        type: "uint256",
-      },
-      {
         indexed: true,
         internalType: "uint256",
         name: "newsId",
         type: "uint256",
       },
       {
-        indexed: true,
+        indexed: false,
         internalType: "uint256",
         name: "index",
         type: "uint256",
       },
       {
-        indexed: true,
+        indexed: false,
         internalType: "enum AbPlatform.NewsType",
         name: "newsType",
         type: "uint8",
       },
       {
-        indexed: false,
-        internalType: "address",
-        name: "publisherAddr",
-        type: "address",
+        indexed: true,
+        internalType: "string",
+        name: "title",
+        type: "string",
       },
       {
-        indexed: false,
+        indexed: true,
         internalType: "string",
         name: "author",
         type: "string",
@@ -101,13 +95,7 @@ export const contractABI = [
       {
         indexed: false,
         internalType: "string",
-        name: "content",
-        type: "string",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "time",
+        name: "content_time",
         type: "string",
       },
       {
@@ -118,6 +106,37 @@ export const contractABI = [
       },
     ],
     name: "NewsEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "newsId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "content1",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "content2",
+        type: "string",
+      },
+    ],
+    name: "NewsEventImage",
     type: "event",
   },
   {
@@ -406,18 +425,13 @@ export const contractABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "dbId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
         name: "newsId",
         type: "uint256",
       },
       {
-        internalType: "address",
-        name: "publisherAddr",
-        type: "address",
+        internalType: "string",
+        name: "title",
+        type: "string",
       },
       {
         internalType: "string",
@@ -426,55 +440,21 @@ export const contractABI = [
       },
       {
         internalType: "string",
-        name: "content",
+        name: "content_time",
         type: "string",
       },
       {
         internalType: "string",
-        name: "time",
+        name: "img1",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "img2",
         type: "string",
       },
     ],
     name: "postNews",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-    payable: true,
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "dbId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "newsId",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "publisherAddr",
-        type: "address",
-      },
-      {
-        internalType: "string",
-        name: "author",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "content",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "time",
-        type: "string",
-      },
-    ],
-    name: "postNewsForOwner",
     outputs: [],
     stateMutability: "payable",
     type: "function",
