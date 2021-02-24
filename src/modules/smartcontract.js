@@ -18,7 +18,7 @@ const INewEvent = {
   title: "",
   author: "",
   content: "",
-  content_time: "",
+  data: "",
   deposit: "",
 };
 //import Tx from "ethereumjs-tx";
@@ -92,18 +92,6 @@ const transactionContract = async (
   });
 };
 
-const getPastEvent = async (eventName, filterData) => {
-  try {
-    const result = await contract.getPastEvents(eventName, {
-      filter: { ...filterData },
-      fromBlock: 0,
-    });
-    console.log(`getPastEvent ${eventName}:`, result);
-    console.log(`getPastEvent ${eventName}:`, result.returnValues);
-  } catch (e) {
-    console.log(`getPastEvent error ${eventName}:`, e);
-  }
-};
 const subscribeTestEvent = () => {
   contract.events
     .TestEvent({ from: 0 })
@@ -163,14 +151,36 @@ export const postNewsToContract = async (data) => {
     console.log("postNews error:", error);
   }
 };
-
-export const getNewsContractByNewsId = async (newsId) => {
-  const eventName = "NewsEvent";
+const getPastEvent = async (eventName, filterData) => {
+  try {
+    const result = await contract.getPastEvents(eventName, {
+      filter: { filterData },
+    });
+    console.log(`getPastEvent ${eventName}:`, result);
+    console.log(`getPastEvent ${eventName}:`, result.returnValues);
+    return result;
+  } catch (e) {
+    console.log(`getPastEvent error ${eventName}:`, e);
+  }
+};
+const getManyPastEvent = async (eventName, filterData) => {
   try {
     const result = await contract.getPastEvents(eventName, {
       fromBlock: 0,
-      filter: { newsId },
+      toBlock: "latest",
+      filter: { filterData },
     });
+    return result;
+    /*console.log(`getPastEvent ${eventName}:`, result);
+    console.log(`getPastEvent ${eventName}:`, result.returnValues);*/
+  } catch (e) {
+    console.log(`getPastEvent error ${eventName}:`, e);
+  }
+};
+export const getNewsFromContractByNewsId = async (newsId) => {
+  const eventName = "NewsEvent";
+  try {
+    const result = await getPastEvent(eventName, newsId);
     console.log(`getNewsContractByNewsId ${eventName}:`, result);
     console.log(
       `getNewsContractByNewsId ${eventName}:`,
@@ -183,9 +193,32 @@ export const getNewsContractByNewsId = async (newsId) => {
     data.newsType = result[0].returnValues[2];
     data.title = result[0].returnValues[3];
     data.author = result[0].returnValues[4];
-    data.content_time = result[0].returnValues[5];
+    data.data = result[0].returnValues[5];
     data.deposit = result[0].returnValues[6];
     return data;
+  } catch (e) {
+    console.log(`getNewsContractByNewsId error ${eventName}:`, e);
+  }
+};
+export const getAllNewsFromContract = async () => {
+  const eventName = "NewsEvent";
+  try {
+    const results = await getManyPastEvent(eventName, null);
+
+    let allData = []; //{ ...INewEvent }
+    let i = 0;
+    for (result of results) {
+      let data = { ...INewEvent }; //
+      data.newsId = result.returnValues[0];
+      data.index = result.returnValues[1];
+      data.newsType = result.returnValues[2];
+      data.title = result.returnValues[3];
+      data.author = result.returnValues[4];
+      data.data = result.returnValues[5];
+      data.deposit = result.returnValues[6];
+      allData.push(data);
+    }
+    return allData;
   } catch (e) {
     console.log(`getNewsContractByNewsId error ${eventName}:`, e);
   }

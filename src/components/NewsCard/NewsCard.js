@@ -1,32 +1,56 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../public/css/NewsCard.css";
-import author from "../../public/images/author.jpg";
+
+import authorImg from "../../public/images/author.jpg";
 import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
+import {} from "../../interfaces/IContract";
+const NewsCardContent = ({ isReviwedCard, data }) => {
+  const { title, author, content, time, tags } = JSON.parse(data);
+  const [tagsData, setTagsData] = useState([]);
+  useEffect(() => {
+    console.log("data:", data);
+    console.log("tags:", tags);
+    const keyNames = Object.keys(tags);
+    /* for(const t of tags){
+       for(k of keyNames){
+         if(t==)
+       }
 
-const NewsCardContent = ({ status, articleContent }) => {
+    }*/
+
+    setTagsData(tags);
+    return () => {};
+  }, []);
   return (
     <div className="content">
       <div className="postInfo">
         <div className="userInfo">
-          <img src={author} alt="Background" className="userPhoto" />
+          <img src={authorImg} alt="Background" className="userPhoto" />
           <div className="article-data">
-            <div className="userId">abc12345678</div>
-            <div className="articleTime">2020-11-06 21:24:08</div>
+            <div className="userId">{author}</div>
+            <div className="articleTime">{time}</div>
           </div>
         </div>
-        <a href="" className={status ? "none" : "history"}>
+        <a href="" className={isReviwedCard == false ? "none" : "history"}>
           <img src={history} alt="History" />
         </a>
       </div>
       <div className="hashtag">
         <a href=""># 醫療</a>
         <a href=""># 疫苗</a>
+        {tagsData.map((val, index) => {
+          return (
+            <a href="" key={index}>
+              # {val}
+            </a>
+          );
+        })}
       </div>
       <div className="article">
-        <h3>這應該大概有十個字吧還是應該要再多一點字呢呢呢呢呢呢呢</h3>
-        <p>{articleContent}</p>
+        <h3>{title}</h3>
+        <p>{content}</p>
         <img src={articleImg} alt="" />
         <a href="">繼續閱讀</a>
       </div>
@@ -35,7 +59,7 @@ const NewsCardContent = ({ status, articleContent }) => {
           <a href="">想知道</a>
           <span>123人想知道</span>
         </div>
-        <div className={status ? "none" : "vote"}>
+        <div className={isReviwedCard == false ? "none" : "vote"}>
           <a href="">同意</a>
           <a href="">反對</a>
         </div>
@@ -66,33 +90,34 @@ const NewsCardComment = () => {
   );
 };
 
-const NewsCard = ({ status, articleContent }) => {
+const NewsCard = ({ status }) => {
   /*  console.log('NewsCard');
       console.log('NewsCardUnreviewed', status);*/
   return (
     <div className="card">
       <div className={status ? "status" : "none"}>未審核</div>
-      <NewsCardContent status={status} articleContent={articleContent} />
+      <NewsCardContent status={status} />
       <NewsCardComment />
     </div>
   );
 };
 
-const NewsCardUnreviewed = ({ articleContent }) => {
+const NewsCardUnreviewed = ({ articleData }) => {
+  const { data, deposit, index, newsId, newsType } = articleData;
   return (
     <div className="card">
       <div className="status">未審核</div>
-      <NewsCardContent status={status} articleContent={articleContent} />
+      <NewsCardContent isReviwedCard={false} data={data} />
       <NewsCardComment />
     </div>
   );
 };
-const NewsCardUnderReview = () => {
-  //   console.log('NewsCard');
+const NewsCardUnderReview = ({ articleData }) => {
+  const { data, deposit, index, newsId, newsType } = articleData;
   return (
     <div className="card">
       <div className="status">審核中</div>
-      <NewsCardContent />
+      <NewsCardContent isReviwedCard={false} data={data} />
       <NewsCardComment />
     </div>
   );

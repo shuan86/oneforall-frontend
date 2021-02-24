@@ -1,4 +1,4 @@
-export const contractAddr = "0x2d97FCe2EF9357C9767c7f9394d93c90Cf95D3E8";
+export const contractAddr = "0x7842c2d55c0123A6A5B628728e506aC8Eb3b75BF";
 
 export const ownerAddr = "0xF657eC39ECf4e91af656EaEC910F558D0A76c768";
 export const ownerPriKey = Buffer.from(
@@ -95,7 +95,7 @@ export const contractABI = [
       {
         indexed: false,
         internalType: "string",
-        name: "content_time",
+        name: "data",
         type: "string",
       },
       {
@@ -440,7 +440,7 @@ export const contractABI = [
       },
       {
         internalType: "string",
-        name: "content_time",
+        name: "data",
         type: "string",
       },
       {

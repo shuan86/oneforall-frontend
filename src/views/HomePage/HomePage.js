@@ -7,7 +7,8 @@ import {
   NewsCardReviewed,
 } from "../../components/NewsCard/NewsCard";
 import RankingTable from "../../components/NewsCard/RankingTable";
-import { getNewsContractByNewsId } from "../../modules/smartcontract";
+import { getNewsFromContractByNewsId } from "../../modules/smartcontract";
+import { NewsType } from "../../interfaces/IContract";
 const NewsCard = ({ newsStatus }) => {
   <div className="NewsCard">
     <NewsCardUnreviewed />
@@ -21,10 +22,10 @@ const HomePage = () => {
   const [list, setList] = useState([]);
   useEffect(() => {
     const contractFunc = async () => {
-      for (let i = 3; i > 0; i--) {
-        newsData.push(await getNewsContractByNewsId(i));
+      for (let i = 3; i >= 0; i--) {
+        newsData.push(await getNewsFromContractByNewsId(i));
 
-        console.log("newsData123:", i);
+        console.log("newsData123:", newsData[i]);
       }
       setList(newsData);
     };
@@ -39,13 +40,13 @@ const HomePage = () => {
       <div className="container">
         <div className="homePageContent">
           <div className="NewsCard">
-            {list.map((v, index) => {
-              if (v.newsType == 0)
-                return <NewsCardUnreviewed key={index} data={v} />;
-              else if (v.newsType == 1)
-                return <NewsCardUnderReview key={index} data={v} />;
-              else if (v.newsType == 2) {
-                return <NewsCardReviewed key={index} data={v} />;
+            {list.map((value, index) => {
+              if (value.newsType == NewsType.Unreview)
+                return <NewsCardUnreviewed key={index} articleData={value} />;
+              else if (value.newsType == NewsType.UnderReviewed)
+                return <NewsCardUnderReview key={index} articleData={value} />;
+              else if (value.newsType == NewsType.Reviewed) {
+                return <NewsCardReviewed key={index} articleData={value} />;
               }
             })}
           </div>
