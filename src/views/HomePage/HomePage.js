@@ -31,6 +31,7 @@ const HomePage = () => {
       const allNewsDataArray = await contract.getNewsCompleteData(1, 4);
       setNewsDataList(allNewsDataArray);
     };
+
     contractFunc();
     return () => {};
   }, []);

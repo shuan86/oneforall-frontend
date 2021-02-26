@@ -27,32 +27,35 @@ const LoginForm = () => {
     dispatch(data);
   };
   return (
-    <div>
-      <Field
-        htmlFor="userId"
-        labelContent="userId:"
-        type="text"
-        name="userId"
-        id="userId"
-        value={userId}
-        setValue={setUserId}
-        errorMessage={errorMessage}
-        setErrorMessage={setErrorMessage}
-        thisFieldErrorMsg={errorMessage.userId}
-      />
-      <Field
-        htmlFor="password"
-        labelContent="password:"
-        type="password"
-        name="password"
-        id="password"
-        value={password}
-        setValue={setPassword}
-        errorMessage={errorMessage}
-        setErrorMessage={setErrorMessage}
-        thisFieldErrorMsg={errorMessage.password}
-      />
-      <button onClick={onClickSubmit}>submit</button>
+    <div className="enrollInfo">
+      <div className="enrollContent">
+        <h3>登入</h3>
+        <Field
+          htmlFor="userId"
+          labelContent="userId:"
+          type="text"
+          name="userId"
+          id="userId"
+          value={userId}
+          setValue={setUserId}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+          thisFieldErrorMsg={errorMessage.userId}
+        />
+        <Field
+          htmlFor="password"
+          labelContent="password:"
+          type="password"
+          name="password"
+          id="password"
+          value={password}
+          setValue={setPassword}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+          thisFieldErrorMsg={errorMessage.password}
+        />
+      </div>
+      <button onClick={onClickSubmit}>送出</button>
     </div>
   );
 };
