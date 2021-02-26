@@ -38,8 +38,6 @@ const NewsCardContent = ({ isReviwedCard, data }) => {
         </a>
       </div>
       <div className="hashtag">
-        <a href=""># 醫療</a>
-        <a href=""># 疫苗</a>
         {tagsData.map((val, index) => {
           return (
             <a href="" key={index}>
@@ -103,21 +101,21 @@ const NewsCard = ({ status }) => {
 };
 
 const NewsCardUnreviewed = ({ articleData }) => {
-  const { data, deposit, index, newsId, newsType } = articleData;
+  const { content, deposit, index, newsId, newsType } = articleData;
   return (
     <div className="card">
       <div className="status">未審核</div>
-      <NewsCardContent isReviwedCard={false} data={data} />
+      <NewsCardContent isReviwedCard={false} data={content} />
       <NewsCardComment />
     </div>
   );
 };
 const NewsCardUnderReview = ({ articleData }) => {
-  const { data, deposit, index, newsId, newsType } = articleData;
+  const { content, deposit, index, newsId, newsType } = articleData;
   return (
     <div className="card">
       <div className="status">審核中</div>
-      <NewsCardContent isReviwedCard={false} data={data} />
+      <NewsCardContent isReviwedCard={false} data={content} />
       <NewsCardComment />
     </div>
   );

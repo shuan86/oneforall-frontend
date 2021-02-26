@@ -1,14 +1,5 @@
 const Web3 = require("Web3");
-import {
-  contractABI,
-  contractAddr,
-  ownerAddr,
-  ownerPriKey,
-  memberAddr1,
-  memberPriKey1,
-  memberAddr2,
-  memberPriKey2,
-} from "./mockdata";
+import { contractABI, contractAddr } from "./mockdata";
 
 const Tx = require("ethereumjs-tx").Transaction;
 const INewEvent = {
@@ -18,14 +9,32 @@ const INewEvent = {
   title: "",
   author: "",
   content: "",
-  data: "",
+
   deposit: "",
+};
+const INewImageEvent = {
+  newsId: 0,
+  index: 0,
+  imgContent1: "",
+  imgContent2: "",
+};
+const ICompleteNewsData = {
+  newsId: 0,
+  index: 0,
+  newsType: 0,
+  title: "",
+  author: "",
+  content: "",
+
+  deposit: "",
+  imgContent1: "",
+  imgContent2: "",
 };
 //import Tx from "ethereumjs-tx";
 const web3 = new Web3("ws://localhost:7545"); //web3.currentProvider
+
 const contract = new web3.eth.Contract(contractABI, contractAddr);
 console.log("init web3.js");
-
 const test = async () => {
   console.log("web3.version:", web3.version);
   const vistors = await contract.methods.getVistors().call();
@@ -152,54 +161,155 @@ export const postNewsToContract = async (data) => {
   }
 };
 const getPastEvent = async (eventName, filterData) => {
+  const filter = { ...filterData };
+
+  console.log("getPastEvent:", { filter });
   try {
     const result = await contract.getPastEvents(eventName, {
-      filter: { filterData },
+      filter,
+      fromBlock: 0,
+      toBlock: "latest",
     });
-    console.log(`getPastEvent ${eventName}:`, result);
-    console.log(`getPastEvent ${eventName}:`, result.returnValues);
+    if (result.length > 0) {
+      console.log(`getPastEvent ${eventName}:`, result);
+      console.log(`getPastEvent ${eventName}:`, result[0].returnValues);
+    }
     return result;
   } catch (e) {
     console.log(`getPastEvent error ${eventName}:`, e);
   }
 };
 const getManyPastEvent = async (eventName, filterData) => {
+  const filter = { ...filterData };
   try {
     const result = await contract.getPastEvents(eventName, {
       fromBlock: 0,
       toBlock: "latest",
-      filter: { filterData },
     });
     return result;
     /*console.log(`getPastEvent ${eventName}:`, result);
     console.log(`getPastEvent ${eventName}:`, result.returnValues);*/
   } catch (e) {
+    console.log(`getManyPastEvent error ${eventName}:`, e);
+  }
+};
+const testPastEvent = async (eventName, filterData) => {
+  const filter = { ...filterData };
+  console.log("getPastEvent:", { filter });
+  try {
+    const result = await contract.getPastEvents(eventName, {
+      filter,
+      fromBlock: 0,
+      toBlock: "latest",
+    });
+    if (result.length > 0) {
+      console.log(`getPastEvent ${eventName}:`, result);
+      console.log(
+        `getPastEvent returnValues ${eventName}:`,
+        result.returnValues
+      );
+    }
+    return result;
+  } catch (e) {
     console.log(`getPastEvent error ${eventName}:`, e);
   }
 };
-export const getNewsFromContractByNewsId = async (newsId) => {
+export const getAllNewsId = async () => {
+  const result = await contract.methods.getAllNewsId().call();
+  console.log("getAllNewsId:", result);
+};
+export const getLastestNews = async (startIndex, endIndex) => {
+  const result = await contract.methods
+    .getLatestNewsData(startIndex, endIndex)
+    .call();
+  console.log("getLastestNews:", result);
+  const array = result[Object.keys(result)[0]];
+  const amount = result[Object.keys(result)[1]];
+  let idArray = [];
+  for (let i = 0; i < amount; i++) {
+    idArray.push(array[i]);
+  }
+  return idArray;
+};
+export const getNewsAmount = async () => {
+  const result = await contract.methods.getNewsAmout().call();
+  console.log("getNewsAmount:", result);
+
+  // test();
+};
+export const getNewsByNewsId = async (newsId) => {
   const eventName = "NewsEvent";
   try {
-    const result = await getPastEvent(eventName, newsId);
-    console.log(`getNewsContractByNewsId ${eventName}:`, result);
-    console.log(
+    const result = await getPastEvent(eventName, {
+      newsId: newsId,
+    });
+
+    /* console.log(
       `getNewsContractByNewsId ${eventName}:`,
       result[0].returnValues[0]
-    );
+    );*/
     let data = { ...INewEvent };
 
     data.newsId = result[0].returnValues[0];
-    data.index = result[0].returnValues[1];
-    data.newsType = result[0].returnValues[2];
-    data.title = result[0].returnValues[3];
-    data.author = result[0].returnValues[4];
-    data.data = result[0].returnValues[5];
+    data.title = result[0].returnValues[1];
+    data.author = result[0].returnValues[2];
+    data.index = result[0].returnValues[3];
+    data.newsType = result[0].returnValues[4];
+
+    data.content = result[0].returnValues[5];
     data.deposit = result[0].returnValues[6];
     return data;
   } catch (e) {
     console.log(`getNewsContractByNewsId error ${eventName}:`, e);
   }
 };
+export const getNewsImageByNewsId = async (newsId, index) => {
+  const eventName = "NewsEventImage";
+  try {
+    const result = await getPastEvent(eventName, {
+      newsId,
+      index,
+    });
+    let data = { ...INewImageEvent };
+    data.newsId = data.newsId = result[0].returnValues[0];
+    data.index = data.index = result[0].returnValues[1];
+    data.imgContent1 = data.index = result[0].returnValues[2];
+    data.imgContent2 = data.index = result[0].returnValues[3];
+    //console.log("getNewsImageByNewsId:", data);
+    return data;
+  } catch (e) {
+    console.log(`getNewsContractByNewsId error ${eventName}:`, e);
+  }
+};
+export const getNewsCompleteData = async (startIndex, endIndex) => {
+  let allData = [];
+  const idArray = await getLastestNews(startIndex, endIndex);
+  for (let i = 0; i < idArray.length; i++) {
+    const tmpNewsData = await getNewsByNewsId(idArray[i]);
+    const tmpNewsImg = await getNewsImageByNewsId(
+      idArray[i],
+      tmpNewsData.index
+    );
+    let tmp = { ...ICompleteNewsData };
+    if (tmpNewsData != undefined) {
+      tmp.newsId = tmpNewsData.newsId;
+      tmp.index = tmpNewsData.index;
+      tmp.newsType = tmpNewsData.newsType;
+      tmp.title = tmpNewsData.title;
+      tmp.author = tmpNewsData.author;
+      tmp.content = tmpNewsData.content;
+      tmp.deposit = tmpNewsData.deposit;
+    }
+    if (tmpNewsImg != undefined) {
+      tmp.imgContent1 = tmpNewsImg.imgContent1;
+      tmp.imgContent2 = tmpNewsImg.imgContent2;
+    }
+    allData.push(tmp);
+  }
+  console.log("getNewsCompleteData:", allData);
+  return allData;
+};
+
 export const getAllNewsFromContract = async () => {
   const eventName = "NewsEvent";
   try {
@@ -214,7 +324,7 @@ export const getAllNewsFromContract = async () => {
       data.newsType = result.returnValues[2];
       data.title = result.returnValues[3];
       data.author = result.returnValues[4];
-      data.data = result.returnValues[5];
+      data.content = result.returnValues[5];
       data.deposit = result.returnValues[6];
       allData.push(data);
     }
@@ -223,3 +333,5 @@ export const getAllNewsFromContract = async () => {
     console.log(`getNewsContractByNewsId error ${eventName}:`, e);
   }
 };
+
+//execute();

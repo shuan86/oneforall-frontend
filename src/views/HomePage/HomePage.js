@@ -7,7 +7,7 @@ import {
   NewsCardReviewed,
 } from "../../components/NewsCard/NewsCard";
 import RankingTable from "../../components/NewsCard/RankingTable";
-import { getNewsFromContractByNewsId } from "../../modules/smartcontract";
+import * as contract from "../../modules/smartcontract";
 import { NewsType } from "../../interfaces/IContract";
 const NewsCard = ({ newsStatus }) => {
   <div className="NewsCard">
@@ -18,16 +18,18 @@ const NewsCard = ({ newsStatus }) => {
 };
 
 const HomePage = () => {
-  let newsData = [];
-  const [list, setList] = useState([]);
+  let newsDataArray = [];
+  let newsImgArray = [];
+
+  const [newsDataList, setNewsDataList] = useState([]);
+  const [newsImgList, setNewsImgList] = useState([]);
+
   useEffect(() => {
     const contractFunc = async () => {
-      for (let i = 3; i >= 0; i--) {
-        newsData.push(await getNewsFromContractByNewsId(i));
-
-        console.log("newsData123:", newsData[i]);
-      }
-      setList(newsData);
+      await contract.getAllNewsId();
+      const amount = await contract.getNewsAmount();
+      const allNewsDataArray = await contract.getNewsCompleteData(1, 4);
+      setNewsDataList(allNewsDataArray);
     };
     contractFunc();
     return () => {};
@@ -36,11 +38,10 @@ const HomePage = () => {
   return (
     <div>
       <Filter />
-
       <div className="container">
         <div className="homePageContent">
           <div className="NewsCard">
-            {list.map((value, index) => {
+            {newsDataList.map((value, index) => {
               if (value.newsType == NewsType.Unreview)
                 return <NewsCardUnreviewed key={index} articleData={value} />;
               else if (value.newsType == NewsType.UnderReviewed)
@@ -50,7 +51,6 @@ const HomePage = () => {
               }
             })}
           </div>
-
           <div className="Ranking">
             <RankingTable />
           </div>

@@ -1,20 +1,4 @@
-export const contractAddr = "0x7842c2d55c0123A6A5B628728e506aC8Eb3b75BF";
-
-export const ownerAddr = "0xF657eC39ECf4e91af656EaEC910F558D0A76c768";
-export const ownerPriKey = Buffer.from(
-  "6bdc88382e72d81424b4c08265dce453928730b71d7a3c4a76bf7d2a47da75be",
-  "hex"
-);
-export const memberAddr1 = "0x0Ee1ffe7910c5fb935C06cb93f9DAFf7C791D176";
-export const memberPriKey1 = Buffer.from(
-  "72a310db4aee4c94fb18186c5e760aa8a63b52e8deb82660b6b391747b04457c",
-  "hex"
-);
-export const memberAddr2 = "0x3abc2643A565b74E3583Fb3Ca7BA84DE8d4Aa04E";
-export const memberPriKey2 = Buffer.from(
-  "7c2978862ac3d6a6ce9ee1075e59c2ae4665f23eca18f60c3c4330189b6e2c36",
-  "hex"
-);
+export const contractAddr = "0xc97c46dcEE4079e4F33f486Acdd22E26F184714F";
 
 export const contractABI = [
   {
@@ -69,18 +53,6 @@ export const contractABI = [
         type: "uint256",
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "enum AbPlatform.NewsType",
-        name: "newsType",
-        type: "uint8",
-      },
-      {
         indexed: true,
         internalType: "string",
         name: "title",
@@ -91,6 +63,18 @@ export const contractABI = [
         internalType: "string",
         name: "author",
         type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newsType",
+        type: "uint256",
       },
       {
         indexed: false,
@@ -118,7 +102,7 @@ export const contractABI = [
         type: "uint256",
       },
       {
-        indexed: false,
+        indexed: true,
         internalType: "uint256",
         name: "index",
         type: "uint256",
@@ -495,6 +479,50 @@ export const contractABI = [
   },
   {
     inputs: [],
+    name: "getNewsAmout",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "startIndex",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "endIndex",
+        type: "uint256",
+      },
+    ],
+    name: "getLatestNewsData",
+    outputs: [
+      {
+        internalType: "uint256[5]",
+        name: "",
+        type: "uint256[5]",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
     name: "getOwnerAddr",
     outputs: [
       {
@@ -515,6 +543,20 @@ export const contractABI = [
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "getAllNewsId",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
       },
     ],
     stateMutability: "view",
@@ -560,77 +602,3 @@ export const contractABI = [
     payable: true,
   },
 ];
-
-export const mockMemberData = {
-  member: [
-    {
-      id: 0,
-      userId: "a",
-      password: "123",
-      userName: "w1",
-      email: "da@gmail.com",
-      publicKey: memberAddr1,
-      token: "",
-      articles: [],
-    },
-    {
-      id: 1,
-      userId: "b",
-      password: "123",
-      userName: "w1",
-      email: "da@gmail.com",
-      publicKey: memberAddr2,
-      token: "",
-      articles: [],
-    },
-  ],
-};
-/*export const mockArticleData = {
-  article: [
-    {
-      id: 0,
-      newsId: 0,
-      index: 0,
-      newsType: NewsType.unreview,
-      authorDbId: mockMemberData.member[0].id,
-      authorName: mockMemberData.member[0].userName,
-      content: "xxxx1",
-      time: "2021",
-      deposit: 0,
-    },
-    {
-      id: 1,
-      newsId: 1,
-      index: 0,
-      newsType: NewsType.unreview,
-      authorDbId: mockMemberData.member[0].id,
-      authorName: mockMemberData.member[0].userName,
-      content: "xxxx11",
-      time: "2021",
-      deposit: 0,
-    },
-    {
-      id: 3,
-      newsId: 3,
-      index: 0,
-      newsType: NewsType.unreview,
-      authorDbId: mockMemberData.member[1].id,
-      authorName: mockMemberData.member[1].userName,
-      content: "xxxx2",
-      time: "2021",
-      deposit: 0,
-    },
-    {
-      id: 4,
-      newsId: 4,
-      index: 0,
-      newsType: NewsType.unreview,
-      authorDbId: mockMemberData.member[1].id,
-      authorName: mockMemberData.member[1].userName,
-      content: "xxxxxx22",
-      time: "2021",
-      deposit: 0,
-    },
-  ],
-};
-*/
