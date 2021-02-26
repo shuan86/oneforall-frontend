@@ -1,14 +1,11 @@
 import React from 'react';
 import EnrollForm from '../../components/Enroll/EnrollForm'
+import '../../public/css/EnrollPage.css';
 
 const Enroll = () => {
     return (
-        <div>
-            <div className="container">
-                <div className="enrollPageContent">
-                    <EnrollForm />
-                </div>
-            </div>
+        <div className="container">
+            <EnrollForm />
         </div>
     )
 }

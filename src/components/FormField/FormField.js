@@ -58,7 +58,7 @@ export const EnrollLoginFiled = ({
     }
   };
   return (
-    <div>
+    <div className="enrollData">
       <label htmlFor={htmlFor}>{labelContent} </label>
       <input
         type={type}

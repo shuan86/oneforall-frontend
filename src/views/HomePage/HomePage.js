@@ -22,13 +22,13 @@ const HomePage = () => {
   const [list, setList] = useState([]);
   useEffect(() => {
     const contractFunc = async () => {
-      for (let i = 3; i >= 0; i--) {
-        newsData.push(await getNewsFromContractByNewsId(i));
+    //   for (let i = 3; i >= 0; i--) {
+    //     newsData.push(await getNewsFromContractByNewsId(i));
 
-        console.log("newsData123:", newsData[i]);
-      }
-      setList(newsData);
-    };
+    //     console.log("newsData123:", newsData[i]);
+    //   }
+    //   setList(newsData);
+     };
     contractFunc();
     return () => {};
   }, []);
