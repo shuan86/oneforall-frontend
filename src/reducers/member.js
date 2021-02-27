@@ -13,3 +13,15 @@ export const member = (state = intitialMember, action) => {
       return state;
   }
 };
+const initalLoginData = false;
+export const loginStatus = (state = initalLoginData, action) => {
+  switch (action.type) {
+    case "updateLoginStatus":
+      return action.payload;
+      break;
+
+    default:
+      return state;
+      break;
+  }
+};

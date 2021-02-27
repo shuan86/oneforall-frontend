@@ -9,7 +9,9 @@ import {
   initialMember,
   wontUpdateMember,
   updateMember,
+  updateLoginStatus,
 } from "../../actions/actions";
+import { ILocalStorage } from "../../modules/member";
 const NavBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -17,26 +19,29 @@ const NavBar = () => {
     history.push(router);
   };
   useEffect(() => {
-    let data = initialMember();
-    if (
-      localStorage.getItem("id") != null &&
-      localStorage.getItem("userId") != null
-    )
-      data = updateMember({
-        id: localStorage.getItem("id"),
-        userId: localStorage.getItem("userId"),
-      });
-    dispatch(data);
-  }, []);
-  const id = useSelector((s) => s.member.id);
-  const userId = useSelector((s) => s.member.userId);
+    let memberData = initialMember();
+    let updateLoginStatusData = updateLoginStatus(false);
 
+    if (localStorage.getItem(ILocalStorage.id) != null) {
+      memberData = updateMember({
+        id: localStorage.getItem(ILocalStorage.id),
+        userId: localStorage.getItem(ILocalStorage.userId),
+      });
+      updateLoginStatusData = updateLoginStatus(true);
+    }
+    dispatch(updateLoginStatusData);
+    dispatch(memberData);
+  }, []);
+
+  const loginStatus = useSelector((s) => s.loginStatus);
+  const userId = useSelector((s) => s.member.userId);
   const onClickLogout = async () => {
-    let data = wontUpdateMember();
+    let memberData = wontUpdateMember();
+    memberData = initialMember();
     const result = await logout();
-    data = initialMember();
-    dispatch(data);
-    //  console.log("onClickLogout");
+
+    dispatch(updateLoginStatus(false));
+    dispatch(initialMember());
   };
 
   return (
@@ -58,31 +63,31 @@ const NavBar = () => {
             <div className={"navFeature"}>
               <input className={"searchBar"} type="text" value={"搜尋"} />
               <button
-                className={`signupButton ${userId && "navDisplayNone"}`}
+                className={`signupButton ${loginStatus && "navDisplayNone"}`}
                 onClick={() => onChangeRouter("/enroll")}
               >
                 註冊
               </button>
               <button
-                className={`${!userId && "signinButton"} ${
-                  userId && "navDisplayNone"
+                className={`${!loginStatus && "signinButton"} ${
+                  loginStatus && "navDisplayNone"
                 }`}
                 onClick={() => onChangeRouter("/login")}
               >
                 登入
               </button>
               <button
-                className={`${!userId && "signinButton"} ${
-                  userId && "navDisplayBlock" && "signinButton"
-                } ${!userId && "navDisplayNone"}`}
+                className={`${!loginStatus && "signinButton"} ${
+                  loginStatus && "navDisplayBlock" && "signinButton"
+                } ${!loginStatus && "navDisplayNone"}`}
                 onClick={() => {}}
               >
                 {userId}
               </button>
               <button
-                className={`${userId && "navDisplayBlock" && "signinButton"} ${
-                  !userId && "navDisplayNone"
-                }`}
+                className={`${
+                  loginStatus && "navDisplayBlock" && "signinButton"
+                } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickLogout}
               >
                 logout

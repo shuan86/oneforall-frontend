@@ -2,6 +2,7 @@ const Web3 = require("Web3");
 import { contractABI, contractAddr } from "./mockdata";
 
 const Tx = require("ethereumjs-tx").Transaction;
+
 const INewEvent = {
   newsId: 0,
   index: 0,
@@ -9,7 +10,6 @@ const INewEvent = {
   title: "",
   author: "",
   content: "",
-
   deposit: "",
 };
 const INewImageEvent = {
@@ -163,7 +163,7 @@ export const postNewsToContract = async (data) => {
 const getPastEvent = async (eventName, filterData) => {
   const filter = { ...filterData };
 
-  console.log("getPastEvent:", { filter });
+  // console.log("getPastEvent:", { filter });
   try {
     const result = await contract.getPastEvents(eventName, {
       filter,
@@ -171,8 +171,8 @@ const getPastEvent = async (eventName, filterData) => {
       toBlock: "latest",
     });
     if (result.length > 0) {
-      console.log(`getPastEvent ${eventName}:`, result);
-      console.log(`getPastEvent ${eventName}:`, result[0].returnValues);
+      //console.log(`getPastEvent ${eventName}:`, result);
+      //  console.log(`getPastEvent ${eventName}:`, result[0].returnValues);
     }
     return result;
   } catch (e) {

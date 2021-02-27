@@ -1,6 +1,11 @@
 import axios from "axios";
 import configData from "../config.json";
 import { encrypt } from "./encrypt";
+export const ILocalStorage = {
+  id: "id",
+  userId: "userId",
+  token: "token",
+};
 export const login = async (formData) => {
   try {
     const rsaData = await encrypt(JSON.stringify(formData));
@@ -8,10 +13,11 @@ export const login = async (formData) => {
       rsaData,
     });
     if (result.status == 200) {
-      localStorage.setItem("token", result.data.token);
-      localStorage.setItem("id", result.data.id);
-      localStorage.setItem("userId", result.data.userId);
+      localStorage.setItem(ILocalStorage.token, result.data.token);
+      localStorage.setItem(ILocalStorage.id, result.data.id);
+      localStorage.setItem(ILocalStorage.userId, result.data.userId);
     }
+    console.log("login:", result.status);
     return {
       status: result.status,
       id: result.data.id,
@@ -28,12 +34,12 @@ export const loginBodyData = {
   password: "",
 };
 export const logout = async () => {
-  const JWTtoken = localStorage.getItem("token");
+  const JWTtoken = localStorage.getItem(ILocalStorage.token);
   const config = {
     headers: { Authorization: `Bearer ${JWTtoken}` },
   };
   const bodyParameters = {
-    id: localStorage.getItem("id"),
+    id: localStorage.getItem(ILocalStorage.id),
   };
   try {
     const result = await axios.post(
@@ -44,9 +50,11 @@ export const logout = async () => {
     if (result.status == 200) {
       console.log("logout sucessful");
     }
-    localStorage.clear("id");
-    localStorage.clear("name");
-    localStorage.clear("toekn");
+    console.log("onClickLogout:", result);
+
+    localStorage.clear(ILocalStorage.id);
+    localStorage.clear(ILocalStorage.userId);
+    localStorage.clear(ILocalStorage.token);
     return {
       status: result.status,
     };

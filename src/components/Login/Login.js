@@ -3,7 +3,11 @@ import { EnrollLoginFiled as Field } from "../FormField/FormField";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login, loginBodyData } from "../../modules/member";
-import { initialMember, updateMember } from "../../actions/actions";
+import {
+  initialMember,
+  updateMember,
+  updateLoginStatus,
+} from "../../actions/actions";
 const LoginForm = () => {
   const [userId, setUserId] = useState("a");
   const [password, setPassword] = useState("123");
@@ -13,18 +17,22 @@ const LoginForm = () => {
   });
   const history = useHistory();
   const dispatch = useDispatch();
-
   const onClickSubmit = async () => {
-    let data = initialMember();
+    let loginData = initialMember();
+    let loginStatusData = updateLoginStatus(false);
     const formData = { ...loginBodyData };
     formData.userId = userId;
     formData.password = password;
     const result = await login(formData);
     if (result != null && result.status == 200) {
-      data = updateMember({ id: result.id, userId: result.userId });
+      loginData = updateMember({ id: result.id, userId: result.userId });
+      loginStatusData = updateLoginStatus(true);
       history.push("/index");
+    } else {
+      alert("login fail");
     }
-    dispatch(data);
+    dispatch(loginStatusData);
+    dispatch(loginData);
   };
   return (
     <div className="enrollInfo">

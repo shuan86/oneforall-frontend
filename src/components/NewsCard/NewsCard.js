@@ -5,20 +5,46 @@ import authorImg from "../../public/images/author.jpg";
 import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
-import {} from "../../interfaces/IContract";
+import { useSelector } from "react-redux";
+const NewsCardUnreviewed = ({ articleData }) => {
+  const { content, deposit, index, newsId, newsType } = articleData;
+  return (
+    <div className="card">
+      <div className="status">未審核</div>
+      <NewsCardContent isReviwedCard={false} data={content} />
+      <NewsCardComment />
+    </div>
+  );
+};
+const NewsCardUnderReview = ({ articleData }) => {
+  const { content, deposit, index, newsId, newsType } = articleData;
+  return (
+    <div className="card">
+      <div className="status">審核中</div>
+      <NewsCardContent isReviwedCard={false} data={content} />
+      <NewsCardComment />
+    </div>
+  );
+};
+const NewsCardReviewed = () => {
+  //  console.log('NewsCard');
+  return (
+    <div className="card">
+      <div className="status">審核後</div>
+      {/* <h1>NewsCard</h1> */}
+      <NewsCardContent />
+      <NewsCard status={false} />
+      <NewsCardComment />
+    </div>
+  );
+};
 const NewsCardContent = ({ isReviwedCard, data }) => {
   const { title, author, content, time, tags } = JSON.parse(data);
   const [tagsData, setTagsData] = useState([]);
   useEffect(() => {
-    console.log("data:", data);
-    console.log("tags:", tags);
-    const keyNames = Object.keys(tags);
-    /* for(const t of tags){
-       for(k of keyNames){
-         if(t==)
-       }
-
-    }*/
+    /* console.log("data:", data);
+    console.log("tags:", tags);*/
+    // const keyNames = Object.keys(tags);
 
     setTagsData(tags);
     return () => {};
@@ -54,7 +80,7 @@ const NewsCardContent = ({ isReviwedCard, data }) => {
       </div>
       <div className="like">
         <div>
-          <a href="">想知道</a>
+          {useSelector((s) => s.loginStatus) ? <a href="">想知道</a> : null}
           <span>123人想知道</span>
         </div>
         <div className={isReviwedCard == false ? "none" : "vote"}>
@@ -95,39 +121,6 @@ const NewsCard = ({ status }) => {
     <div className="card">
       <div className={status ? "status" : "none"}>未審核</div>
       <NewsCardContent status={status} />
-      <NewsCardComment />
-    </div>
-  );
-};
-
-const NewsCardUnreviewed = ({ articleData }) => {
-  const { content, deposit, index, newsId, newsType } = articleData;
-  return (
-    <div className="card">
-      <div className="status">未審核</div>
-      <NewsCardContent isReviwedCard={false} data={content} />
-      <NewsCardComment />
-    </div>
-  );
-};
-const NewsCardUnderReview = ({ articleData }) => {
-  const { content, deposit, index, newsId, newsType } = articleData;
-  return (
-    <div className="card">
-      <div className="status">審核中</div>
-      <NewsCardContent isReviwedCard={false} data={content} />
-      <NewsCardComment />
-    </div>
-  );
-};
-const NewsCardReviewed = () => {
-  //  console.log('NewsCard');
-  return (
-    <div className="card">
-      <div className="status">審核後</div>
-      {/* <h1>NewsCard</h1> */}
-      <NewsCardContent />
-      <NewsCard status={false} />
       <NewsCardComment />
     </div>
   );
