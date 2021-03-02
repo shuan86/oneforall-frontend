@@ -2,6 +2,7 @@
     "name": "oneforall-frontend",
     "dependencies": {
         "@material-ui/core": "^4.11.3",
+        "@material-ui/data-grid": "^4.0.0-alpha.21",
         "axios": "^0.21.1",
         "encryptlong": "^3.1.4",
         "ethereumjs-tx": "^2.1.2",

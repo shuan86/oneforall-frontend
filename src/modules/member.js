@@ -5,24 +5,22 @@ import { encrypt } from "./encrypt";
 export const IMemberStatus = {
   vistor: "vistor",
   reviewer: "reviewer",
-  publisher: "publisher"
-}
+  publisher: "publisher",
+};
 export const ILocalStorage = {
   id: "id",
   userId: "userId",
   userName: "userName",
   token: "token",
-  email: 'email',
-  publicKey: 'publicKey',
-  isVistor: 'isVistor',
-  isReviewer: 'isReviewer',
-  isPublisher: 'isPublisher',
-
+  email: "email",
+  publicKey: "publicKey",
+  isVistor: "isVistor",
+  isReviewer: "isReviewer",
+  isPublisher: "isPublisher",
 };
 
 export const login = async (formData) => {
   try {
-
     const rsaData = await encrypt(JSON.stringify(formData));
     const result = await axios.post(configData.SERVER_URL + "/login", {
       rsaData,
@@ -68,4 +66,4 @@ export const logout = async () => {
   return null;
 };
 
-
+export const AgreeDisAgreePublish = async () => {};

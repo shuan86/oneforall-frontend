@@ -14,6 +14,7 @@ import MemberPage from "./views/MemberPage/MemberPage";
 import EnrollPage from "./views/EnrollPage/EnrollPage";
 import LoginPage from "./views/LoginPage/LoginPage";
 import SmartContractPage from "./views/SmartContractPage/SmartContactPage";
+import PublisherPage from "./views/SmartContractPage/PublisherPage";
 
 const App = () => (
   <Provider store={store}>
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/enroll" component={EnrollPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/smartcontract" component={SmartContractPage} />
+          <Route path="/publisher" component={PublisherPage} />
           <Route path="/" component={HomePage} />
         </Switch>
       </div>
