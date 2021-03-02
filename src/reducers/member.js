@@ -1,6 +1,9 @@
 const intitialMember = {
   id: "",
   userId: "",
+  userName: "",
+  email: "",
+  publicKey: ""
 };
 export const member = (state = intitialMember, action) => {
   switch (action.type) {
@@ -23,5 +26,18 @@ export const loginStatus = (state = initalLoginData, action) => {
     default:
       return state;
       break;
+  }
+};
+export const initialMemberStatus = {
+  isVistor: false,
+  isrReviewer: false,
+  isPublisher: false
+}
+export const memberStatus = (state = initialMemberStatus, action) => {
+  switch (action.type) {
+    case "updateMemberStatus":
+      return { ...action.payload };
+    default:
+      return state;
   }
 };

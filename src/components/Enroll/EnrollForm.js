@@ -3,13 +3,14 @@ import axios from "axios";
 import configData from "../../config.json";
 import { EnrollLoginFiled as Field } from "../FormField/FormField";
 import { encrypt } from "../../modules/encrypt";
+
 import { useHistory } from "react-router-dom";
 const EnrollForm = () => {
   const [userId, setUserId] = useState("a");
   const [password, setPassword] = useState("123");
   const [userName, setUserName] = useState("a");
   const [email, setEmail] = useState("da@gmail.com");
-  const [publicKey, setPublicKey] = useState("123");
+  const [publicKey, setPublicKey] = useState("0x59982711466fD1d4C2F1C1F710f721651BCCFDb3");
   const history = useHistory();
   const [errorMessage, setErrorMessage] = useState({
     userId: "",
@@ -32,7 +33,11 @@ const EnrollForm = () => {
     };
     try {
       const dataStr = JSON.stringify(data);
+      console.log('enroll:', dataStr);
       const rsaData = await encrypt(dataStr);
+      console.log('rsaData:', rsaData);
+      // const rsaData = dataStr;
+
       const result = await axios.post(configData.SERVER_URL + "/enroll", {
         rsaData,
       });

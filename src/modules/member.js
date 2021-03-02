@@ -1,29 +1,33 @@
 import axios from "axios";
 import configData from "../config.json";
 import { encrypt } from "./encrypt";
+
+export const IMemberStatus = {
+  vistor: "vistor",
+  reviewer: "reviewer",
+  publisher: "publisher"
+}
 export const ILocalStorage = {
   id: "id",
   userId: "userId",
+  userName: "userName",
   token: "token",
+  email: 'email',
+  publicKey: 'publicKey',
+  isVistor: 'isVistor',
+  isReviewer: 'isReviewer',
+  isPublisher: 'isPublisher',
+
 };
+
 export const login = async (formData) => {
   try {
+
     const rsaData = await encrypt(JSON.stringify(formData));
     const result = await axios.post(configData.SERVER_URL + "/login", {
       rsaData,
     });
-    if (result.status == 200) {
-      localStorage.setItem(ILocalStorage.token, result.data.token);
-      localStorage.setItem(ILocalStorage.id, result.data.id);
-      localStorage.setItem(ILocalStorage.userId, result.data.userId);
-    }
-    console.log("login:", result.status);
-    return {
-      status: result.status,
-      id: result.data.id,
-      userId: result.data.userId,
-      token: result.data.token,
-    };
+    return result;
   } catch (e) {
     console.error("login error:", e);
   }
@@ -63,3 +67,5 @@ export const logout = async () => {
   }
   return null;
 };
+
+

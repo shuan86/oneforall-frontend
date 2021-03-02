@@ -284,12 +284,13 @@ export const getNewsImageByNewsId = async (newsId, index) => {
 export const getNewsCompleteData = async (startIndex, endIndex) => {
   let allData = [];
   const idArray = await getLastestNews(startIndex, endIndex);
-  for (let i = 0; i < idArray.length; i++) {
+  for (let i = idArray.length - 1; i >= 0; i--) {
     const tmpNewsData = await getNewsByNewsId(idArray[i]);
     const tmpNewsImg = await getNewsImageByNewsId(
       idArray[i],
       tmpNewsData.index
     );
+
     let tmp = { ...ICompleteNewsData };
     if (tmpNewsData != undefined) {
       tmp.newsId = tmpNewsData.newsId;
@@ -305,6 +306,7 @@ export const getNewsCompleteData = async (startIndex, endIndex) => {
       tmp.imgContent2 = tmpNewsImg.imgContent2;
     }
     allData.push(tmp);
+    console.log('getNewsCompleteData tmp:', tmp);
   }
   console.log("getNewsCompleteData:", allData);
   return allData;
@@ -333,5 +335,28 @@ export const getAllNewsFromContract = async () => {
     console.log(`getNewsContractByNewsId error ${eventName}:`, e);
   }
 };
-
+export const isMember = async (addr) => {
+  try {
+    const result = await contract.methods.isMember(addr).call();//transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)        
+    return result;
+  } catch (error) {
+    console.log('isMember error:', error);
+  }
+}
+export const isReviewer = async (addr) => {
+  try {
+    const result = await contract.methods.isReviewer(addr).call();//transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)        
+    return result;
+  } catch (error) {
+    console.log('isReviewer error:', error);
+  }
+}
+export const isPublisher = async (addr) => {
+  try {
+    const result = await contract.methods.isPublisher(addr).call();//transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)        
+    return result;
+  } catch (error) {
+    console.log('isPublisher error:', error);
+  }
+}
 //execute();

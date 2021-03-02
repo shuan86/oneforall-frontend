@@ -10,6 +10,8 @@ import {
   wontUpdateMember,
   updateMember,
   updateLoginStatus,
+  initialMemberStatus,
+  updateMemberStatus,
 } from "../../actions/actions";
 import { ILocalStorage } from "../../modules/member";
 const NavBar = () => {
@@ -21,16 +23,26 @@ const NavBar = () => {
   useEffect(() => {
     let memberData = initialMember();
     let updateLoginStatusData = updateLoginStatus(false);
+    let memberStatusData = initialMemberStatus();
 
     if (localStorage.getItem(ILocalStorage.id) != null) {
       memberData = updateMember({
         id: localStorage.getItem(ILocalStorage.id),
         userId: localStorage.getItem(ILocalStorage.userId),
+        userName: localStorage.getItem(ILocalStorage.userName),
+        email: localStorage.getItem(ILocalStorage.email),
+        publicKey: localStorage.getItem(ILocalStorage.publicKey),
+
       });
       updateLoginStatusData = updateLoginStatus(true);
+      const isMember = localStorage.getItem(ILocalStorage.isMember);
+      const isReviewer = localStorage.getItem(ILocalStorage.isReviewer);
+      const isPublisher = localStorage.getItem(ILocalStorage.isPublisher);
+      memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher)
     }
     dispatch(updateLoginStatusData);
     dispatch(memberData);
+    dispatch(memberStatusData)
   }, []);
 
   const loginStatus = useSelector((s) => s.loginStatus);
@@ -43,7 +55,9 @@ const NavBar = () => {
     dispatch(updateLoginStatus(false));
     dispatch(initialMember());
   };
-
+  const onClickMemberCenter = () => {
+    onChangeRouter('/member')
+  }
   return (
     <div className={"navBar"}>
       <div className="container">
@@ -69,25 +83,22 @@ const NavBar = () => {
                 註冊
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${
-                  loginStatus && "navDisplayNone"
-                }`}
+                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayNone"
+                  }`}
                 onClick={() => onChangeRouter("/login")}
               >
                 登入
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${
-                  loginStatus && "navDisplayBlock" && "signinButton"
-                } ${!loginStatus && "navDisplayNone"}`}
-                onClick={() => {}}
+                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayBlock" && "signinButton"
+                  } ${!loginStatus && "navDisplayNone"}`}
+                onClick={onClickMemberCenter}
               >
                 {userId}
               </button>
               <button
-                className={`${
-                  loginStatus && "navDisplayBlock" && "signinButton"
-                } ${!loginStatus && "navDisplayNone"}`}
+                className={`${loginStatus && "navDisplayBlock" && "signinButton"
+                  } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickLogout}
               >
                 logout
