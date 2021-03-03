@@ -1,6 +1,5 @@
 import { createStore, combineReducers } from "redux";
-import { member } from "../reducers/member";
-const store = createStore(combineReducers({ member }))
-
+import { member, loginStatus, memberStatus } from "../reducers/member";
+const store = createStore(combineReducers({ member, loginStatus, memberStatus }));
 
 export default store;

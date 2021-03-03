@@ -2,6 +2,7 @@ const Web3 = require("Web3");
 import { contractABI, contractAddr } from "./mockdata";
 
 const Tx = require("ethereumjs-tx").Transaction;
+
 const INewEvent = {
   newsId: 0,
   index: 0,
@@ -9,7 +10,6 @@ const INewEvent = {
   title: "",
   author: "",
   content: "",
-
   deposit: "",
 };
 const INewImageEvent = {
@@ -163,16 +163,16 @@ export const postNewsToContract = async (data) => {
 const getPastEvent = async (eventName, filterData) => {
   const filter = { ...filterData };
 
-  console.log("getPastEvent:", { filter });
+  // console.log("getPastEvent:", { filter });
   try {
     const result = await contract.getPastEvents(eventName, {
       filter,
       fromBlock: 0,
-      toBlock: "latest",
+      //   toBlock: "latest",
     });
     if (result.length > 0) {
-      console.log(`getPastEvent ${eventName}:`, result);
-      console.log(`getPastEvent ${eventName}:`, result[0].returnValues);
+      //console.log(`getPastEvent ${eventName}:`, result);
+      //  console.log(`getPastEvent ${eventName}:`, result[0].returnValues);
     }
     return result;
   } catch (e) {
@@ -284,12 +284,13 @@ export const getNewsImageByNewsId = async (newsId, index) => {
 export const getNewsCompleteData = async (startIndex, endIndex) => {
   let allData = [];
   const idArray = await getLastestNews(startIndex, endIndex);
-  for (let i = 0; i < idArray.length; i++) {
+  for (let i = idArray.length - 1; i >= 0; i--) {
     const tmpNewsData = await getNewsByNewsId(idArray[i]);
     const tmpNewsImg = await getNewsImageByNewsId(
       idArray[i],
       tmpNewsData.index
     );
+
     let tmp = { ...ICompleteNewsData };
     if (tmpNewsData != undefined) {
       tmp.newsId = tmpNewsData.newsId;
@@ -305,6 +306,7 @@ export const getNewsCompleteData = async (startIndex, endIndex) => {
       tmp.imgContent2 = tmpNewsImg.imgContent2;
     }
     allData.push(tmp);
+    console.log("getNewsCompleteData tmp:", tmp);
   }
   console.log("getNewsCompleteData:", allData);
   return allData;
@@ -333,5 +335,63 @@ export const getAllNewsFromContract = async () => {
     console.log(`getNewsContractByNewsId error ${eventName}:`, e);
   }
 };
+export const isMember = async (addr) => {
+  try {
+    const result = await contract.methods.isMember(addr).call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
+    return result;
+  } catch (error) {
+    console.log("isMember error:", error);
+  }
+};
+export const isReviewer = async (addr) => {
+  try {
+    const result = await contract.methods.isReviewer(addr).call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
+    return result;
+  } catch (error) {
+    console.log("isReviewer error:", error);
+  }
+};
+export const isPublisher = async (addr) => {
+  try {
+    const result = await contract.methods.isPublisher(addr).call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
+    return result;
+  } catch (error) {
+    console.log("isPublisher error:", error);
+  }
+};
+export const getApplyPublishersAddr = async () => {
+  try {
+    const result = await contract.methods.getApplyPublishers().call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
+    return result;
+  } catch (error) {
+    console.log("getApplyPublisher error:", error);
+  }
+};
+export const getApplyPublisherEvent = async (filterAddr) => {
+  const eventName = "applyPublisherEvent";
+  try {
+    const results = await getPastEvent(eventName, {
+      addr: filterAddr,
+    });
+    console.log("getApplyPublisherEvent:", results);
 
+    const addr = results[0].returnValues[0];
+    const publisherId = results[0].returnValues[1];
+    const index = results[0].returnValues[2];
+    const data = results[0].returnValues[3];
+    const { companyName, co, email, phone } = JSON.parse(data);
+    const tmpData = {
+      publisherId: publisherId,
+      addr: addr,
+      index: index,
+      companyName: companyName,
+      co: co,
+      email: email,
+      phone: phone,
+    };
+    return tmpData;
+  } catch (e) {
+    console.log(`getApplyPublisherEvent error ${eventName}:`, e);
+  }
+};
 //execute();

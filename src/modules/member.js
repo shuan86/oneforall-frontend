@@ -1,23 +1,31 @@
 import axios from "axios";
 import configData from "../config.json";
 import { encrypt } from "./encrypt";
+
+export const IMemberStatus = {
+  vistor: "vistor",
+  reviewer: "reviewer",
+  publisher: "publisher",
+};
+export const ILocalStorage = {
+  id: "id",
+  userId: "userId",
+  userName: "userName",
+  token: "token",
+  email: "email",
+  publicKey: "publicKey",
+  isVistor: "isVistor",
+  isReviewer: "isReviewer",
+  isPublisher: "isPublisher",
+};
+
 export const login = async (formData) => {
   try {
     const rsaData = await encrypt(JSON.stringify(formData));
     const result = await axios.post(configData.SERVER_URL + "/login", {
       rsaData,
     });
-    if (result.status == 200) {
-      localStorage.setItem("token", result.data.token);
-      localStorage.setItem("id", result.data.id);
-      localStorage.setItem("userId", result.data.userId);
-    }
-    return {
-      status: result.status,
-      id: result.data.id,
-      userId: result.data.userId,
-      token: result.data.token,
-    };
+    return result;
   } catch (e) {
     console.error("login error:", e);
   }
@@ -28,12 +36,12 @@ export const loginBodyData = {
   password: "",
 };
 export const logout = async () => {
-  const JWTtoken = localStorage.getItem("token");
+  const JWTtoken = localStorage.getItem(ILocalStorage.token);
   const config = {
     headers: { Authorization: `Bearer ${JWTtoken}` },
   };
   const bodyParameters = {
-    id: localStorage.getItem("id"),
+    id: localStorage.getItem(ILocalStorage.id),
   };
   try {
     const result = await axios.post(
@@ -44,9 +52,11 @@ export const logout = async () => {
     if (result.status == 200) {
       console.log("logout sucessful");
     }
-    localStorage.clear("id");
-    localStorage.clear("name");
-    localStorage.clear("toekn");
+    console.log("onClickLogout:", result);
+
+    localStorage.clear(ILocalStorage.id);
+    localStorage.clear(ILocalStorage.userId);
+    localStorage.clear(ILocalStorage.token);
     return {
       status: result.status,
     };
@@ -54,4 +64,18 @@ export const logout = async () => {
     console.error("login error:", e);
   }
   return null;
+};
+
+export const RootPublishDecision = async (publisherId, decision, reason) => {
+  const data = {
+    publisherId: publisherId,
+    decision: decision,
+    reason: reason,
+  };
+  const result = axios.post(configData.SERVER_URL + "/rootPublishDecision", {
+    data,
+  });
+  return {
+    status: result.status,
+  };
 };

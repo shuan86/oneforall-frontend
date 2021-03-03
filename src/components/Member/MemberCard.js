@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from "react-redux";
 import '../../public/css/MemberCard.css';
+import ApplyReviewerDialog from "./ApplyReviewerDialog";
+import ApplyPublisherDialog from "./ApplyPublisherDialog";
 
 const MemberContainer = () => {
-    console.log('MemberContainer');
+
 
     return (
         <div className={'memberContainer'}>
             <MemberCard />
-            <InspectorRight />
-            <AudienceRight />
+            <ReviewerRight />
+            <VistorRight />
             {/* <AuthorRight /> */}
         </div>
     );
@@ -16,7 +19,7 @@ const MemberContainer = () => {
 
 
 const MemberCard = () => {
-    console.log('MemberCard');
+
     return (
         <div className={'personalInfo'}>
             <div className={'personalPhoto'}>
@@ -24,22 +27,18 @@ const MemberCard = () => {
             </div>
             <div className={'infoContent'}>
                 <p>使用者名稱</p>
-                <p>亞拉岡</p>
+                <p>{useSelector(s => s.member.userId)}</p>
                 <p>電子信箱</p>
-                <p>a123a123@gamil.com</p>
-                <p>手機號碼</p>
-                <p>09122344566</p>
-                <p>平台名稱</p>
-                <p>猴子香蕉報社</p>
+                <p>{useSelector(s => s.member.email)}</p>
                 <p>錢包地址</p>
-                <p>***********</p>
+                <p>{useSelector(s => s.member.publicKey)}</p>
+
             </div>
 
         </div>);
 };
 
-const InspectorRight = () => {
-    console.log('memberTable');
+const ReviewerRight = () => {
     return (
         <div>
             <div className={'memberTable'}>
@@ -75,7 +74,6 @@ const InspectorRight = () => {
 };
 
 const InformContent = () => {
-    console.log('InformContent');
     return (
         <div className={'informContainer'}>
             <p>因為成功證實「因原物料做口罩，衛生紙將成為下一波缺貨物資」獲得了0.1 ETH，謝謝你為了真實消息的付出</p>
@@ -85,7 +83,6 @@ const InformContent = () => {
 };
 
 const MissionContent = () => {
-    console.log('missionContent');
     return (
         <div className={'missionContent'}>
             <p>12/1開始，超商、公共場所都要戴口罩，好多人因沒戴口罩，警察於某超商門口開罰單~3000元</p>
@@ -94,7 +91,6 @@ const MissionContent = () => {
 };
 
 const VoteContent = () => {
-    console.log('VoteContent');
     return (
         <div className={'voteContainer'}>
             <p>您在「因原物料做口罩，衛生紙將成為下一波缺貨物資」一文中投下了支持</p>
@@ -104,7 +100,7 @@ const VoteContent = () => {
 };
 
 
-const AudienceRight = () => {
+const VistorRight = () => {
     console.log('AudienceRight');
     return (
         <div>
@@ -128,12 +124,10 @@ const AudienceRight = () => {
                 <VoteContent />
                 <VoteContent />
             </div>
-            <div className={'missionBtn'}>
-                <button>我想成為審核者</button>
-            </div>
-            <div className={'missionBtn'}>
-                <button>我想成為發文者</button>
-            </div>
+
+            <ApplyReviewerDialog />
+            <ApplyPublisherDialog />
+
         </div>
     );
 };
@@ -166,4 +160,4 @@ const AudienceRight = () => {
 // };
 
 
-export { MemberContainer, MemberCard, InspectorRight, AudienceRight };
+export { MemberContainer, MemberCard, ReviewerRight, VistorRight };
