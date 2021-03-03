@@ -8,7 +8,6 @@ const DataTable = ({ columns, rows, onSelected }) => {
         rows={rows}
         columns={columns}
         pageSize={5}
-        checkboxSelection
         onRowSelected={onSelected}
       />
     </div>

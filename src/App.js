@@ -13,8 +13,8 @@ import HomePage from "./views/HomePage/HomePage";
 import MemberPage from "./views/MemberPage/MemberPage";
 import EnrollPage from "./views/EnrollPage/EnrollPage";
 import LoginPage from "./views/LoginPage/LoginPage";
-import SmartContractPage from "./views/SmartContractPage/SmartContactPage";
-import PublisherPage from "./views/SmartContractPage/PublisherPage";
+import SmartContractPage from "./views/RootPage/SmartContactPage";
+import PublisherPage from "./views/RootPage/RootPublisherPage";
 
 const App = () => (
   <Provider store={store}>

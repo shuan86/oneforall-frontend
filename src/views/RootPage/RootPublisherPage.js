@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import * as contract from "../../modules/smartcontract";
 import RootPublisherDataTable from "../../components/Publisher/RootPublisherDataTable";
 import Button from "@material-ui/core/Button";
+import AgreeDisagreePublisherDialog from "../../components/Publisher/PublisherDecisionDialog";
 const PublisherPage = () => {
   const [applyPublisherData, setApplyPublisherData] = useState([]);
-  const [selectedData, setSelectedData] = useState([]);
+  const [selectedData, setSelectedData] = useState({});
+
+  const [dialogSwitch, setDialogSwitch] = useState(false);
+  const [decisionReason, setDecisionReason] = useState("");
+
   const publisherList = [];
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
@@ -16,18 +21,26 @@ const PublisherPage = () => {
   ];
   const onSelected = (sel) => {
     const { data, isSelected } = sel;
-    let tmpArray = [...selectedData];
-    if (isSelected) {
-      tmpArray = [...selectedData, data];
-    } else {
-      tmpArray = tmpArray.filter((value, index, arr) => {
-        if (value != data) return value;
-      });
-    }
-    console.log("onSelected:", tmpArray);
-    setSelectedData(tmpArray);
+    setDialogSwitch(true);
+    console.log("onSelected:", data);
+    setSelectedData(data);
   };
-  const onClickSend = () => {};
+  const onReasonChange = (event) => {
+    console.log("onReasonChange:", event.target.value);
+    setDecisionReason(event.target.value);
+  };
+  const onClickFinalDecision = async (decision) => {
+    const result = await RootPublishDecision(
+      selectedData.publisherId,
+      decision,
+      decisionReason
+    );
+    if ((result.status = 200)) {
+    }
+    setDialogSwitch(false);
+    console.log(decision, decisionReason);
+  };
+
   useEffect(() => {
     const excuteContract = async () => {
       const publisherAddrArray = await contract.getApplyPublishersAddr();
@@ -50,16 +63,12 @@ const PublisherPage = () => {
         rows={applyPublisherData}
         onSelected={onSelected}
       />
-      <div style={{ margin: "left:50%" }}>
-        <Button
-          variant="contained"
-          size="large"
-          color="primary"
-          style={{ marginLeft: "50%" }}
-        >
-          Send
-        </Button>
-      </div>
+      <AgreeDisagreePublisherDialog
+        isOpen={dialogSwitch}
+        setOpen={setDialogSwitch}
+        onReasonChange={onReasonChange}
+        onClickFinalDecision={onClickFinalDecision}
+      />
     </div>
   );
 };

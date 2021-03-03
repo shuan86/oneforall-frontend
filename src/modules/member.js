@@ -66,4 +66,16 @@ export const logout = async () => {
   return null;
 };
 
-export const AgreeDisAgreePublish = async () => {};
+export const RootPublishDecision = async (publisherId, decision, reason) => {
+  const data = {
+    publisherId: publisherId,
+    decision: decision,
+    reason: reason,
+  };
+  const result = axios.post(configData.SERVER_URL + "/rootPublishDecision", {
+    data,
+  });
+  return {
+    status: result.status,
+  };
+};
