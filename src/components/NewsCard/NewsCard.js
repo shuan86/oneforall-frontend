@@ -6,32 +6,32 @@ import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
-const NewsCardUnreviewed = ({ articleData,ifintiyScroll }) => {
+const NewsCardUnreviewed = ({ articleData, refHook }) => {
   const { content, deposit, index, newsId, newsType } = articleData;
   return (
-    <div ref={ifintiyScroll} className="card">
+    <div ref={refHook} className="card">
       <div className="status">未審核</div>
       <NewsCardContent isReviwedCard={false} data={content} />
       <NewsCardComment />
     </div>
   );
 };
-const NewsCardUnderReview = ({ articleData }) => {
+const NewsCardUnderReview = ({ articleData, refHook }) => {
   const { content, deposit, index, newsId, newsType } = articleData;
   return (
-    <div ref={ref} className="card">
+    <div ref={refHook} className="card">
       <div className="status">審核中</div>
       <NewsCardContent isReviwedCard={false} data={content} />
       <NewsCardComment />
     </div>
   );
 };
-const NewsCardReviewed = () => {
+const NewsCardReviewed = ({ refHook }) => {
   //  console.log('NewsCard');
   return (
-    <div ref={ref} className="card">
+    <div ref={refHook} className="card">
       <div className="status">審核後</div>
-      {/* <h1>NewsCard</h1> */}
+
       <NewsCardContent />
       <NewsCard status={false} />
       <NewsCardComment />
@@ -55,7 +55,7 @@ const NewsCardContent = ({ isReviwedCard, data }) => {
         <div className="userInfo">
           <img src={authorImg} alt="Background" className="userPhoto" />
           <div className="article-data">
-            <div className="userId">{author}</div>
+            <div className="account">{author}</div>
             <div className="articleTime">{time}</div>
           </div>
         </div>
@@ -104,7 +104,7 @@ const NewsCardComment = () => {
       <div className="userComment">
         <img src={audience} alt="Background" className="userPhoto" />
         <span>
-          <div className="userId">abc12345678</div>
+          <div className="account">abc12345678</div>
           <p>大問號？！！！</p>
         </span>
         <p>20min</p>

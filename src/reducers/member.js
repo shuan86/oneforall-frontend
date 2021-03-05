@@ -1,9 +1,9 @@
 const intitialMember = {
   id: "",
-  userId: "",
+  account: "",
   userName: "",
   email: "",
-  publicKey: ""
+  publicKey: "",
 };
 export const member = (state = intitialMember, action) => {
   switch (action.type) {
@@ -31,8 +31,8 @@ export const loginStatus = (state = initalLoginData, action) => {
 export const initialMemberStatus = {
   isVistor: false,
   isrReviewer: false,
-  isPublisher: false
-}
+  isPublisher: false,
+};
 export const memberStatus = (state = initialMemberStatus, action) => {
   switch (action.type) {
     case "updateMemberStatus":

@@ -1,252 +1,248 @@
 @import "common.css";
 
-
 /*filter*/
 .filter {
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 30px;
-    border-bottom: 1px solid var(--gray-border);
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 30px;
+  border-bottom: 1px solid var(--gray-border);
 }
 
 .filter a {
-    display: inline-block;
-    color: var(--black);
-    margin-left: 10px;
-    padding: 5px 10px;
+  display: inline-block;
+  color: var(--black);
+  margin-left: 10px;
+  padding: 5px 10px;
 }
 
 .filter a:first-child {
-    color: var(--navy-blue);
-    border-bottom: 3px solid var(--navy-blue);
+  color: var(--navy-blue);
+  border-bottom: 3px solid var(--navy-blue);
 }
 
 /*content*/
 .content {
-    /* padding: 30px 15px 0 15px; */
-    padding-top: 30px;
-    margin-bottom: 25px;
+  /* padding: 30px 15px 0 15px; */
+  padding-top: 30px;
+  margin-bottom: 25px;
 }
 
 .card {
-    display: block;
-    position: relative;
-    max-width: 620px;
-    border: 1px solid var(--gray-border);
-    border-radius: 20px;
-    margin: 40px 10px;
+  display: block;
+  position: relative;
+  max-width: 620px;
+  border: 1px solid var(--gray-border);
+  border-radius: 20px;
+  margin: 40px 10px;
 }
 
 .status {
-    display: inline-block;
-    position: absolute;
-    top: -20px;
-    left: -1px;
-    padding: 10px;
-    background-color: var(--yellow);
+  display: inline-block;
+  position: absolute;
+  top: -20px;
+  left: -1px;
+  padding: 10px;
+  background-color: var(--yellow);
 }
 
 .postInfo {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
-    padding: 20px 15px 0 15px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding: 20px 15px 0 15px;
 }
 
 .userInfo {
-    display: flex;
+  display: flex;
 }
 
 .userPhoto {
-    width: 40px;
-    height: 40px;
-    box-sizing: border-box;
-    border: 1px solid var(--gray-border);
-    border-radius: 20px;
-    margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  border: 1px solid var(--gray-border);
+  border-radius: 20px;
+  margin-right: 10px;
 }
 
-.userId {
-    font-size: 1rem;
-    font-weight: 700;
+.account {
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .articleTime {
-    font-size: 0.75rem;
+  font-size: 0.75rem;
 }
 
 .history {
-    /* display: inline-block; */
-    background-color: var(--navy-blue);
-    padding: 0 20px;
-    border-radius: 5px;
+  /* display: inline-block; */
+  background-color: var(--navy-blue);
+  padding: 0 20px;
+  border-radius: 5px;
 }
 
 .history img {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .hashtag {
-    padding: 0 15px;
-    margin-bottom: 10px;
+  padding: 0 15px;
+  margin-bottom: 10px;
 }
 
 .hashtag a {
-    padding: 0 5px;
-    color: #fff;
-    border-radius: 5px;
-    margin-right: 10px;
-    background-color: var(--navy-blue);
+  padding: 0 5px;
+  color: #fff;
+  border-radius: 5px;
+  margin-right: 10px;
+  background-color: var(--navy-blue);
 }
 
 .article h3 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    padding: 0 15px;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  padding: 0 15px;
 }
 
 .article p {
-    line-height: 1.8rem;
-    margin-bottom: 20px;
-    padding: 0 15px;
+  line-height: 1.8rem;
+  margin-bottom: 20px;
+  padding: 0 15px;
 }
 
 .article img {
-    width: 100%;
+  width: 100%;
 }
 
 .article a {
-    display: block;
-    padding: 15px 15px;
-    /* margin-top: 15px; */
-    color: var(--black);
+  display: block;
+  padding: 15px 15px;
+  /* margin-top: 15px; */
+  color: var(--black);
 }
 
 .like {
-    padding: 15px 15px;
-    display: flex;
-    justify-content: space-between;
+  padding: 15px 15px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .like a {
-    display: inline-block;
-    color: #fff;
-    padding: 10px 15px;
-    background-color: var(--navy-blue);
-    border-radius: 5px;
+  display: inline-block;
+  color: #fff;
+  padding: 10px 15px;
+  background-color: var(--navy-blue);
+  border-radius: 5px;
 }
 
 .like span {
-    padding: 0 10px;
-    letter-spacing: 1px;
+  padding: 0 10px;
+  letter-spacing: 1px;
 }
-
 
 /*comment*/
 .comment {
-    padding: 0 15px 15px 15px;
+  padding: 0 15px 15px 15px;
 }
 
 .comment a {
-    font-size: 14px;
-    color: var(--gray);
+  font-size: 14px;
+  color: var(--gray);
 }
 
 .userInput {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .userInput input {
-    width: 100%;
-    padding: 0 10px;
-    background-color: var(--light-blue);
-    border: none;
-    border-radius: 5px;
-    outline: none;
+  width: 100%;
+  padding: 0 10px;
+  background-color: var(--light-blue);
+  border: none;
+  border-radius: 5px;
+  outline: none;
 }
 
 .userInput a {
-    display: inline;
-    color: #fff;
-    width: 10%;
-    text-align: center;
-    line-height: 40px;
-    padding: 0 10px;
-    margin-left: 10px;
-    background-color: var(--navy-blue);
-    border-radius: 5px;
+  display: inline;
+  color: #fff;
+  width: 10%;
+  text-align: center;
+  line-height: 40px;
+  padding: 0 10px;
+  margin-left: 10px;
+  background-color: var(--navy-blue);
+  border-radius: 5px;
 }
 
 .userComment {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
 }
 
 .userComment span {
-    width: 100%;
-    padding: 15px 10px;
-    background-color: var(--light-blue);
-    border-radius: 5px;
+  width: 100%;
+  padding: 15px 10px;
+  background-color: var(--light-blue);
+  border-radius: 5px;
 }
 
 .userComment span .user-id {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .userComment span p {
-    font-size: 16px;
-    margin: 0;
-    width: 100%;
+  font-size: 16px;
+  margin: 0;
+  width: 100%;
 }
-
 
 .userComment p {
-    width: 10%;
-    font-size: 12px;
-    margin-right: 20px;
-    margin-left: 10px;
+  width: 10%;
+  font-size: 12px;
+  margin-right: 20px;
+  margin-left: 10px;
 }
-
 
 /*vote*/
 
 .vote {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .vote a {
-    display: inline-block;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 5px;
-    background-color: var(--red);
+  display: inline-block;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: var(--red);
 }
 
 .vote a:first-child {
-    margin-right: 20px;
-    background-color: var(--green);
+  margin-right: 20px;
+  background-color: var(--green);
 }
 
 .voteResult {
-    width: 300px;
-    display: flex;
-    justify-content: flex-end;
+  width: 300px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .voteResult a {
-    width: 70%;
-    display: inline-block;
-    background-color: var(--red);
-    text-align: center;
-    padding: 10px 15px;
-    border-radius: 0 5px 5px 0;
+  width: 70%;
+  display: inline-block;
+  background-color: var(--red);
+  text-align: center;
+  padding: 10px 15px;
+  border-radius: 0 5px 5px 0;
 }
 
 .voteResult a:first-child {
-    width: 30%;
-    background-color: var(--green);
-    border-radius: 5px 0 0 5px;
+  width: 30%;
+  background-color: var(--green);
+  border-radius: 5px 0 0 5px;
 }

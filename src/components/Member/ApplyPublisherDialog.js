@@ -7,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import "../../public/css/MemberCard.css";
+import { applyPublisher } from "../../modules/smartcontract";
 const FormDialog = () => {
   const [open, setOpen] = React.useState(false);
 
@@ -17,7 +18,9 @@ const FormDialog = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const onClickApplyPublisher = () => {
+    //applyPublisher()
+  };
   return (
     <div className={"missionBtn"}>
       <button onClick={handleClickOpen}>我想成為發文者</button>

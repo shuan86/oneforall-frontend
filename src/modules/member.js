@@ -1,81 +1,136 @@
 import axios from "axios";
 import configData from "../config.json";
 import { encrypt } from "./encrypt";
+import { ILocalStorage } from "../interfaces/IMember";
+import * as contract from "../modules/smartcontract";
 
-export const IMemberStatus = {
-  vistor: "vistor",
-  reviewer: "reviewer",
-  publisher: "publisher",
+const sendRsaTokenPostRequest = async (JWTtoken, id, rout, dataObject) => {
+  const rsaData = encrypt(JSON.stringify(dataObject));
+  const config = {
+    headers: { Authorization: ` ${JWTtoken}` },
+  };
+  const bodyParameters = {
+    rsaData,
+  };
+  const result = await axios.post(
+    configData.SERVER_URL + rout,
+    bodyParameters,
+    config
+  );
+  if (result.status == 200) {
+    console.log("sendPostRequest sucessful");
+  }
+  return result;
 };
-export const ILocalStorage = {
-  id: "id",
-  userId: "userId",
-  userName: "userName",
-  token: "token",
-  email: "email",
-  publicKey: "publicKey",
-  isVistor: "isVistor",
-  isReviewer: "isReviewer",
-  isPublisher: "isPublisher",
+const sendRsaPostRequest = async (rout, dataObject) => {
+  const rsaData = encrypt(JSON.stringify(dataObject));
+  const bodyParameters = {
+    rsaData,
+  };
+  const result = await axios.post(configData.SERVER_URL + rout, bodyParameters);
+  if (result.status == 200) {
+    console.log("sendPostRequest sucessful");
+  }
+  return result;
 };
-
-export const login = async (formData) => {
+export const login = async (account, password) => {
   try {
-    const rsaData = await encrypt(JSON.stringify(formData));
-    const result = await axios.post(configData.SERVER_URL + "/login", {
-      rsaData,
-    });
+    const data = { account: account, password: password };
+    const result = await sendRsaPostRequest("/login", data);
+    if (result.status == 200) {
+      const pubKey = result.data.publicKey;
+      const isMember = await contract.isMember(pubKey);
+      const isReviewer = await contract.isReviewer(pubKey);
+      const isPublisher = await contract.isPublisher(pubKey);
+      localStorage.setItem(ILocalStorage.getToken, result.data.token);
+      localStorage.setItem(ILocalStorage.getId, result.data.id);
+      localStorage.setItem(ILocalStorage.getAccount, result.data.account);
+      localStorage.setItem(ILocalStorage.getUserName, result.data.userName);
+      localStorage.setItem(ILocalStorage.getEmail, result.data.email);
+      localStorage.setItem(ILocalStorage.getPublicKey, result.data.publicKey);
+      localStorage.setItem(ILocalStorage.getIsVistor, isMember);
+      localStorage.setItem(ILocalStorage.getIsReviewer, isReviewer);
+      localStorage.setItem(ILocalStorage.getIsPublisher, isPublisher);
+    }
+    console.log("login:", data);
     return result;
   } catch (e) {
     console.error("login error:", e);
   }
   return null;
 };
-export const loginBodyData = {
-  userId: "",
-  password: "",
-};
+// export const loginBodyData = {
+//   account: "",
+//   password: "",
+// };
 export const logout = async () => {
-  const JWTtoken = localStorage.getItem(ILocalStorage.token);
-  const config = {
-    headers: { Authorization: `Bearer ${JWTtoken}` },
-  };
-  const bodyParameters = {
-    id: localStorage.getItem(ILocalStorage.id),
-  };
+  let result;
   try {
-    const result = await axios.post(
-      configData.SERVER_URL + "/logout",
-      bodyParameters,
-      config
+    result = await sendRsaTokenPostRequest(
+      localStorage.getItem(ILocalStorage.getToken),
+      localStorage.getItem(ILocalStorage.getId),
+      "/logout",
+      {
+        id: localStorage.getItem(ILocalStorage.id),
+        token: localStorage.getItem(ILocalStorage.getToken),
+      }
     );
-    if (result.status == 200) {
-      console.log("logout sucessful");
-    }
-    console.log("onClickLogout:", result);
-
-    localStorage.clear(ILocalStorage.id);
-    localStorage.clear(ILocalStorage.userId);
-    localStorage.clear(ILocalStorage.token);
-    return {
-      status: result.status,
-    };
-  } catch (e) {
-    console.error("login error:", e);
+  } catch (error) {
+    console.log("logout error:", error);
   }
-  return null;
+
+  localStorage.clear(ILocalStorage.getId);
+  localStorage.clear(ILocalStorage.getAccount);
+  localStorage.clear(ILocalStorage.getToken);
+  return result;
+};
+export const enroll = async (account, password, userName, email, publicKey) => {
+  try {
+    const data = {
+      id: 0,
+      account: account,
+      password: password,
+      userName: userName,
+      email: email,
+      publicKey: publicKey,
+      token: "",
+    };
+    const result = await sendRsaPostRequest("/enroll", data);
+    return result;
+  } catch (error) {
+    console.log("enroll error:", error);
+  }
 };
 
-export const RootPublishDecision = async (publisherId, decision, reason) => {
-  const data = {
-    publisherId: publisherId,
-    decision: decision,
-    reason: reason,
-  };
-  const result = axios.post(configData.SERVER_URL + "/rootPublishDecision", {
-    data,
-  });
+export const RootPublisherDecision = async (
+  id,
+  publisherId,
+  decision,
+  reason
+) => {
+  const result = await sendRsaTokenPostRequest(
+    localStorage.getItem(ILocalStorage.getToken),
+    localStorage.getItem(ILocalStorage.getId),
+    "/rootPublisherDecision",
+    { id: id, decision: decision, reason: reason }
+  );
+
   return {
     status: result.status,
   };
 };
+
+export const getLocalStorageData = () => {
+  return {
+    id: localStorage.getItem(ILocalStorage.getId),
+    account: localStorage.getItem(ILocalStorage.getAccount),
+    userName: localStorage.getItem(ILocalStorage.getUserName),
+    email: localStorage.getItem(ILocalStorage.getEmail),
+    publicKey: localStorage.getItem(ILocalStorage.getPublicKey),
+    isMember: localStorage.getItem(ILocalStorage.getIsVistor),
+    isReviewer: localStorage.getItem(ILocalStorage.getIsReviewer),
+    isPublisher: localStorage.getItem(ILocalStorage.getIsPublisher),
+  };
+};
+
+export const applyPublisher = () => {};

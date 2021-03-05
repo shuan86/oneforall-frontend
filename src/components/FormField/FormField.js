@@ -23,11 +23,11 @@ export const EnrollLoginFiled = ({
   const validateField = (fieldName, value) => {
     let validateLenMsg = "";
     switch (fieldName) {
-      case "userId":
+      case "account":
         validateLenMsg = validateLen(value, 1, 10);
         setErrorMessage({
           ...errorMessage,
-          userId: validateLenMsg,
+          account: validateLenMsg,
         });
       case "password":
         validateLenMsg = validateLen(value, 1, 10);
@@ -48,7 +48,7 @@ export const EnrollLoginFiled = ({
         setErrorMessage({ ...errorMessage, email: errorMessage.email });
         break;
       case "publicKey":
-        validateLenMsg = validateLen(value, 1, 15);
+        validateLenMsg = validateLen(value, 1, 50);
         setErrorMessage({
           ...errorMessage,
           publicKey: validateLenMsg,

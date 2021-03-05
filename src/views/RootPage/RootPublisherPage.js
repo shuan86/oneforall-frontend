@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import * as contract from "../../modules/smartcontract";
-import RootPublisherDataTable from "../../components/Publisher/RootPublisherDataTable";
+import RootPublisherDataTable from "../../components/RootPublisher/RootPublisherDataTable";
 import Button from "@material-ui/core/Button";
-import AgreeDisagreePublisherDialog from "../../components/Publisher/PublisherDecisionDialog";
+import AgreeDisagreePublisherDialog from "../../components/RootPublisher/PublisherDecisionDialog";
+import { RootPublisherDecision } from "../../modules/member";
+import { ILocalStorage } from "../../interfaces/IMember";
 const PublisherPage = () => {
   const [applyPublisherData, setApplyPublisherData] = useState([]);
   const [selectedData, setSelectedData] = useState({});
@@ -13,7 +15,7 @@ const PublisherPage = () => {
   const publisherList = [];
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "publisherId", headerName: "publisherId", width: 330 },
+    { field: "account", headerName: "account", width: 330 },
     { field: "companyName", headerName: "companyName", width: 330 },
     { field: "co", headerName: "co", width: 330 },
     { field: "email", headerName: "email", width: 330 },
@@ -26,11 +28,11 @@ const PublisherPage = () => {
     setSelectedData(data);
   };
   const onReasonChange = (event) => {
-    console.log("onReasonChange:", event.target.value);
     setDecisionReason(event.target.value);
   };
   const onClickFinalDecision = async (decision) => {
-    const result = await RootPublishDecision(
+    const result = await RootPublisherDecision(
+      localStorage.getItem(ILocalStorage.getId),
       selectedData.publisherId,
       decision,
       decisionReason
@@ -46,11 +48,11 @@ const PublisherPage = () => {
       const publisherAddrArray = await contract.getApplyPublishersAddr();
       let num = 0;
       for (const addr of publisherAddrArray) {
-        console.log("addr:", addr);
         const tmp = await contract.getApplyPublisherEvent(addr);
         publisherList.push({ ...tmp, id: num });
         num++;
       }
+      console.log("publisherAddrArray:", publisherAddrArray);
       setApplyPublisherData(publisherList);
     };
     excuteContract(); // <div key={index}>{v.companyName}</div>;

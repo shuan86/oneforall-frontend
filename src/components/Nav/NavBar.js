@@ -4,7 +4,7 @@ import "../../public/css/common.css";
 import "../../public/css/NavBar.css";
 import Logo from "../../Logo.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../modules/member";
+import * as memberModuel from "../../modules/member";
 import {
   initialMember,
   wontUpdateMember,
@@ -13,7 +13,7 @@ import {
   initialMemberStatus,
   updateMemberStatus,
 } from "../../actions/actions";
-import { ILocalStorage } from "../../modules/member";
+import { ILocalStorage } from "../../interfaces/IMember";
 const NavBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -24,40 +24,46 @@ const NavBar = () => {
     let memberData = initialMember();
     let updateLoginStatusData = updateLoginStatus(false);
     let memberStatusData = initialMemberStatus();
-
-    if (localStorage.getItem(ILocalStorage.id) != null) {
+    const {
+      id,
+      account,
+      userName,
+      email,
+      publicKey,
+      isMember,
+      isReviewer,
+      isPublisher,
+    } = memberModuel.getLocalStorageData(localStorage);
+    if (localStorage.getItem(ILocalStorage.getId) != null) {
       memberData = updateMember({
-        id: localStorage.getItem(ILocalStorage.id),
-        userId: localStorage.getItem(ILocalStorage.userId),
-        userName: localStorage.getItem(ILocalStorage.userName),
-        email: localStorage.getItem(ILocalStorage.email),
-        publicKey: localStorage.getItem(ILocalStorage.publicKey),
-
+        id,
+        account,
+        userName,
+        email,
+        publicKey,
       });
       updateLoginStatusData = updateLoginStatus(true);
-      const isMember = localStorage.getItem(ILocalStorage.isMember);
-      const isReviewer = localStorage.getItem(ILocalStorage.isReviewer);
-      const isPublisher = localStorage.getItem(ILocalStorage.isPublisher);
-      memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher)
+      memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);
     }
     dispatch(updateLoginStatusData);
     dispatch(memberData);
-    dispatch(memberStatusData)
+    dispatch(memberStatusData);
+    console.log("s:", isMember, isReviewer, isPublisher, account);
   }, []);
 
   const loginStatus = useSelector((s) => s.loginStatus);
-  const userId = useSelector((s) => s.member.userId);
+  const account = useSelector((s) => s.member.account);
   const onClickLogout = async () => {
     let memberData = wontUpdateMember();
     memberData = initialMember();
-    const result = await logout();
+    const result = await memberModuel.logout();
 
     dispatch(updateLoginStatus(false));
     dispatch(initialMember());
   };
   const onClickMemberCenter = () => {
-    onChangeRouter('/member')
-  }
+    onChangeRouter("/member");
+  };
   return (
     <div className={"navBar"}>
       <div className="container">
@@ -83,22 +89,25 @@ const NavBar = () => {
                 註冊
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayNone"
-                  }`}
+                className={`${!loginStatus && "signinButton"} ${
+                  loginStatus && "navDisplayNone"
+                }`}
                 onClick={() => onChangeRouter("/login")}
               >
                 登入
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayBlock" && "signinButton"
-                  } ${!loginStatus && "navDisplayNone"}`}
+                className={`${!loginStatus && "signinButton"} ${
+                  loginStatus && "navDisplayBlock" && "signinButton"
+                } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickMemberCenter}
               >
-                {userId}
+                {account}
               </button>
               <button
-                className={`${loginStatus && "navDisplayBlock" && "signinButton"
-                  } ${!loginStatus && "navDisplayNone"}`}
+                className={`${
+                  loginStatus && "navDisplayBlock" && "signinButton"
+                } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickLogout}
               >
                 logout

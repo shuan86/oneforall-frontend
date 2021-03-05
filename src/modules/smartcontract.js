@@ -1,6 +1,5 @@
 const Web3 = require("Web3");
 import { contractABI, contractAddr } from "./mockdata";
-
 const Tx = require("ethereumjs-tx").Transaction;
 
 const INewEvent = {
@@ -31,10 +30,39 @@ const ICompleteNewsData = {
   imgContent2: "",
 };
 //import Tx from "ethereumjs-tx";
-const web3 = new Web3("ws://localhost:7545"); //web3.currentProvider
+// const web3 = new Web3("ws://localhost:7545"); //web3.currentProvider
+
+const initContract = () => {
+  // const ethEnabled = () => {
+  //   if (window.web3) {
+  //     window.web3 = new Web3(window.web3.currentProvider);
+  //     window.ethereum.enable();
+  //     return true;
+  //   }
+  //   return false;
+  // };
+  // if (!ethEnabled()) {
+  //   alert("Please install MetaMask to use this dApp!");
+  // }
+  // console.log("init web3.js:", Web3.givenProvider);
+  // return window.web3;
+  // return new Web3("ws://localhost:7545");
+  /*--------------------------*/
+  if (window.ethereum) {
+    const web3 = new Web3(Web3.givenProvider);
+    window.ethereum.enable();
+    console.log("initContract:", web3.eth);
+    return web3;
+  } else {
+    alert("Please install MetaMask to use this dApp!");
+  }
+  return null;
+};
+
+const web3 = initContract();
 
 const contract = new web3.eth.Contract(contractABI, contractAddr);
-console.log("init web3.js");
+
 const test = async () => {
   console.log("web3.version:", web3.version);
   const vistors = await contract.methods.getVistors().call();
@@ -124,7 +152,7 @@ export const execute = async () => {
     contract.methods.setTestEvent(15).encodeABI(),
     memberPriKey2
   );
-  await getPastEvent("TestEvent", { id: 102 });
+  await getPastEventFilterByNumber("TestEvent", { id: 102 });
 };
 
 export const postNewsToContract = async (data) => {
@@ -160,25 +188,41 @@ export const postNewsToContract = async (data) => {
     console.log("postNews error:", error);
   }
 };
-const getPastEvent = async (eventName, filterData) => {
-  const filter = { ...filterData };
-
-  // console.log("getPastEvent:", { filter });
+// const getPastEventFilterByNumber = async (eventName, filterData) => {
+//   try {
+//     const result = await contract.getPastEvents(
+//       eventName,
+//       { filter: { ...filterData } },
+//       { fromBlock: 0, toBlock: "latest" }
+//     );
+//     const tmp = { filter: { ...filterData } };
+//     console.log("getPastEvent filter:", tmp);
+//     return result;
+//   } catch (e) {
+//     console.log(`getPastEvent error ${eventName}:`, e);
+//   }
+// };
+const getPastEventFilter = async (eventName, filterData) => {
   try {
-    const result = await contract.getPastEvents(eventName, {
-      filter,
-      fromBlock: 0,
-      //   toBlock: "latest",
-    });
-    if (result.length > 0) {
-      //console.log(`getPastEvent ${eventName}:`, result);
-      //  console.log(`getPastEvent ${eventName}:`, result[0].returnValues);
-    }
+    const result = await contract.getPastEvents(
+      eventName,
+      {
+        filter: {
+          ...filterData,
+        }, // Using an array means OR: e.g. 20 or 23
+        fromBlock: 0,
+        toBlock: "latest",
+      },
+      function (error, events) {
+        // console.log(`getPastEventFilter ${eventName} :`, events);
+      }
+    );
     return result;
   } catch (e) {
-    console.log(`getPastEvent error ${eventName}:`, e);
+    console.log(`getPastEventFilter error ${eventName}:`, e);
   }
 };
+
 const getManyPastEvent = async (eventName, filterData) => {
   const filter = { ...filterData };
   try {
@@ -237,10 +281,10 @@ export const getNewsAmount = async () => {
 
   // test();
 };
-export const getNewsByNewsId = async (newsId) => {
+export const getNewsByNewsIdEvent = async (newsId) => {
   const eventName = "NewsEvent";
   try {
-    const result = await getPastEvent(eventName, {
+    const result = await getPastEventFilter(eventName, {
       newsId: newsId,
     });
 
@@ -249,13 +293,11 @@ export const getNewsByNewsId = async (newsId) => {
       result[0].returnValues[0]
     );*/
     let data = { ...INewEvent };
-
     data.newsId = result[0].returnValues[0];
     data.title = result[0].returnValues[1];
     data.author = result[0].returnValues[2];
     data.index = result[0].returnValues[3];
     data.newsType = result[0].returnValues[4];
-
     data.content = result[0].returnValues[5];
     data.deposit = result[0].returnValues[6];
     return data;
@@ -263,10 +305,10 @@ export const getNewsByNewsId = async (newsId) => {
     console.log(`getNewsContractByNewsId error ${eventName}:`, e);
   }
 };
-export const getNewsImageByNewsId = async (newsId, index) => {
+export const getNewsImageByNewsIdEvent = async (newsId, index) => {
   const eventName = "NewsEventImage";
   try {
-    const result = await getPastEvent(eventName, {
+    const result = await getPastEventFilter(eventName, {
       newsId,
       index,
     });
@@ -285,8 +327,8 @@ export const getNewsCompleteData = async (startIndex, endIndex) => {
   let allData = [];
   const idArray = await getLastestNews(startIndex, endIndex);
   for (let i = idArray.length - 1; i >= 0; i--) {
-    const tmpNewsData = await getNewsByNewsId(idArray[i]);
-    const tmpNewsImg = await getNewsImageByNewsId(
+    const tmpNewsData = await getNewsByNewsIdEvent(idArray[i]);
+    const tmpNewsImg = await getNewsImageByNewsIdEvent(
       idArray[i],
       tmpNewsData.index
     );
@@ -312,7 +354,7 @@ export const getNewsCompleteData = async (startIndex, endIndex) => {
   return allData;
 };
 
-export const getAllNewsFromContract = async () => {
+export const getAllNewsEvent = async () => {
   const eventName = "NewsEvent";
   try {
     const results = await getManyPastEvent(eventName, null);
@@ -370,19 +412,20 @@ export const getApplyPublishersAddr = async () => {
 export const getApplyPublisherEvent = async (filterAddr) => {
   const eventName = "applyPublisherEvent";
   try {
-    const results = await getPastEvent(eventName, {
+    const results = await getPastEventFilter(eventName, {
       addr: filterAddr,
     });
-    console.log("getApplyPublisherEvent:", results);
-
     const addr = results[0].returnValues[0];
     const publisherId = results[0].returnValues[1];
-    const index = results[0].returnValues[2];
-    const data = results[0].returnValues[3];
-    const { companyName, co, email, phone } = JSON.parse(data);
+    const memberId = results[0].returnValues[2];
+    const index = results[0].returnValues[3];
+    const data = results[0].returnValues[4];
+    const { account, companyName, co, email, phone } = JSON.parse(data);
     const tmpData = {
       publisherId: publisherId,
+      memberId: memberId,
       addr: addr,
+      account: account,
       index: index,
       companyName: companyName,
       co: co,
@@ -392,6 +435,26 @@ export const getApplyPublisherEvent = async (filterAddr) => {
     return tmpData;
   } catch (e) {
     console.log(`getApplyPublisherEvent error ${eventName}:`, e);
+  }
+};
+export const applyPublisher = async (
+  publisherId,
+  memberId,
+  addr,
+  personalInformation
+) => {
+  try {
+    await transactionContract(
+      ownerAddr,
+      contractAddr,
+      "0",
+      contract.methods
+        .applyPublisher(publisherId, memberId, addr, personalInformation)
+        .encodeABI(),
+      ownerPriKey
+    );
+  } catch (error) {
+    console.log("enrollVistor error:", error);
   }
 };
 //execute();
