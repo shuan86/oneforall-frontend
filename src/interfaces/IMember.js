@@ -6,7 +6,7 @@ export const EnumMemberStatus = {
 
 class LocalStorage {
   constructor() {
-    this.id = "id";
+    this.memberId = "memberId";
     this.account = "account";
     this.userName = "userName";
     this.token = "token";
@@ -16,8 +16,8 @@ class LocalStorage {
     this.isReviewer = "isReviewer";
     this.isPublisher = "isPublisher";
   }
-  get getId() {
-    return this.id;
+  get getMemberId() {
+    return this.memberId;
   }
   get getAccount() {
     return this.account;

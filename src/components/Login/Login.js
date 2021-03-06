@@ -3,6 +3,8 @@ import { EnrollLoginFiled as Field } from "../FormField/FormField";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as memberMoudel from "../../modules/member";
+import { getAllData as getLocalStorageData } from "../../modules/localstorage";
+
 import {
   initialMember,
   updateMember,
@@ -12,7 +14,7 @@ import {
 } from "../../actions/actions";
 
 const LoginForm = () => {
-  const [account, setAccountId] = useState("a");
+  const [account, setAccountId] = useState("c");
   const [password, setPassword] = useState("123");
   const [errorMessage, setErrorMessage] = useState({
     account: "",
@@ -33,11 +35,7 @@ const LoginForm = () => {
         email: result.data.email,
         publicKey: result.data.publicKey,
       };
-      const {
-        isMember,
-        isReviewer,
-        isPublisher,
-      } = memberMoudel.getLocalStorageData();
+      const { isMember, isReviewer, isPublisher } = getLocalStorageData();
       loginData = updateMember(memberData);
       loginStatusData = updateLoginStatus(true);
       memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);

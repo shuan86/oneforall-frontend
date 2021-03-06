@@ -26,28 +26,23 @@ const MemberPage = () => {
   };
   const isReviewer = useSelector((state) => state.memberStatus.isReviewer);
   const isPublisher = useSelector((state) => state.memberStatus.isPublisher);
-  console.log("isReviewer:", isReviewer);
+
   return (
     <div className="container">
-      <button
-        onClick={() => onClickChangeMemberStatus(EnumMemberStatus.vistor)}
-      >
-        觀看者
-      </button>
-      {isReviewer ? null : (
+      {isReviewer ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.reviewer)}
         >
           審查者
         </button>
-      )}
-      {isPublisher ? null : (
+      ) : null}
+      {isPublisher ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.publisher)}
         >
           發文者
         </button>
-      )}
+      ) : null}
 
       <div className="memberContainer">
         <MemberCard />

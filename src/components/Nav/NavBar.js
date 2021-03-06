@@ -5,6 +5,8 @@ import "../../public/css/NavBar.css";
 import Logo from "../../Logo.svg";
 import { useSelector, useDispatch } from "react-redux";
 import * as memberModuel from "../../modules/member";
+import { getAllData as getLocalStorageData } from "../../modules/localstorage";
+
 import {
   initialMember,
   wontUpdateMember,
@@ -33,8 +35,8 @@ const NavBar = () => {
       isMember,
       isReviewer,
       isPublisher,
-    } = memberModuel.getLocalStorageData(localStorage);
-    if (localStorage.getItem(ILocalStorage.getId) != null) {
+    } = getLocalStorageData(localStorage);
+    if (localStorage.getItem(ILocalStorage.getMemberId) != null) {
       memberData = updateMember({
         id,
         account,
@@ -43,12 +45,20 @@ const NavBar = () => {
         publicKey,
       });
       updateLoginStatusData = updateLoginStatus(true);
-      memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);
+      // memberStatusData = updateMemberStatus(
+      //   Boolean(isMember),
+      //   Boolean(isReviewer),
+      //   Boolean(isPublisher)
+      // );
+      memberStatusData = updateMemberStatus(
+        isMember == "true" ? true : false,
+        isReviewer == "true" ? true : false,
+        isPublisher == "true" ? true : false
+      );
     }
     dispatch(updateLoginStatusData);
     dispatch(memberData);
     dispatch(memberStatusData);
-    console.log("s:", isMember, isReviewer, isPublisher, account);
   }, []);
 
   const loginStatus = useSelector((s) => s.loginStatus);

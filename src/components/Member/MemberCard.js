@@ -3,18 +3,6 @@ import { useSelector } from "react-redux";
 import "../../public/css/MemberCard.css";
 import ApplyReviewerDialog from "./ApplyReviewerDialog";
 import ApplyPublisherDialog from "./ApplyPublisherDialog";
-
-const MemberContainer = () => {
-  return (
-    <div className={"memberContainer"}>
-      <MemberCard />
-      <ReviewerRight />
-      <VistorRight />
-      {/* <AuthorRight /> */}
-    </div>
-  );
-};
-
 const MemberCard = () => {
   return (
     <div className={"personalInfo"}>
@@ -29,6 +17,16 @@ const MemberCard = () => {
         <p>錢包地址</p>
         <p>{useSelector((s) => s.member.publicKey)}</p>
       </div>
+    </div>
+  );
+};
+const MemberContainer = () => {
+  return (
+    <div className={"memberContainer"}>
+      <MemberCard />
+      <ReviewerRight />
+      <VistorRight />
+      {/* <AuthorRight /> */}
     </div>
   );
 };

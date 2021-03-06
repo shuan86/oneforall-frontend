@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -7,9 +7,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import "../../public/css/MemberCard.css";
-import { applyPublisher } from "../../modules/smartcontract";
+import { apply } from "../../modules/publisher";
 const FormDialog = () => {
   const [open, setOpen] = React.useState(false);
+  const [companyName, setCompanyName] = useState("companyName");
+  const [co, setCO] = useState("co");
+  const [phone, setPhone] = useState("phone");
+  const [email, setEmail] = useState("email");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,8 +22,10 @@ const FormDialog = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const onClickApplyPublisher = () => {
-    //applyPublisher()
+  const onClickApplyPublisher = async () => {
+    const result = await apply(companyName, co, phone, email);
+    console.log("onClickApplyPublisher:", result);
+    handleClose();
   };
   return (
     <div className={"missionBtn"}>
@@ -39,6 +45,8 @@ const FormDialog = () => {
               label="請輸入公司名稱"
               type="text"
               fullWidth
+              value={companyName}
+              onChange={(v) => setCompanyName(v.target.value)}
             />
             <TextField
               autoFocus
@@ -47,6 +55,8 @@ const FormDialog = () => {
               label="請輸入公司行號"
               type="text"
               fullWidth
+              value={co}
+              onChange={(v) => setCO(v.target.value)}
             />
             <TextField
               autoFocus
@@ -55,6 +65,8 @@ const FormDialog = () => {
               label="請輸入公司電話"
               type="text"
               fullWidth
+              value={phone}
+              onChange={(v) => setPhone(v.target.value)}
             />
             <TextField
               autoFocus
@@ -63,13 +75,15 @@ const FormDialog = () => {
               label="請輸入公司信箱"
               type="email"
               fullWidth
+              value={email}
+              onChange={(v) => setEmail(v.target.value)}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={onClickApplyPublisher} color="primary">
               Send
             </Button>
           </DialogActions>

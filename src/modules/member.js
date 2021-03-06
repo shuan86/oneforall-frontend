@@ -1,56 +1,26 @@
-import axios from "axios";
-import configData from "../config.json";
-import { encrypt } from "./encrypt";
-import { ILocalStorage } from "../interfaces/IMember";
-import * as contract from "../modules/smartcontract";
-
-const sendRsaTokenPostRequest = async (JWTtoken, id, rout, dataObject) => {
-  const rsaData = encrypt(JSON.stringify(dataObject));
-  const config = {
-    headers: { Authorization: ` ${JWTtoken}` },
-  };
-  const bodyParameters = {
-    rsaData,
-  };
-  const result = await axios.post(
-    configData.SERVER_URL + rout,
-    bodyParameters,
-    config
-  );
-  if (result.status == 200) {
-    console.log("sendPostRequest sucessful");
-  }
-  return result;
-};
-const sendRsaPostRequest = async (rout, dataObject) => {
-  const rsaData = encrypt(JSON.stringify(dataObject));
-  const bodyParameters = {
-    rsaData,
-  };
-  const result = await axios.post(configData.SERVER_URL + rout, bodyParameters);
-  if (result.status == 200) {
-    console.log("sendPostRequest sucessful");
-  }
-  return result;
-};
+import * as sendRequest from "./sendRequest";
+import * as localStorage from "./localstorage";
+import * as contract from "./smartcontract";
 export const login = async (account, password) => {
   try {
     const data = { account: account, password: password };
-    const result = await sendRsaPostRequest("/login", data);
+    const result = await sendRequest.rsaPostRequest("/login", data);
     if (result.status == 200) {
       const pubKey = result.data.publicKey;
       const isMember = await contract.isMember(pubKey);
       const isReviewer = await contract.isReviewer(pubKey);
       const isPublisher = await contract.isPublisher(pubKey);
-      localStorage.setItem(ILocalStorage.getToken, result.data.token);
-      localStorage.setItem(ILocalStorage.getId, result.data.id);
-      localStorage.setItem(ILocalStorage.getAccount, result.data.account);
-      localStorage.setItem(ILocalStorage.getUserName, result.data.userName);
-      localStorage.setItem(ILocalStorage.getEmail, result.data.email);
-      localStorage.setItem(ILocalStorage.getPublicKey, result.data.publicKey);
-      localStorage.setItem(ILocalStorage.getIsVistor, isMember);
-      localStorage.setItem(ILocalStorage.getIsReviewer, isReviewer);
-      localStorage.setItem(ILocalStorage.getIsPublisher, isPublisher);
+      localStorage.saveAllData(
+        result.data.memberId,
+        result.data.token,
+        result.data.account,
+        result.data.userName,
+        result.data.email,
+        result.data.publicKey,
+        isMember,
+        isReviewer,
+        isPublisher
+      );
     }
     console.log("login:", data);
     return result;
@@ -66,22 +36,16 @@ export const login = async (account, password) => {
 export const logout = async () => {
   let result;
   try {
-    result = await sendRsaTokenPostRequest(
-      localStorage.getItem(ILocalStorage.getToken),
-      localStorage.getItem(ILocalStorage.getId),
-      "/logout",
-      {
-        id: localStorage.getItem(ILocalStorage.id),
-        token: localStorage.getItem(ILocalStorage.getToken),
-      }
-    );
+    const { token, memberId } = localStorage.getAllData();
+    result = await sendRequest.rsaTokenPostRequest(token, memberId, "/logout", {
+      memberId,
+      token,
+    });
+    localStorage.clearAllData();
   } catch (error) {
     console.log("logout error:", error);
   }
 
-  localStorage.clear(ILocalStorage.getId);
-  localStorage.clear(ILocalStorage.getAccount);
-  localStorage.clear(ILocalStorage.getToken);
   return result;
 };
 export const enroll = async (account, password, userName, email, publicKey) => {
@@ -95,42 +59,9 @@ export const enroll = async (account, password, userName, email, publicKey) => {
       publicKey: publicKey,
       token: "",
     };
-    const result = await sendRsaPostRequest("/enroll", data);
+    const result = await sendRequest.rsaPostRequest("/enroll", data);
     return result;
   } catch (error) {
     console.log("enroll error:", error);
   }
 };
-
-export const RootPublisherDecision = async (
-  id,
-  publisherId,
-  decision,
-  reason
-) => {
-  const result = await sendRsaTokenPostRequest(
-    localStorage.getItem(ILocalStorage.getToken),
-    localStorage.getItem(ILocalStorage.getId),
-    "/rootPublisherDecision",
-    { id: id, decision: decision, reason: reason }
-  );
-
-  return {
-    status: result.status,
-  };
-};
-
-export const getLocalStorageData = () => {
-  return {
-    id: localStorage.getItem(ILocalStorage.getId),
-    account: localStorage.getItem(ILocalStorage.getAccount),
-    userName: localStorage.getItem(ILocalStorage.getUserName),
-    email: localStorage.getItem(ILocalStorage.getEmail),
-    publicKey: localStorage.getItem(ILocalStorage.getPublicKey),
-    isMember: localStorage.getItem(ILocalStorage.getIsVistor),
-    isReviewer: localStorage.getItem(ILocalStorage.getIsReviewer),
-    isPublisher: localStorage.getItem(ILocalStorage.getIsPublisher),
-  };
-};
-
-export const applyPublisher = () => {};

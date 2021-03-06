@@ -32,7 +32,7 @@ const PublisherPage = () => {
   };
   const onClickFinalDecision = async (decision) => {
     const result = await RootPublisherDecision(
-      localStorage.getItem(ILocalStorage.getId),
+      localStorage.getItem(ILocalStorage.getMemberId),
       selectedData.publisherId,
       decision,
       decisionReason
