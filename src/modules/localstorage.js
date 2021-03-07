@@ -29,9 +29,12 @@ export const getAllData = () => {
   const userName = localStorage.getItem(ILocalStorage.getUserName);
   const email = localStorage.getItem(ILocalStorage.getEmail);
   const publicKey = localStorage.getItem(ILocalStorage.getPublicKey);
-  const isMember = localStorage.getItem(ILocalStorage.getIsVistor);
-  const isReviewer = localStorage.getItem(ILocalStorage.getIsReviewer);
-  const isPublisher = localStorage.getItem(ILocalStorage.getIsPublisher);
+  let isMember = localStorage.getItem(ILocalStorage.getIsVistor);
+  let isReviewer = localStorage.getItem(ILocalStorage.getIsReviewer);
+  let isPublisher = localStorage.getItem(ILocalStorage.getIsPublisher);
+  isMember = isMember == "true" ? true : false,
+    isReviewer = isReviewer == "true" ? true : false,
+    isPublisher = isPublisher == "true" ? true : false
   const data = {
     memberId,
     token,

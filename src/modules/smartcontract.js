@@ -287,19 +287,20 @@ export const getNewsByNewsIdEvent = async (newsId) => {
     const result = await getPastEventFilter(eventName, {
       newsId: newsId,
     });
+    const lastestDataIndex = result.length - 1;
 
     /* console.log(
       `getNewsContractByNewsId ${eventName}:`,
       result[0].returnValues[0]
     );*/
     let data = { ...INewEvent };
-    data.newsId = result[0].returnValues[0];
-    data.title = result[0].returnValues[1];
-    data.author = result[0].returnValues[2];
-    data.index = result[0].returnValues[3];
-    data.newsType = result[0].returnValues[4];
-    data.content = result[0].returnValues[5];
-    data.deposit = result[0].returnValues[6];
+    data.newsId = result[lastestDataIndex].returnValues[0];
+    data.title = result[lastestDataIndex].returnValues[1];
+    data.author = result[lastestDataIndex].returnValues[2];
+    data.index = result[lastestDataIndex].returnValues[3];
+    data.newsType = result[lastestDataIndex].returnValues[4];
+    data.content = result[lastestDataIndex].returnValues[5];
+    data.deposit = result[lastestDataIndex].returnValues[6];
     return data;
   } catch (e) {
     console.log(`getNewsContractByNewsId error ${eventName}:`, e);
@@ -313,10 +314,12 @@ export const getNewsImageByNewsIdEvent = async (newsId, index) => {
       index,
     });
     let data = { ...INewImageEvent };
-    data.newsId = data.newsId = result[0].returnValues[0];
-    data.index = data.index = result[0].returnValues[1];
-    data.imgContent1 = data.index = result[0].returnValues[2];
-    data.imgContent2 = data.index = result[0].returnValues[3];
+    const lastestDataIndex = result.length - 1;
+
+    data.newsId = data.newsId = result[lastestDataIndex].returnValues[0];
+    data.index = data.index = result[lastestDataIndex].returnValues[1];
+    data.imgContent1 = data.index = result[lastestDataIndex].returnValues[2];
+    data.imgContent2 = data.index = result[lastestDataIndex].returnValues[3];
     //console.log("getNewsImageByNewsId:", data);
     return data;
   } catch (e) {
@@ -415,11 +418,13 @@ export const getApplyPublisherEvent = async (filterAddr) => {
     const results = await getPastEventFilter(eventName, {
       addr: filterAddr,
     });
-    const addr = results[0].returnValues[0];
-    const publisherId = results[0].returnValues[1];
-    const memberId = results[0].returnValues[2];
-    const index = results[0].returnValues[3];
-    const data = results[0].returnValues[4];
+    console.log('getApplyPublisherEvent:', results);
+    const lastestDataIndex = results.length - 1;
+    const addr = results[lastestDataIndex].returnValues[0];
+    const publisherId = results[lastestDataIndex].returnValues[1];
+    const memberId = results[lastestDataIndex].returnValues[2];
+    const index = results[lastestDataIndex].returnValues[3];
+    const data = results[lastestDataIndex].returnValues[4];
     const { account, companyName, co, email, phone } = JSON.parse(data);
     const tmpData = {
       publisherId: publisherId,
@@ -455,6 +460,32 @@ export const applyPublisher = async (
     );
   } catch (error) {
     console.log("enrollVistor error:", error);
+  }
+};
+export const subscribeEnrollPublisherEvent = (handleFunc) => {
+  contract.events
+    .enrollPublisherEvent({ from: 0 })
+    .on("data", (results) => {
+
+
+      const publisherId = results.returnValues[0];
+      const memberId = results.returnValues[1];
+      const isAgree = results.returnValues[2];
+      const personalInformation = results.returnValues[3];
+      const replyContent = results.returnValues[4];
+
+
+      handleFunc(memberId, isAgree)
+    });
+};
+
+export const getTestData = async () => {
+  try {
+    const result = await contract.methods.getTestData().call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
+    console.log('getTestData:', result);
+    return result;
+  } catch (error) {
+    console.log("getTestData error:", error);
   }
 };
 //execute();

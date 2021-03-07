@@ -20,13 +20,33 @@ const MemberCard = () => {
     </div>
   );
 };
-const MemberContainer = () => {
+const VistorRight = ({ isPublisher, isReviewer }) => {
+  console.log("isPublisher:", isPublisher);
   return (
-    <div className={"memberContainer"}>
-      <MemberCard />
-      <ReviewerRight />
-      <VistorRight />
-      {/* <AuthorRight /> */}
+    <div>
+      <div className={"memberTable"}>
+        <p>觀看者</p>
+        <div className={"tablePosition"}>
+          <div className={"memberScore"}>
+            <p>積分</p>
+            <p>1283</p>
+          </div>
+
+          <div className={"memberFollower"}>
+            <p>已追蹤</p>
+            <p>83</p>
+          </div>
+        </div>
+      </div>
+      <div className={"memberInform"}>
+        <p>投票紀錄</p>
+        <VoteContent />
+        <VoteContent />
+        <VoteContent />
+      </div>
+
+      {isReviewer == false ? <ApplyReviewerDialog /> : null}
+      {isPublisher == false ? <ApplyPublisherDialog /> : null}
     </div>
   );
 };
@@ -96,36 +116,7 @@ const VoteContent = () => {
   );
 };
 
-const VistorRight = () => {
-  console.log("AudienceRight");
-  return (
-    <div>
-      <div className={"memberTable"}>
-        <p>觀看者</p>
-        <div className={"tablePosition"}>
-          <div className={"memberScore"}>
-            <p>積分</p>
-            <p>1283</p>
-          </div>
 
-          <div className={"memberFollower"}>
-            <p>已追蹤</p>
-            <p>83</p>
-          </div>
-        </div>
-      </div>
-      <div className={"memberInform"}>
-        <p>投票紀錄</p>
-        <VoteContent />
-        <VoteContent />
-        <VoteContent />
-      </div>
-
-      <ApplyReviewerDialog />
-      <ApplyPublisherDialog />
-    </div>
-  );
-};
 
 // const AuthorRight = () => {
 //     console.log('AuthorRight');
@@ -154,4 +145,4 @@ const VistorRight = () => {
 //     );
 // };
 
-export { MemberContainer, MemberCard, ReviewerRight, VistorRight };
+export { MemberCard, ReviewerRight, VistorRight };

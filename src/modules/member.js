@@ -35,13 +35,15 @@ export const login = async (account, password) => {
 // };
 export const logout = async () => {
   let result;
+  const { token, memberId } = localStorage.getAllData();
+  localStorage.clearAllData();
   try {
-    const { token, memberId } = localStorage.getAllData();
+
     result = await sendRequest.rsaTokenPostRequest(token, memberId, "/logout", {
       memberId,
       token,
     });
-    localStorage.clearAllData();
+
   } catch (error) {
     console.log("logout error:", error);
   }

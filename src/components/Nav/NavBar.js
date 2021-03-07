@@ -51,9 +51,9 @@ const NavBar = () => {
       //   Boolean(isPublisher)
       // );
       memberStatusData = updateMemberStatus(
-        isMember == "true" ? true : false,
-        isReviewer == "true" ? true : false,
-        isPublisher == "true" ? true : false
+        isMember,
+        isReviewer,
+        isPublisher
       );
     }
     dispatch(updateLoginStatusData);
@@ -99,25 +99,22 @@ const NavBar = () => {
                 註冊
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${
-                  loginStatus && "navDisplayNone"
-                }`}
+                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayNone"
+                  }`}
                 onClick={() => onChangeRouter("/login")}
               >
                 登入
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${
-                  loginStatus && "navDisplayBlock" && "signinButton"
-                } ${!loginStatus && "navDisplayNone"}`}
+                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayBlock" && "signinButton"
+                  } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickMemberCenter}
               >
                 {account}
               </button>
               <button
-                className={`${
-                  loginStatus && "navDisplayBlock" && "signinButton"
-                } ${!loginStatus && "navDisplayNone"}`}
+                className={`${loginStatus && "navDisplayBlock" && "signinButton"
+                  } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickLogout}
               >
                 logout

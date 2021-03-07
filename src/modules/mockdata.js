@@ -1,1085 +1,1129 @@
-export const contractAddr = "0x31569b0698B77544e5a6e646ECB958CfAEdd144c";
+export const contractAddr = "0x3E26762571FaCA073933F08b30B39bc4C8790C30";
 
 export const contractABI = [
   {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "dbId",
-        type: "uint256",
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "dbId",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "articleId",
-        type: "uint256",
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "articleId",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "address",
-        name: "authorAddr",
-        type: "address",
+        "indexed": false,
+        "internalType": "address",
+        "name": "authorAddr",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "content",
-        type: "string",
+        "indexed": false,
+        "internalType": "string",
+        "name": "content",
+        "type": "string"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "time",
-        type: "string",
-      },
+        "indexed": false,
+        "internalType": "string",
+        "name": "time",
+        "type": "string"
+      }
     ],
-    name: "CommentEvent",
-    type: "event",
+    "name": "CommentEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "newsId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "newsId",
+        "type": "uint256"
       },
       {
-        indexed: true,
-        internalType: "string",
-        name: "title",
-        type: "string",
+        "indexed": true,
+        "internalType": "string",
+        "name": "title",
+        "type": "string"
       },
       {
-        indexed: true,
-        internalType: "string",
-        name: "author",
-        type: "string",
+        "indexed": true,
+        "internalType": "string",
+        "name": "author",
+        "type": "string"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "newsType",
-        type: "uint256",
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newsType",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "data",
-        type: "string",
+        "indexed": false,
+        "internalType": "string",
+        "name": "data",
+        "type": "string"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "deposit",
-        type: "uint256",
-      },
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "deposit",
+        "type": "uint256"
+      }
     ],
-    name: "NewsEvent",
-    type: "event",
+    "name": "NewsEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "newsId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "newsId",
+        "type": "uint256"
       },
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "content1",
-        type: "string",
+        "indexed": false,
+        "internalType": "string",
+        "name": "content1",
+        "type": "string"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "content2",
-        type: "string",
-      },
+        "indexed": false,
+        "internalType": "string",
+        "name": "content2",
+        "type": "string"
+      }
     ],
-    name: "NewsEventImage",
-    type: "event",
+    "name": "NewsEventImage",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "data",
-        type: "uint256",
-      },
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "data",
+        "type": "uint256"
+      }
     ],
-    name: "TestEvent",
-    type: "event",
+    "name": "TestEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "num",
-        type: "uint256",
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "num",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "str",
-        type: "string",
-      },
+        "indexed": false,
+        "internalType": "string",
+        "name": "str",
+        "type": "string"
+      }
     ],
-    name: "TestFunctionEvent",
-    type: "event",
+    "name": "TestFunctionEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "address",
-        name: "addr",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "publisherId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "publisherId",
+        "type": "uint256"
       },
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "memberDbId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "memberDbId",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "personalInformation",
-        type: "string",
-      },
+        "indexed": false,
+        "internalType": "string",
+        "name": "personalInformation",
+        "type": "string"
+      }
     ],
-    name: "applyPublisherEvent",
-    type: "event",
+    "name": "applyPublisherEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "eventId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "addr",
-        type: "address",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "reviewerId",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "enum AbPlatform.NewsKind",
-        name: "applyNewsKind",
-        type: "uint8",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "memberDbId",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "applyContents",
-        type: "string",
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "address",
-        name: "exmanier1",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "exmanier2",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "time",
-        type: "string",
-      },
+        "indexed": false,
+        "internalType": "string",
+        "name": "applyContents",
+        "type": "string"
+      }
     ],
-    name: "applyReviewerEvent",
-    type: "event",
+    "name": "applyReviewerEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "publisherId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "memberId",
+        "type": "uint256"
       },
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "memberDbId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "personalInformation",
-        type: "string",
+        "indexed": false,
+        "internalType": "enum AbPlatform.NewsKind",
+        "name": "applyNewsKind",
+        "type": "uint8"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "replyContent",
-        type: "string",
+        "indexed": false,
+        "internalType": "address",
+        "name": "examiner1",
+        "type": "address"
       },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "exmanier1Reply",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "examiner2",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "exmanier2Reply",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "aplyContents",
+        "type": "string"
+      }
     ],
-    name: "enrollFailPublisher",
-    type: "event",
+    "name": "enrollFailReviewer",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "memberId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "publisherId",
+        "type": "uint256"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "addr",
-        type: "address",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "memberDbId",
+        "type": "uint256"
       },
       {
-        indexed: false,
-        internalType: "enum AbPlatform.NewsKind",
-        name: "applyNewsKind",
-        type: "uint8",
+        "indexed": true,
+        "internalType": "bool",
+        "name": "isAgree",
+        "type": "bool"
       },
       {
-        indexed: false,
-        internalType: "address",
-        name: "examiner1",
-        type: "address",
+        "indexed": false,
+        "internalType": "string",
+        "name": "personalInformation",
+        "type": "string"
       },
       {
-        indexed: false,
-        internalType: "bool",
-        name: "exmanier1Reply",
-        type: "bool",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "examiner2",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "bool",
-        name: "exmanier2Reply",
-        type: "bool",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "aplyContents",
-        type: "string",
-      },
+        "indexed": false,
+        "internalType": "string",
+        "name": "replyContent",
+        "type": "string"
+      }
     ],
-    name: "enrollFailReviewer",
-    type: "event",
+    "name": "enrollPublisherEvent",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "publisherId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "memberId",
+        "type": "uint256"
       },
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "memberDbId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "personalInformation",
-        type: "string",
+        "indexed": false,
+        "internalType": "enum AbPlatform.NewsKind",
+        "name": "applyNewsKind",
+        "type": "uint8"
       },
       {
-        indexed: false,
-        internalType: "string",
-        name: "replyContent",
-        type: "string",
+        "indexed": false,
+        "internalType": "address",
+        "name": "examiner1",
+        "type": "address"
       },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "examiner2",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "applyContents",
+        "type": "string"
+      }
     ],
-    name: "enrollSucessfulPublisher",
-    type: "event",
+    "name": "enrollSucessfulReviewer",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "memberId",
-        type: "uint256",
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "memberId",
+        "type": "uint256"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "addr",
-        type: "address",
+        "indexed": true,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
       },
       {
-        indexed: false,
-        internalType: "enum AbPlatform.NewsKind",
-        name: "applyNewsKind",
-        type: "uint8",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "examiner1",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "examiner2",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "applyContents",
-        type: "string",
-      },
+        "indexed": false,
+        "internalType": "string",
+        "name": "time",
+        "type": "string"
+      }
     ],
-    name: "enrollSucessfulReviewer",
-    type: "event",
+    "name": "enrollSucessfulVistor",
+    "type": "event"
   },
   {
-    anonymous: false,
-    inputs: [
+    "inputs": [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "memberId",
-        type: "uint256",
+        "internalType": "address[]",
+        "name": "array",
+        "type": "address[]"
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "addr",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "time",
-        type: "string",
-      },
+        "internalType": "address",
+        "name": "data",
+        "type": "address"
+      }
     ],
-    name: "enrollSucessfulVistor",
-    type: "event",
+    "name": "findAddrArrayIndex",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address[]",
-        name: "array",
-        type: "address[]",
+        "internalType": "uint256[]",
+        "name": "array",
+        "type": "uint256[]"
       },
       {
-        internalType: "address",
-        name: "data",
-        type: "address",
-      },
+        "internalType": "uint256",
+        "name": "data",
+        "type": "uint256"
+      }
     ],
-    name: "findAddrArrayIndex",
-    outputs: [
+    "name": "findUintArrayIndex",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       },
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256[]",
-        name: "array",
-        type: "uint256[]",
+        "internalType": "address[]",
+        "name": "array",
+        "type": "address[]"
       },
       {
-        internalType: "uint256",
-        name: "data",
-        type: "uint256",
-      },
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
     ],
-    name: "findUintArrayIndex",
-    outputs: [
+    "name": "removeAddrArray",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address[]",
-        name: "array",
-        type: "address[]",
+        "internalType": "uint256[]",
+        "name": "array",
+        "type": "uint256[]"
       },
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
     ],
-    name: "removeAddrArray",
-    outputs: [
+    "name": "removeUintArray",
+    "outputs": [
       {
-        internalType: "address[]",
-        name: "",
-        type: "address[]",
-      },
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256[]",
-        name: "array",
-        type: "uint256[]",
-      },
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
+        "internalType": "string",
+        "name": "source",
+        "type": "string"
+      }
     ],
-    name: "removeUintArray",
-    outputs: [
+    "name": "stringToBytes32",
+    "outputs": [
       {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
+        "internalType": "bytes32",
+        "name": "result",
+        "type": "bytes32"
+      }
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "pure",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "string",
-        name: "source",
-        type: "string",
-      },
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
     ],
-    name: "stringToBytes32",
-    outputs: [
+    "name": "isMember",
+    "outputs": [
       {
-        internalType: "bytes32",
-        name: "result",
-        type: "bytes32",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    stateMutability: "pure",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "addr",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
     ],
-    name: "isMember",
-    outputs: [
+    "name": "isReviewer",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "addr",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
     ],
-    name: "isReviewer",
-    outputs: [
+    "name": "isPublisher",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "addr",
-        type: "address",
-      },
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
     ],
-    name: "isPublisher",
-    outputs: [
+    "name": "applyReviewerIsExist",
+    "outputs": [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [],
-    name: "getNeedCheckReviewersKey",
-    outputs: [
+    "inputs": [],
+    "name": "getApplyReviewers",
+    "outputs": [
       {
-        internalType: "address[]",
-        name: "",
-        type: "address[]",
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "memberId",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "reviewerId",
+        "type": "uint256"
       },
       {
-        internalType: "address",
-        name: "addr",
-        type: "address",
+        "internalType": "uint256",
+        "name": "memberId",
+        "type": "uint256"
       },
       {
-        internalType: "bool",
-        name: "isAgree",
-        type: "bool",
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
       },
       {
-        internalType: "string",
-        name: "time",
-        type: "string",
-      },
+        "internalType": "string",
+        "name": "applyContents",
+        "type": "string"
+      }
     ],
-    name: "enrollVistor",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "applyReviewer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getNeedCheckReviewersKey",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "dbId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "memberId",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "addr",
-        type: "address",
-      },
-      {
-        internalType: "enum AbPlatform.NewsKind",
-        name: "applyNewsKind",
-        type: "uint8",
-      },
-      {
-        internalType: "address",
-        name: "examiner1",
-        type: "address",
-      },
-      {
-        internalType: "bool",
-        name: "exmanier1Reply",
-        type: "bool",
-      },
-      {
-        internalType: "address",
-        name: "examiner2",
-        type: "address",
-      },
-      {
-        internalType: "bool",
-        name: "exmanier2Reply",
-        type: "bool",
-      },
-      {
-        internalType: "string",
-        name: "applyContents",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "disagreenReason",
-        type: "string",
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
     ],
-    name: "enrollReviewer",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "publisherId",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "memberId",
+        "type": "uint256"
       },
       {
-        internalType: "uint256",
-        name: "memberId",
-        type: "uint256",
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
       },
       {
-        internalType: "address",
-        name: "addr",
-        type: "address",
+        "internalType": "bool",
+        "name": "isAgree",
+        "type": "bool"
       },
       {
-        internalType: "string",
-        name: "personalInformation",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "replyContent",
-        type: "string",
-      },
-      {
-        internalType: "bool",
-        name: "isAgree",
-        type: "bool",
-      },
+        "internalType": "string",
+        "name": "time",
+        "type": "string"
+      }
     ],
-    name: "enrollPublisher",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "enrollVistor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "getVistors",
-    outputs: [
+    "inputs": [
       {
-        internalType: "address[]",
-        name: "",
-        type: "address[]",
+        "internalType": "uint256",
+        "name": "dbId",
+        "type": "uint256"
       },
+      {
+        "internalType": "uint256",
+        "name": "memberId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      },
+      {
+        "internalType": "enum AbPlatform.NewsKind",
+        "name": "applyNewsKind",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "examiner1",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "exmanier1Reply",
+        "type": "bool"
+      },
+      {
+        "internalType": "address",
+        "name": "examiner2",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "exmanier2Reply",
+        "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "applyContents",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "disagreenReason",
+        "type": "string"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "name": "enrollReviewer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "getReviewers",
-    outputs: [
+    "inputs": [
       {
-        internalType: "address[]",
-        name: "",
-        type: "address[]",
+        "internalType": "uint256",
+        "name": "publisherId",
+        "type": "uint256"
       },
+      {
+        "internalType": "uint256",
+        "name": "memberId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "personalInformation",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "replyContent",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "isAgree",
+        "type": "bool"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "name": "enrollPublisher",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "getApplyPublishers",
-    outputs: [
+    "inputs": [],
+    "name": "getVistors",
+    "outputs": [
       {
-        internalType: "address[]",
-        name: "",
-        type: "address[]",
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [],
-    name: "getPublishers",
-    outputs: [
+    "inputs": [],
+    "name": "getReviewers",
+    "outputs": [
       {
-        internalType: "address[]",
-        name: "",
-        type: "address[]",
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getApplyPublishers",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "publisherId",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "memberId",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "addr",
-        type: "address",
-      },
-      {
-        internalType: "string",
-        name: "personalInformation",
-        type: "string",
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
     ],
-    name: "applyPublisher",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getPublishers",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "newsId",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "title",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "author",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "data",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "img1",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "img2",
-        type: "string",
-      },
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
     ],
-    name: "postNews",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-    payable: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "addr",
-        type: "address",
+        "internalType": "uint256",
+        "name": "publisherId",
+        "type": "uint256"
       },
       {
-        internalType: "uint256",
-        name: "newsId",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "memberId",
+        "type": "uint256"
       },
+      {
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "personalInformation",
+        "type": "string"
+      }
     ],
-    name: "setNewsWantToKnownAmount",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "applyPublisher",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "dbId",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "newsId",
+        "type": "uint256"
       },
       {
-        internalType: "uint256",
-        name: "articleId",
-        type: "uint256",
+        "internalType": "string",
+        "name": "title",
+        "type": "string"
       },
       {
-        internalType: "address",
-        name: "authorAddr",
-        type: "address",
+        "internalType": "string",
+        "name": "author",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "content",
-        type: "string",
+        "internalType": "string",
+        "name": "data",
+        "type": "string"
       },
       {
-        internalType: "string",
-        name: "time",
-        type: "string",
+        "internalType": "string",
+        "name": "img1",
+        "type": "string"
       },
+      {
+        "internalType": "string",
+        "name": "img2",
+        "type": "string"
+      }
     ],
-    name: "comment",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "name": "postNews",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function",
+    "payable": true
   },
   {
-    inputs: [],
-    name: "getNewsAmout",
-    outputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
       },
+      {
+        "internalType": "uint256",
+        "name": "newsId",
+        "type": "uint256"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "name": "setNewsWantToKnownAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: "uint256",
-        name: "startIndex",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "dbId",
+        "type": "uint256"
       },
       {
-        internalType: "uint256",
-        name: "endIndex",
-        type: "uint256",
+        "internalType": "uint256",
+        "name": "articleId",
+        "type": "uint256"
       },
+      {
+        "internalType": "address",
+        "name": "authorAddr",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "content",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "time",
+        "type": "string"
+      }
     ],
-    name: "getLatestNewsData",
-    outputs: [
-      {
-        internalType: "uint256[5]",
-        name: "",
-        type: "uint256[5]",
-      },
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "name": "comment",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: "getOwnerAddr",
-    outputs: [
+    "inputs": [],
+    "name": "getNewsAmout",
+    "outputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [],
-    name: "getLastSender",
-    outputs: [
+    "inputs": [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        "internalType": "uint256",
+        "name": "startIndex",
+        "type": "uint256"
       },
+      {
+        "internalType": "uint256",
+        "name": "endIndex",
+        "type": "uint256"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "name": "getLatestNewsData",
+    "outputs": [
+      {
+        "internalType": "uint256[5]",
+        "name": "",
+        "type": "uint256[5]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [],
-    name: "getAllNewsId",
-    outputs: [
+    "inputs": [],
+    "name": "getOwnerAddr",
+    "outputs": [
       {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [],
-    name: "removeAllMember",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    "inputs": [],
+    "name": "getLastSender",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [],
-    name: "getVistorLen",
-    outputs: [
+    "inputs": [],
+    "name": "getAllNewsId",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
     ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "data",
-        type: "uint256",
-      },
-    ],
-    name: "setTestEvent",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
+    "inputs": [],
+    "name": "removeAllMember",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getVistorLen",
+    "outputs": [
       {
-        internalType: "uint256",
-        name: "num",
-        type: "uint256",
-      },
-      {
-        internalType: "string",
-        name: "str",
-        type: "string",
-      },
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
     ],
-    name: "setTestFunction",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-    payable: true,
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
-];
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "data",
+        "type": "uint256"
+      }
+    ],
+    "name": "setTestEvent",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "num",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "str",
+        "type": "string"
+      }
+    ],
+    "name": "setTestFunction",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function",
+    "payable": true
+  },
+  {
+    "inputs": [],
+    "name": "getTestData",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  }
+]

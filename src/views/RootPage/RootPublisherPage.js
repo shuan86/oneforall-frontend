@@ -3,8 +3,8 @@ import * as contract from "../../modules/smartcontract";
 import RootPublisherDataTable from "../../components/RootPublisher/RootPublisherDataTable";
 import Button from "@material-ui/core/Button";
 import AgreeDisagreePublisherDialog from "../../components/RootPublisher/PublisherDecisionDialog";
-import { RootPublisherDecision } from "../../modules/member";
-import { ILocalStorage } from "../../interfaces/IMember";
+import { RootPublisherDecision } from "../../modules/publisher";
+import { getAllData as getAllLocalStorageData } from "../../modules/localstorage";
 const PublisherPage = () => {
   const [applyPublisherData, setApplyPublisherData] = useState([]);
   const [selectedData, setSelectedData] = useState({});
@@ -32,7 +32,6 @@ const PublisherPage = () => {
   };
   const onClickFinalDecision = async (decision) => {
     const result = await RootPublisherDecision(
-      localStorage.getItem(ILocalStorage.getMemberId),
       selectedData.publisherId,
       decision,
       decisionReason
@@ -40,19 +39,44 @@ const PublisherPage = () => {
     if ((result.status = 200)) {
     }
     setDialogSwitch(false);
-    console.log(decision, decisionReason);
   };
 
   useEffect(() => {
     const excuteContract = async () => {
       const publisherAddrArray = await contract.getApplyPublishersAddr();
-      let num = 0;
-      for (const addr of publisherAddrArray) {
-        const tmp = await contract.getApplyPublisherEvent(addr);
-        publisherList.push({ ...tmp, id: num });
-        num++;
+      console.log('publisherAddrArray:', publisherAddrArray);
+      if (publisherAddrArray != null) {
+        let num = 0;
+        for (const addr of publisherAddrArray) {
+          const tmp = await contract.getApplyPublisherEvent(addr);
+          publisherList.push({ ...tmp, id: num });
+          console.log("publisherData:", { ...tmp, id: num });
+          num++;
+        }
+        contract.subscribeEnrollPublisherEvent(async (memberId, isAgree) => {
+          let tmpArray = applyPublisherData
+          if (isAgree) {
+            let removeData = null;
+            for (const data of applyPublisherData) {
+              const { memberId: mId } = data
+              if (mId == memberId) {
+                removeData = data
+              }
+            }
+
+            if (removeData != null) {
+              tmpArray = applyPublisherData
+              const index = tmpArray.indexOf(removeData);
+              if (index > -1) {
+                tmpArray.splice(index, 1);
+              }
+            }
+            const t = await contract.getTestData()
+            console.log('test:', t);
+          }
+          setApplyPublisherData(tmpArray);
+        })
       }
-      console.log("publisherAddrArray:", publisherAddrArray);
       setApplyPublisherData(publisherList);
     };
     excuteContract(); // <div key={index}>{v.companyName}</div>;

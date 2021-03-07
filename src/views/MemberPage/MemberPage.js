@@ -9,34 +9,41 @@ import { EnumMemberStatus } from "../../interfaces/IMember";
 
 const MemberPage = () => {
   const [memberStatus, setMemberStatus] = useState(EnumMemberStatus.vistor);
-  useEffect(() => {
-    return () => {};
-  }, []);
+
+  const isReviewer = useSelector((state) => state.memberStatus.isReviewer);
+  const isPublisher = useSelector((state) => state.memberStatus.isPublisher);
+  // const [isReviewer, setIsReviewer] = useState(useSelector((state) => state.memberStatus.isReviewer))
+  // const [isPublisher, setIsPublisher] = useState(useSelector((state) => state.memberStatus.isPublisher))
 
   useEffect(() => {
-    if (memberStatus == EnumMemberStatus.vistor) {
-    } else if (memberStatus == EnumMemberStatus.reviewer) {
-    } else if (memberStatus == EnumMemberStatus.publisher) {
+
+    return () => {
+
     }
-
-    return () => {};
+  }, [])
+  useEffect(() => {
+    // if (memberStatus == EnumMemberStatus.vistor) {
+    // } else if (memberStatus == EnumMemberStatus.reviewer) {
+    // } else if (memberStatus == EnumMemberStatus.publisher) {
+    // }
+    return () => { };
   }, [memberStatus]);
   const onClickChangeMemberStatus = (status) => {
     setMemberStatus(status);
   };
-  const isReviewer = useSelector((state) => state.memberStatus.isReviewer);
-  const isPublisher = useSelector((state) => state.memberStatus.isPublisher);
+
+
 
   return (
     <div className="container">
-      {isReviewer ? (
+      { isReviewer ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.reviewer)}
         >
           審查者
         </button>
       ) : null}
-      {isPublisher ? (
+      { isPublisher ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.publisher)}
         >
@@ -46,7 +53,7 @@ const MemberPage = () => {
 
       <div className="memberContainer">
         <MemberCard />
-        {memberStatus == EnumMemberStatus.vistor ? <VistorRight /> : null}
+        {memberStatus == EnumMemberStatus.vistor ? <VistorRight isReviewer={isReviewer} isPublisher={isPublisher} /> : null}
         {memberStatus == EnumMemberStatus.reviewer ? <ReviewerRight /> : null}
         {memberStatus == EnumMemberStatus.publisher ? <ReviewerRight /> : null}
       </div>
