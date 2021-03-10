@@ -21,7 +21,6 @@ const MemberCard = () => {
   );
 };
 const VistorRight = ({ isPublisher, isReviewer }) => {
-  console.log("isPublisher:", isPublisher);
   return (
     <div>
       <div className={"memberTable"}>
@@ -115,8 +114,6 @@ const VoteContent = () => {
     </div>
   );
 };
-
-
 
 // const AuthorRight = () => {
 //     console.log('AuthorRight');

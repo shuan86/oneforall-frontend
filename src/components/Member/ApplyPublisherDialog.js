@@ -24,7 +24,9 @@ const FormDialog = () => {
   };
   const onClickApplyPublisher = async () => {
     const result = await apply(companyName, co, phone, email);
-    console.log("onClickApplyPublisher:", result);
+    if (result.status == 200) {
+      console.log("apply publisher scuessful");
+    }
     handleClose();
   };
   return (

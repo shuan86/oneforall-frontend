@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
 import * as contract from "../../modules/smartcontract";
-import RootPublisherDataTable from "../../components/Root/DataTable";
-import Button from "@material-ui/core/Button";
-import AgreeDisagreePublisherDialog from "../../components/Root/DecisionDialog";
-import { RootPublisherDecision } from "../../modules/publisher";
-import { getAllData as getAllLocalStorageData } from "../../modules/localstorage";
-const PublisherPage = () => {
-  const [applyPublisherState, setApplyPublisherState] = useState([]);
+import DataTable from "../../components/Root/DataTable";
+import DecisionDialog from "../../components/Root/DecisionDialog";
+import { RootReviewerDecision } from "../../modules/reviewer";
+const ReviewerPage = () => {
+  const [applyReviewerState, setApplyReviewerState] = useState([]);
   const [selectedData, setSelectedData] = useState({});
 
   const [dialogSwitch, setDialogSwitch] = useState(false);
   const [decisionReason, setDecisionReason] = useState("");
 
-  const publisherList = [];
+  const reviewerList = [];
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "account", headerName: "account", width: 330 },
-    { field: "companyName", headerName: "companyName", width: 330 },
-    { field: "co", headerName: "co", width: 330 },
     { field: "email", headerName: "email", width: 330 },
-    { field: "phone", headerName: "phone", width: 330 },
+    { field: "tag", headerName: "tag", width: 330 },
+    { field: "applyContent", headerName: "applyContent", width: 330 },
   ];
   const onSelected = (sel) => {
     const { data, isSelected } = sel;
@@ -31,8 +28,8 @@ const PublisherPage = () => {
     setDecisionReason(event.target.value);
   };
   const onClickFinalDecision = async (decision) => {
-    const result = await RootPublisherDecision(
-      selectedData.publisherId,
+    const result = await RootReviewerDecision(
+      selectedData.reviewerId,
       decision,
       decisionReason
     );
@@ -43,36 +40,43 @@ const PublisherPage = () => {
 
   useEffect(() => {
     const excuteContract = async () => {
-      const publisherAddrArray = await contract.getApplyPublishersAddr();
-      console.log("publisherAddrArray:", publisherAddrArray);
-      if (publisherAddrArray != null) {
+      const reviewerAddrArray = await contract.getApplyReviewersAddr();
+      console.log("reviewerAddrArray:", reviewerAddrArray);
+      if (reviewerAddrArray != null) {
         let num = 0;
-        for (const addr of publisherAddrArray) {
-          const tmp = await contract.getApplyPublisherEvent(addr);
-          publisherList.push({ ...tmp, id: num });
-          console.log("publisherData:", { ...tmp, id: num });
+        for (const addr of reviewerAddrArray) {
+          const tmp = await contract.getApplyReviewerEvent(addr);
+          reviewerList.push({ ...tmp, id: num });
+          console.log("reviewer data:", { ...tmp, id: num });
           num++;
         }
+
+        /*--------------------------------*/
       }
-      setApplyPublisherState(publisherList);
+      setApplyReviewerState(reviewerList);
     };
     excuteContract(); // <div key={index}>{v.companyName}</div>;
     const handleSubScribeFunc = (mId, isAgree) => {
-      setApplyPublisherState((data) => {
-        let tmpArray = publisherList;
+      setApplyReviewerState((data) => {
+        let tmpArray = reviewerList;
+        let returnArray = [];
         let index = -1;
         if (isAgree) {
           let removeData = null;
           let count = 0;
+
           for (const d of tmpArray) {
             const { memberId } = d;
             if (mId != memberId) {
               removeData = d;
               index = count;
             }
+            //  returnArray.push();
             count++;
           }
+
           if (removeData != null) {
+            // tmpArray = applyReviewerData;
             if (index > -1) {
               const array = tmpArray.splice(index, 1);
               return array;
@@ -82,17 +86,23 @@ const PublisherPage = () => {
         return data;
       });
     };
-    contract.subscribeEnrollPublisherEvent(handleSubScribeFunc);
+    contract.subscribeEnrollReviewerEvent(handleSubScribeFunc);
   }, []);
-
+  useEffect(() => {
+    console.log(
+      "applyReviewerData changexxxxxxxxxxxxxxxxxxxxxxxxx: ",
+      applyReviewerState
+    );
+    return () => {};
+  }, [applyReviewerState]);
   return (
     <div>
-      <RootPublisherDataTable
+      <DataTable
         columns={columns}
-        rows={applyPublisherState}
+        rows={applyReviewerState}
         onSelected={onSelected}
       />
-      <AgreeDisagreePublisherDialog
+      <DecisionDialog
         isOpen={dialogSwitch}
         setOpen={setDialogSwitch}
         onReasonChange={onReasonChange}
@@ -101,4 +111,4 @@ const PublisherPage = () => {
     </div>
   );
 };
-export default PublisherPage;
+export default ReviewerPage;

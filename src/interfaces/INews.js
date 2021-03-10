@@ -1,5 +1,4 @@
 export const NewsTagKind = {
-    sport: "sport",
-    food: "food",
-
-}
+  sport: false,
+  food: false,
+};

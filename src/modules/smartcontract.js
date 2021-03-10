@@ -418,7 +418,7 @@ export const getApplyPublisherEvent = async (filterAddr) => {
     const results = await getPastEventFilter(eventName, {
       addr: filterAddr,
     });
-    console.log('getApplyPublisherEvent:', results);
+    console.log("getApplyPublisherEvent:", results);
     const lastestDataIndex = results.length - 1;
     const addr = results[lastestDataIndex].returnValues[0];
     const publisherId = results[lastestDataIndex].returnValues[1];
@@ -465,24 +465,71 @@ export const applyPublisher = async (
 export const subscribeEnrollPublisherEvent = (handleFunc) => {
   contract.events
     .enrollPublisherEvent({ from: 0 })
-    .on("data", (results) => {
-
-
+    .on("data", async (results) => {
       const publisherId = results.returnValues[0];
       const memberId = results.returnValues[1];
       const isAgree = results.returnValues[2];
       const personalInformation = results.returnValues[3];
       const replyContent = results.returnValues[4];
 
-
-      handleFunc(memberId, isAgree)
+      await handleFunc(memberId, isAgree);
     });
 };
-
+export const getApplyReviewersAddr = async () => {
+  try {
+    const result = await contract.methods.getApplyReviewers().call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
+    return result;
+  } catch (error) {
+    console.log("getApplyPublisher error:", error);
+  }
+};
+export const getApplyReviewerEvent = async (filterAddr) => {
+  const eventName = "applyReviewerEvent";
+  try {
+    const results = await getPastEventFilter(eventName, {
+      addr: filterAddr,
+    });
+    console.log("getApplyReviewerEvent:", results);
+    const lastestDataIndex = results.length - 1;
+    const addr = results[lastestDataIndex].returnValues[0];
+    const reviewerId = results[lastestDataIndex].returnValues[1];
+    const memberId = results[lastestDataIndex].returnValues[2];
+    const index = results[lastestDataIndex].returnValues[3];
+    const data = results[lastestDataIndex].returnValues[4];
+    const { account, tag, email, applyContent } = JSON.parse(data);
+    const tmpData = {
+      reviewerId: reviewerId,
+      memberId: memberId,
+      addr: addr,
+      account: account,
+      index: index,
+      email: email,
+      tag: tag,
+      applyContent: applyContent,
+    };
+    return tmpData;
+  } catch (e) {
+    console.log(`getApplyPublisherEvent error ${eventName}:`, e);
+  }
+};
+export const subscribeEnrollReviewerEvent = async (handleFunc) => {
+  contract.events
+    .enrollReviewerEvent({ from: 0 })
+    .on("data", async (results) => {
+      const reviewerId = results.returnValues[0];
+      const memberId = results.returnValues[1];
+      const addr = results.returnValues[2];
+      const isAgree = results.returnValues[3];
+      const data = results.returnValues[3];
+      const replyContent = results.returnValues[4];
+      console.log("subscribeEnrollReviewerEvent:", memberId);
+      await handleFunc(memberId, isAgree);
+    });
+};
 export const getTestData = async () => {
   try {
     const result = await contract.methods.getTestData().call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
-    console.log('getTestData:', result);
+    console.log("getTestData:", result);
     return result;
   } catch (error) {
     console.log("getTestData error:", error);
