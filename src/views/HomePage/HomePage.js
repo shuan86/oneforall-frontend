@@ -30,6 +30,7 @@ const HomePage = () => {
   //   /* Optional options */
   //   threshold: 1,
   // });
+
   const contractFunc = async () => {
     await contract.getAllNewsId();
     const index = scrollCount;
@@ -37,7 +38,7 @@ const HomePage = () => {
       index,
       index + 1
     );
-    // console.log(allNewsDataArray);
+    console.log(allNewsDataArray);
     // setNewsDataList(allNewsDataArray);
     setNewsDataList((oldNewsDataList) => [
       ...oldNewsDataList,

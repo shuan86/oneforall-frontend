@@ -1,5 +1,1053 @@
+let contractAddr = "0x4bc01D2c4b8C34acDE5f2B2F04b562642C7D761C";
+
+let contractABI = [
+  {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "dbId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "articleId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "authorAddr",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "content",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "time",
+        type: "string",
+      },
+    ],
+    name: "CommentEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "newsId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "string",
+        name: "title",
+        type: "string",
+      },
+      {
+        indexed: true,
+        internalType: "string",
+        name: "author",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "newsType",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "data",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "deposit",
+        type: "uint256",
+      },
+    ],
+    name: "NewsEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "newsId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "content1",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "content2",
+        type: "string",
+      },
+    ],
+    name: "NewsEventImage",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "data",
+        type: "uint256",
+      },
+    ],
+    name: "TestEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "num",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "str",
+        type: "string",
+      },
+    ],
+    name: "TestFunctionEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "publisherId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "memberDbId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "personalInformation",
+        type: "string",
+      },
+    ],
+    name: "applyPublisherEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "reviewerId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "memberDbId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "applyContents",
+        type: "string",
+      },
+    ],
+    name: "applyReviewerEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "publisherId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "memberDbId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "bool",
+        name: "isAgree",
+        type: "bool",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "personalInformation",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "replyContent",
+        type: "string",
+      },
+    ],
+    name: "enrollPublisherEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "reviewerId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "memberDbId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "bool",
+        name: "isAgree",
+        type: "bool",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "data",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "replyContent",
+        type: "string",
+      },
+    ],
+    name: "enrollReviewerEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "time",
+        type: "string",
+      },
+    ],
+    name: "enrollVistorEvent",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "array",
+        type: "address[]",
+      },
+      {
+        internalType: "address",
+        name: "data",
+        type: "address",
+      },
+    ],
+    name: "findAddrArrayIndex",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "array",
+        type: "uint256[]",
+      },
+      {
+        internalType: "uint256",
+        name: "data",
+        type: "uint256",
+      },
+    ],
+    name: "findUintArrayIndex",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "array",
+        type: "address[]",
+      },
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "removeAddrArray",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "array",
+        type: "uint256[]",
+      },
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "removeUintArray",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "source",
+        type: "string",
+      },
+    ],
+    name: "stringToBytes32",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "result",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+    ],
+    name: "isMember",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+    ],
+    name: "isReviewer",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+    ],
+    name: "isPublisher",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+    ],
+    name: "applyReviewerIsExist",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "getApplyReviewers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "reviewerId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "applyContents",
+        type: "string",
+      },
+    ],
+    name: "applyReviewer",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        internalType: "bool",
+        name: "isAgree",
+        type: "bool",
+      },
+      {
+        internalType: "string",
+        name: "time",
+        type: "string",
+      },
+    ],
+    name: "enrollVistor",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "reviewerId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "data",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "replyContent",
+        type: "string",
+      },
+      {
+        internalType: "bool",
+        name: "isAgree",
+        type: "bool",
+      },
+    ],
+    name: "enrollReviewer",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "publisherId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "personalInformation",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "replyContent",
+        type: "string",
+      },
+      {
+        internalType: "bool",
+        name: "isAgree",
+        type: "bool",
+      },
+    ],
+    name: "enrollPublisher",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getVistors",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "getReviewers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "getApplyPublishers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "getPublishers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "publisherId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "personalInformation",
+        type: "string",
+      },
+    ],
+    name: "applyPublisher",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "newsId",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "title",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "author",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "data",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "img1",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "img2",
+        type: "string",
+      },
+    ],
+    name: "postNews",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+    payable: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "addr",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "newsId",
+        type: "uint256",
+      },
+    ],
+    name: "setNewsWantToKnownAmount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "dbId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "articleId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "authorAddr",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "content",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "time",
+        type: "string",
+      },
+    ],
+    name: "comment",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getNewsAmout",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "startIndex",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "endIndex",
+        type: "uint256",
+      },
+    ],
+    name: "getRangeNewsId",
+    outputs: [
+      {
+        internalType: "uint256[5]",
+        name: "",
+        type: "uint256[5]",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "getOwnerAddr",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "getLastSender",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "getAllNewsId",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "removeAllMember",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getVistorLen",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "data",
+        type: "uint256",
+      },
+    ],
+    name: "setTestEvent",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "num",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "str",
+        type: "string",
+      },
+    ],
+    name: "setTestFunction",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+    payable: true,
+  },
+  {
+    inputs: [],
+    name: "getTestData",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+];
+
 const Web3 = require("Web3");
-import { contractABI, contractAddr } from "./mockdata";
+// import { contractABI, contractAddr } from "./mockdata";
+import config from "../config.json";
 const Tx = require("ethereumjs-tx").Transaction;
 
 const INewEvent = {
@@ -33,25 +1081,1062 @@ const ICompleteNewsData = {
 // const web3 = new Web3("ws://localhost:7545"); //web3.currentProvider
 
 const initContract = () => {
-  // const ethEnabled = () => {
-  //   if (window.web3) {
-  //     window.web3 = new Web3(window.web3.currentProvider);
-  //     window.ethereum.enable();
-  //     return true;
-  //   }
-  //   return false;
-  // };
-  // if (!ethEnabled()) {
-  //   alert("Please install MetaMask to use this dApp!");
-  // }
-  // console.log("init web3.js:", Web3.givenProvider);
-  // return window.web3;
-  // return new Web3("ws://localhost:7545");
-  /*--------------------------*/
+  if (config.NODE_ENV == "development") {
+    console.log("development mode");
+  } else {
+    contractAddr = "0x7E549324A220D82dF779109a8eFFF4e232BCbeff";
+    contractABI = [
+      {
+        inputs: [],
+        stateMutability: "nonpayable",
+        type: "constructor",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "dbId",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "articleId",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "address",
+            name: "authorAddr",
+            type: "address",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "content",
+            type: "string",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "time",
+            type: "string",
+          },
+        ],
+        name: "CommentEvent",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "newsId",
+            type: "uint256",
+          },
+          {
+            indexed: true,
+            internalType: "string",
+            name: "title",
+            type: "string",
+          },
+          {
+            indexed: true,
+            internalType: "string",
+            name: "author",
+            type: "string",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "index",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "newsType",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "data",
+            type: "string",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "deposit",
+            type: "uint256",
+          },
+        ],
+        name: "NewsEvent",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "newsId",
+            type: "uint256",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "index",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "content1",
+            type: "string",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "content2",
+            type: "string",
+          },
+        ],
+        name: "NewsEventImage",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "data",
+            type: "uint256",
+          },
+        ],
+        name: "TestEvent",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "num",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "str",
+            type: "string",
+          },
+        ],
+        name: "TestFunctionEvent",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "publisherId",
+            type: "uint256",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "memberDbId",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "index",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "personalInformation",
+            type: "string",
+          },
+        ],
+        name: "applyPublisherEvent",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "reviewerId",
+            type: "uint256",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "memberDbId",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "index",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "applyContents",
+            type: "string",
+          },
+        ],
+        name: "applyReviewerEvent",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "publisherId",
+            type: "uint256",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "memberDbId",
+            type: "uint256",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            indexed: false,
+            internalType: "bool",
+            name: "isAgree",
+            type: "bool",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "personalInformation",
+            type: "string",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "replyContent",
+            type: "string",
+          },
+        ],
+        name: "enrollPublisherEvent",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "reviewerId",
+            type: "uint256",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "memberDbId",
+            type: "uint256",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            indexed: false,
+            internalType: "bool",
+            name: "isAgree",
+            type: "bool",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "data",
+            type: "string",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "replyContent",
+            type: "string",
+          },
+        ],
+        name: "enrollReviewerEvent",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "memberId",
+            type: "uint256",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            indexed: false,
+            internalType: "string",
+            name: "time",
+            type: "string",
+          },
+        ],
+        name: "enrollVistorEvent",
+        type: "event",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address[]",
+            name: "array",
+            type: "address[]",
+          },
+          {
+            internalType: "address",
+            name: "data",
+            type: "address",
+          },
+        ],
+        name: "findAddrArrayIndex",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256[]",
+            name: "array",
+            type: "uint256[]",
+          },
+          {
+            internalType: "uint256",
+            name: "data",
+            type: "uint256",
+          },
+        ],
+        name: "findUintArrayIndex",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "address[]",
+            name: "array",
+            type: "address[]",
+          },
+          {
+            internalType: "uint256",
+            name: "index",
+            type: "uint256",
+          },
+        ],
+        name: "removeAddrArray",
+        outputs: [
+          {
+            internalType: "address[]",
+            name: "",
+            type: "address[]",
+          },
+        ],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256[]",
+            name: "array",
+            type: "uint256[]",
+          },
+          {
+            internalType: "uint256",
+            name: "index",
+            type: "uint256",
+          },
+        ],
+        name: "removeUintArray",
+        outputs: [
+          {
+            internalType: "uint256[]",
+            name: "",
+            type: "uint256[]",
+          },
+        ],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "string",
+            name: "source",
+            type: "string",
+          },
+        ],
+        name: "stringToBytes32",
+        outputs: [
+          {
+            internalType: "bytes32",
+            name: "result",
+            type: "bytes32",
+          },
+        ],
+        stateMutability: "pure",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+        ],
+        name: "isMember",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+        ],
+        name: "isReviewer",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+        ],
+        name: "isPublisher",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+        ],
+        name: "applyReviewerIsExist",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [],
+        name: "getApplyReviewers",
+        outputs: [
+          {
+            internalType: "address[]",
+            name: "",
+            type: "address[]",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "reviewerId",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "memberId",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "applyContents",
+            type: "string",
+          },
+        ],
+        name: "applyReviewer",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "memberId",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            internalType: "bool",
+            name: "isAgree",
+            type: "bool",
+          },
+          {
+            internalType: "string",
+            name: "time",
+            type: "string",
+          },
+        ],
+        name: "enrollVistor",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "reviewerId",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "memberId",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "data",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "replyContent",
+            type: "string",
+          },
+          {
+            internalType: "bool",
+            name: "isAgree",
+            type: "bool",
+          },
+        ],
+        name: "enrollReviewer",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "publisherId",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "memberId",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "personalInformation",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "replyContent",
+            type: "string",
+          },
+          {
+            internalType: "bool",
+            name: "isAgree",
+            type: "bool",
+          },
+        ],
+        name: "enrollPublisher",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "getVistors",
+        outputs: [
+          {
+            internalType: "address[]",
+            name: "",
+            type: "address[]",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [],
+        name: "getReviewers",
+        outputs: [
+          {
+            internalType: "address[]",
+            name: "",
+            type: "address[]",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [],
+        name: "getApplyPublishers",
+        outputs: [
+          {
+            internalType: "address[]",
+            name: "",
+            type: "address[]",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [],
+        name: "getPublishers",
+        outputs: [
+          {
+            internalType: "address[]",
+            name: "",
+            type: "address[]",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "publisherId",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "memberId",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "personalInformation",
+            type: "string",
+          },
+        ],
+        name: "applyPublisher",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "newsId",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "title",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "author",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "data",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "img1",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "img2",
+            type: "string",
+          },
+        ],
+        name: "postNews",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function",
+        payable: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "addr",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "newsId",
+            type: "uint256",
+          },
+        ],
+        name: "setNewsWantToKnownAmount",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "dbId",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "articleId",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "authorAddr",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "content",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "time",
+            type: "string",
+          },
+        ],
+        name: "comment",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "getNewsAmout",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "startIndex",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "endIndex",
+            type: "uint256",
+          },
+        ],
+        name: "getRangeNewsId",
+        outputs: [
+          {
+            internalType: "uint256[5]",
+            name: "",
+            type: "uint256[5]",
+          },
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [],
+        name: "getOwnerAddr",
+        outputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [],
+        name: "getLastSender",
+        outputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [],
+        name: "getAllNewsId",
+        outputs: [
+          {
+            internalType: "uint256[]",
+            name: "",
+            type: "uint256[]",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+      {
+        inputs: [],
+        name: "removeAllMember",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "getVistorLen",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "data",
+            type: "uint256",
+          },
+        ],
+        name: "setTestEvent",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "num",
+            type: "uint256",
+          },
+          {
+            internalType: "string",
+            name: "str",
+            type: "string",
+          },
+        ],
+        name: "setTestFunction",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function",
+        payable: true,
+      },
+      {
+        inputs: [],
+        name: "getTestData",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+        constant: true,
+      },
+    ];
+    console.log("production mode");
+  }
   if (window.ethereum) {
     const web3 = new Web3(Web3.givenProvider);
     window.ethereum.enable();
+    console.log("process.env.NODE_ENV:", config.NODE_ENV);
     console.log("initContract:", web3.eth);
+
     return web3;
   } else {
     alert("Please install MetaMask to use this dApp!");
@@ -171,7 +2256,7 @@ export const postNewsToContract = async (data) => {
     await transactionContract(
       ownerAddr,
       contractAddr,
-      "10000",
+      "1",
       contract.methods
         .postNewsForOwner(
           a_id,
@@ -262,9 +2347,9 @@ export const getAllNewsId = async () => {
   const result = await contract.methods.getAllNewsId().call();
   console.log("getAllNewsId:", result);
 };
-export const getLastestNews = async (startIndex, endIndex) => {
+export const getRangeNewsId = async (startIndex, endIndex) => {
   const result = await contract.methods
-    .getLatestNewsData(startIndex, endIndex)
+    .getRangeNewsId(startIndex, endIndex)
     .call();
   console.log("getLastestNews:", result);
   const array = result[Object.keys(result)[0]];
@@ -328,7 +2413,7 @@ export const getNewsImageByNewsIdEvent = async (newsId, index) => {
 };
 export const getNewsCompleteData = async (startIndex, endIndex) => {
   let allData = [];
-  const idArray = await getLastestNews(startIndex, endIndex);
+  const idArray = await getRangeNewsId(startIndex, endIndex);
   for (let i = idArray.length - 1; i >= 0; i--) {
     const tmpNewsData = await getNewsByNewsIdEvent(idArray[i]);
     const tmpNewsImg = await getNewsImageByNewsIdEvent(
