@@ -1,4 +1,4 @@
-let contractAddr = "0x4bc01D2c4b8C34acDE5f2B2F04b562642C7D761C";
+let contractAddr = "0x7E549324A220D82dF779109a8eFFF4e232BCbeff";
 
 let contractABI = [
   {
@@ -2134,9 +2134,6 @@ const initContract = () => {
   if (window.ethereum) {
     const web3 = new Web3(Web3.givenProvider);
     window.ethereum.enable();
-    console.log("process.env.NODE_ENV:", config.NODE_ENV);
-    console.log("initContract:", web3.eth);
-
     return web3;
   } else {
     alert("Please install MetaMask to use this dApp!");
