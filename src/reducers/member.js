@@ -41,3 +41,12 @@ export const memberStatus = (state = initialMemberStatus, action) => {
       return state;
   }
 };
+
+export const flag = (state = false, action) => {
+  switch (action.type) {
+    case "setMemberListFlag":
+      return !state;
+    default:
+      return state;
+  }
+};

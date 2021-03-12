@@ -70,7 +70,7 @@ const HomePage = () => {
   //const observer = useRef();
 
   return (
-    <div>
+    <div className="homePageContainer">
       <Filter />
       <div className="container">
         <div className="homePageContent">

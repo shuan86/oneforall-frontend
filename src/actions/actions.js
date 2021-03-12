@@ -22,4 +22,9 @@ const updateMemberStatus = (isVistor, isReviewer, isPublisher) => ({
   payload: { isVistor: isVistor, isReviewer: isReviewer, isPublisher: isPublisher },
   type: "updateMemberStatus",
 });
-export { initialMember, updateMember, wontUpdateMember, updateLoginStatus, initialMemberStatus, updateMemberStatus };
+
+const setMemberListFlag =(value) => ({
+  payload: value,
+  type:  "setMemberListFlag",
+})
+export { initialMember, updateMember, wontUpdateMember, updateLoginStatus, initialMemberStatus, updateMemberStatus, setMemberListFlag };

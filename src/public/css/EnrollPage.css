@@ -2,23 +2,33 @@
 
 
 .enrollInfo {
-    width: 680px;
+    width: 430px;
     border: solid 1px var(--gray-border);
-    border-radius: 20px;
+    border-radius: 10px;
     margin: 0 auto;
     margin-top: 30px;
     box-sizing: border-box;
 }
 
 .enrollInfo button {
-    width: 680px;
-    height: 80px;
-    border-radius: 0 0 20px 20px;
+    width: 100%;
+    height: 40px;
     border: none;
     background-color: var(--navy-blue);
     color: #fff;
-    margin-top: 55px;
-    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color .2s ease-in;
+}
+
+.enrollInfo button:hover {
+    background-color: var(--sky-blue);
+}
+
+.enrollInfo button:focus {
+    background-color: var(--navy-blue);
 }
 
 .enrollContent {
@@ -26,6 +36,7 @@
     flex-direction: column;
     padding: 20px;
     padding-bottom: 0;
+    box-shadow: 5px 5px 10px 10px var(--light-gray);
 }
 
 .enrollContent h3 {
@@ -38,13 +49,14 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 45px;
+    margin-bottom: 30px;
 }
 
 .enrollData label {
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 1.1px;
-    color: var(--gray);
+    color: var(--black);
+    font-weight: 500;
     letter-spacing: 1.75px;
     margin-bottom: 5px;
 }
@@ -53,8 +65,19 @@
     font-size: 16px;
     letter-spacing: 1.75px;
     color: var(--black);
-    padding-bottom: 5px;
-    border: none;
-    border-bottom: solid 1.5px var(--gray-border);
+    border: 2px solid var(--gray);
+    /* background-color: var(--light-blue); */
+    border-radius: 3px;
+    padding: 5px 0;
+    padding-left: 10px;
     margin-top: 5px;
+    transition: border .2s ease-in;
+}
+
+.enrollData input:focus {
+    border: 2px solid var(--navy-blue);
+}
+
+#publicKey {
+    font-size: 12px;
 }

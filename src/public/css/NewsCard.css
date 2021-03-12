@@ -13,6 +13,11 @@
   color: var(--black);
   margin-left: 10px;
   padding: 5px 10px;
+  transition: color .2s ease-in;
+}
+
+.filter a:hover {
+  color: var(--navy-blue);
 }
 
 .filter a:first-child {
@@ -21,28 +26,71 @@
 }
 
 /*content*/
+
 .content {
   /* padding: 30px 15px 0 15px; */
   padding-top: 30px;
-  margin-bottom: 25px;
+}
+
+.NewsCard {
+  width: 100%;
+  padding-top: 15px;
 }
 
 .card {
   display: block;
   position: relative;
-  max-width: 620px;
+  width: 90%;
+  max-width: 1200px;
   border: 1px solid var(--gray-border);
-  border-radius: 20px;
-  margin: 40px 10px;
+  border-radius: 10px;
+  margin: 50px 0;
+  margin-bottom: 70px;
+}
+
+.cardTop {
+  position: absolute;
+  top: -30px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+}
+
+.scrollingText {
+  display: block;
+  width: 90%;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px 0 var(--gray);
+}
+
+.scrollingText .userComment {
+  border: 0;
 }
 
 .status {
   display: inline-block;
-  position: absolute;
-  top: -20px;
-  left: -1px;
-  padding: 10px;
-  background-color: var(--yellow);
+  min-width: 50px;
+  line-height: 30px;
+  padding: 5px 10px;
+  margin-right: 10px;
+  background-color: var(--navy-blue);
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px 0 var(--gray);
+  font-size: 1rem;
+}
+
+.cardTop .userComment {
+  margin: 0;
+  padding: 7px 0;
+  padding-left: 15px;
+}
+
+.cardTop .userComment span {
+  border: none;
+  padding: 0;
 }
 
 .postInfo {
@@ -54,6 +102,23 @@
 
 .userInfo {
   display: flex;
+  position: relative;
+}
+
+.postData {
+  display: flex;
+  padding: 5px 15px;
+  padding-left: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.postData:hover {
+  background-color: var(--light-gray);
+}
+
+.postData:active {
+  background-color: var(--gray);
 }
 
 .userPhoto {
@@ -66,8 +131,20 @@
 }
 
 .account {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 5px;
   font-size: 1rem;
   font-weight: 700;
+}
+
+.account h3 {
+  margin-right: 5px;
+}
+
+.account p {
+  font-weight: 400;
+  color: var(--light-black);
 }
 
 .articleTime {
@@ -95,7 +172,15 @@
   color: #fff;
   border-radius: 5px;
   margin-right: 10px;
+  background-color: var(--sky-blue);
+}
+
+.hashtag a:hover {
   background-color: var(--navy-blue);
+}
+
+.hashtag a:active {
+  background-color: var(--deep-blue);
 }
 
 .article h3 {
@@ -105,7 +190,9 @@
 }
 
 .article p {
-  line-height: 1.8rem;
+  line-height: 2rem;
+  font-size: 1rem;
+  letter-spacing: 0.02rem;
   margin-bottom: 20px;
   padding: 0 15px;
 }
@@ -115,10 +202,15 @@
 }
 
 .article a {
-  display: block;
-  padding: 15px 15px;
-  /* margin-top: 15px; */
+  display: inline-block;
+  padding: 15px;
   color: var(--black);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.article a:hover {
+  text-decoration: underline;
 }
 
 .like {
@@ -131,8 +223,17 @@
   display: inline-block;
   color: #fff;
   padding: 10px 15px;
-  background-color: var(--navy-blue);
+  background-color: var(--sky-blue);
+  transition: background-color .2s ease-in;
   border-radius: 5px;
+}
+
+.like a:hover {
+  background-color: var(--navy-blue);
+}
+
+.like a:active {
+  background-color: var(--deep-blue);
 }
 
 .like span {
@@ -142,68 +243,126 @@
 
 /*comment*/
 .comment {
-  padding: 0 15px 15px 15px;
+  display: block;
 }
 
 .comment a {
-  font-size: 14px;
-  color: var(--gray);
+  font-size: 1rem;
+  color: var(--black);
+  padding-left: 10px;
+  font-weight: 700;
+}
+
+.comment a:hover {
+  text-decoration: underline;
 }
 
 .userInput {
   display: flex;
   justify-content: space-between;
+  height: 40px;
+  margin-bottom: 16px;
+  padding: 0 16px;
 }
 
 .userInput input {
   width: 100%;
   padding: 0 10px;
-  background-color: var(--light-blue);
+  color: var(--black);
+  background-color: var(--gray);
   border: none;
   border-radius: 5px;
   outline: none;
+  border: 2px solid var(--gray);
+  transition: border .2s ease-in, background-color .2s ease-in
+}
+
+.userInput input:hover {
+  border: 2px solid var(--gray-border);
+}
+
+.userInput input:focus {
+  border: 2px solid var(--sky-blue);
+  background-color: #fff;
 }
 
 .userInput a {
   display: inline;
   color: #fff;
   width: 10%;
+  min-width: 40px;
   text-align: center;
   line-height: 40px;
   padding: 0 10px;
   margin-left: 10px;
-  background-color: var(--navy-blue);
   border-radius: 5px;
+  background-color: var(--sky-blue);
+  transition: background-color .2s ease-in;
+}
+
+.userInput a:hover {
+  color: #fff;
+  background-color: var(--navy-blue);
+  text-decoration: none;
+}
+
+.userInput a:active {
+  color: #fff;
+  background-color: var(--deep-blue);
+  text-decoration: none;
 }
 
 .userComment {
   display: flex;
   justify-content: space-between;
-  margin: 20px 0;
+  border-top: 1px solid var(--gray);
+  border-bottom: 0;
+}
+
+.comment .userComment:nth-last-child(2) {
+  border-bottom: 1px solid var(--gray);
 }
 
 .userComment span {
   width: 100%;
-  padding: 15px 10px;
-  background-color: var(--light-blue);
-  border-radius: 5px;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.comment .userComment span {
+  /* background-color: var(--light-blue); */
+  border-bottom: 0;
+  border-radius: 0;
 }
 
 .userComment span .user-id {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .userComment span p {
-  font-size: 16px;
+  font-size: 1rem;
   margin: 0;
   width: 100%;
 }
 
-.userComment p {
+
+.timeCode {
+  position: relative;
   width: 10%;
-  font-size: 12px;
+  font-size: 0.75rem;
   margin-right: 20px;
   margin-left: 10px;
+}
+
+.timeCode p {
+  position: absolute;
+  bottom: 0;
+}
+
+.moreComment {
+  display: inline-block;
+  width: 100%;
+  padding: 16px 0;
 }
 
 /*vote*/
@@ -245,4 +404,28 @@
   width: 30%;
   background-color: var(--green);
   border-radius: 5px 0 0 5px;
+}
+
+.memberInformationCard {
+  display: block;
+}
+
+
+
+
+@media screen and (max-width: 800px) {
+  .card {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .status {
+    min-width: 42px;
+  }
+
+  .userInput a {
+    display: none;
+  }
+
 }

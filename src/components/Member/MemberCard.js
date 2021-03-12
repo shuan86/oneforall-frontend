@@ -3,6 +3,12 @@ import { useSelector } from "react-redux";
 import "../../public/css/MemberCard.css";
 import ApplyReviewerDialog from "./ApplyReviewerDialog";
 import ApplyPublisherDialog from "./ApplyPublisherDialog";
+
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+
+import Copper10 from '../../public/images/medals/copper10.png'
+
 const MemberCard = () => {
   return (
     <div className={"personalInfo"}>
@@ -20,6 +26,34 @@ const MemberCard = () => {
     </div>
   );
 };
+
+const MemberInformation = ({setMemberFlag}) => {
+  const onClickCloseMemberInformation = () => {
+    setMemberFlag(false);
+  }
+  return (
+    <div className="memberInformation">
+      <div className="close" onClick={onClickCloseMemberInformation}><CloseOutlinedIcon /></div>
+      <div className={"memberInformationPersonal"}>
+        <img src="favicon.ico" alt="" className="userPhoto"/>
+        <div className={"userAccount"}>
+          <div className="userAccountID">
+            <p>a1233456</p>
+            <img src={Copper10} alt="medals" className="medals"/>
+          </div>
+          <p>477分</p>
+          <p>註冊日期：2020-03-11</p>
+        </div>
+      </div>
+      <div className="publicKey">
+        <p className="">0x59982711466fD1d4C2F1C1F710f721651BCCFDb3</p>
+        <FileCopyOutlinedIcon fontSize="small"/>
+      </div>
+      <a href="#">追隨</a>
+    </div>
+  );
+};
+
 const VistorRight = ({ isPublisher, isReviewer }) => {
   console.log("isPublisher:", isPublisher);
   return (
@@ -145,4 +179,4 @@ const VoteContent = () => {
 //     );
 // };
 
-export { MemberCard, ReviewerRight, VistorRight };
+export { MemberCard, ReviewerRight, VistorRight, MemberInformation };

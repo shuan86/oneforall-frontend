@@ -1,22 +1,41 @@
-.rankingTable{
+.rankingTable {
+    display: inline-block;
     width: 300px;
-    height: 500px;
     color: var(--navy-blue);
     margin: 30px auto;
+    padding: 16px;
+    border: 1px solid var(--gray-border);
+    border-radius: 10px;
 }
 
-.rankingName,.rankingScore,.rankingSequence{
-    color: var(--gray);
+.rankingTable h2 {
+    font-size: 1.5rem;
+    padding-bottom: 16px;
 }
 
-.rankingItem{
+@media screen and (max-width: 800px) {
+    .rankingTable {
+        display: none;
+    }
+}
+
+.rankingName,
+.rankingScore,
+.rankingSequence {
+    color: var(--black);
+}
+
+/* .rankingItem {
     margin-top: 25px;
-}
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray-border);
+} */
 
-.rankingName{
+.rankingName {
     padding-right: 142px;
 }
 
-.rankingScore{
+.rankingScore {
     padding-right: 58px;
 }

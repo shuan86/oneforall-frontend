@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../../public/css/common.css";
 import "../../public/css/NavBar.css";
@@ -6,6 +6,8 @@ import Logo from "../../Logo.svg";
 import { useSelector, useDispatch } from "react-redux";
 import * as memberModuel from "../../modules/member";
 import { getAllData as getLocalStorageData } from "../../modules/localstorage";
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import {
   initialMember,
@@ -14,6 +16,7 @@ import {
   updateLoginStatus,
   initialMemberStatus,
   updateMemberStatus,
+  setMemberListFlag,
 } from "../../actions/actions";
 import { ILocalStorage } from "../../interfaces/IMember";
 const NavBar = () => {
@@ -63,6 +66,7 @@ const NavBar = () => {
 
   const loginStatus = useSelector((s) => s.loginStatus);
   const account = useSelector((s) => s.member.account);
+  const memberListFlag = useSelector((s)=>s.flag);
   const onClickLogout = async () => {
     let memberData = wontUpdateMember();
     memberData = initialMember();
@@ -74,24 +78,28 @@ const NavBar = () => {
   const onClickMemberCenter = () => {
     onChangeRouter("/member");
   };
+  
+  const onClickMemberListFlag = () => {
+    dispatch(setMemberListFlag())
+  }
+
   return (
     <div className={"navBar"}>
       <div className="container">
         <div className="navContent">
-          <div className={"navLeft"}>
-            <div className={"logo"}>
-              <img
-                className={"logoImg"}
-                src={Logo}
-                alt="logoImg"
-                width={"158px"}
-                onClick={() => onChangeRouter("/")}
-              />
-            </div>
-          </div>
+          <img
+            className={"logo"}
+            src={Logo}
+            alt="logoImg"
+            width={"158px"}
+            onClick={() => onChangeRouter("/")}
+          />
           <div className={"leftRight"}>
             <div className={"navFeature"}>
-              <input className={"searchBar"} type="text" value={"搜尋"} />
+              <div className="searchBarContainer">
+                <button className={"searchBarIcon"}></button>
+                <input className={"searchBar"} type="text" placeholder={"搜尋"} />
+              </div>
               <button
                 className={`signupButton ${loginStatus && "navDisplayNone"}`}
                 onClick={() => onChangeRouter("/enroll")}
@@ -105,20 +113,17 @@ const NavBar = () => {
               >
                 登入
               </button>
-              <button
-                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayBlock" && "signinButton"
-                  } ${!loginStatus && "navDisplayNone"}`}
-                onClick={onClickMemberCenter}
-              >
-                {account}
-              </button>
-              <button
-                className={`${loginStatus && "navDisplayBlock" && "signinButton"
-                  } ${!loginStatus && "navDisplayNone"}`}
-                onClick={onClickLogout}
-              >
-                logout
-              </button>
+              <div className={memberListFlag?"memberList":"none"}>
+                  <div className="memberListItem" onClick={()=>{onClickMemberListFlag();onClickMemberCenter();}}><AccountBoxIcon fontSize="small"/><div className="memberListItemTitle">會員帳號</div></div>
+                  <div className="memberListItem"></div>
+                  <div className="memberListItem" onClick={()=>{onClickMemberListFlag();onClickLogout();}}><ExitToAppIcon fontSize="small"/><div className="memberListItemTitle">登出</div></div>
+                  <div className="fakeDiv" onClick={onClickMemberListFlag}></div>
+              </div>
+              <div className={`${loginStatus && "navDisplayBlock" && "navUserInfo"
+                    } ${!loginStatus && "navDisplayNone"}`}  onClick={onClickMemberListFlag} >
+                <div className="navUserInfoID">{account}</div>
+                <img src="static/media/author.7613283f.jpg" alt="Background" class="navUserInfoPhoto"></img>
+              </div>
             </div>
           </div>
         </div>

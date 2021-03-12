@@ -53,7 +53,7 @@ const LoginForm = () => {
         <h3>登入</h3>
         <Field
           htmlFor="account"
-          labelContent="account:"
+          labelContent="帳號"
           type="text"
           name="account"
           id="account"
@@ -65,7 +65,7 @@ const LoginForm = () => {
         />
         <Field
           htmlFor="password"
-          labelContent="password:"
+          labelContent="密碼"
           type="password"
           name="password"
           id="password"
@@ -75,8 +75,8 @@ const LoginForm = () => {
           setErrorMessage={setErrorMessage}
           thisFieldErrorMsg={errorMessage.password}
         />
+        <button onClick={onClickSubmit}>送出</button>
       </div>
-      <button onClick={onClickSubmit}>送出</button>
     </div>
   );
 };

@@ -68,7 +68,7 @@ const EnrollForm = () => {
         <h3>註冊會員</h3>
         <Field
           htmlFor="account"
-          labelContent="account:"
+          labelContent="帳號"
           type="text"
           name="account"
           id="account"
@@ -80,7 +80,7 @@ const EnrollForm = () => {
         />
         <Field
           htmlFor="password"
-          labelContent="password:"
+          labelContent="密碼"
           type="password"
           name="password"
           id="password"
@@ -92,7 +92,7 @@ const EnrollForm = () => {
         />
         <Field
           htmlFor="userName"
-          labelContent="userName:"
+          labelContent="真實姓名"
           type="text"
           name="userName"
           id="userName"
@@ -104,7 +104,7 @@ const EnrollForm = () => {
         />
         <Field
           htmlFor="email"
-          labelContent="email:"
+          labelContent="電子信箱"
           type="email"
           name="email"
           id="email"
@@ -116,7 +116,7 @@ const EnrollForm = () => {
         />
         <Field
           htmlFor="publicKey"
-          labelContent="publicKey:"
+          labelContent="publicKey"
           type="text"
           name="publicKey"
           id="publicKey"
@@ -126,8 +126,8 @@ const EnrollForm = () => {
           setErrorMessage={setErrorMessage}
           thisFieldErrorMsg={errorMessage.publicKey}
         />
+        <button onClick={onClickEnroll}>送出</button>
       </div>
-      <button onClick={onClickEnroll}>送出</button>
     </div>
   );
 };
