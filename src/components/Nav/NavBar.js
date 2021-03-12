@@ -53,11 +53,7 @@ const NavBar = () => {
       //   Boolean(isReviewer),
       //   Boolean(isPublisher)
       // );
-      memberStatusData = updateMemberStatus(
-        isMember,
-        isReviewer,
-        isPublisher
-      );
+      memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);
     }
     dispatch(updateLoginStatusData);
     dispatch(memberData);
@@ -74,6 +70,7 @@ const NavBar = () => {
 
     dispatch(updateLoginStatus(false));
     dispatch(initialMember());
+    history.push("/login");
   };
   const onClickMemberCenter = () => {
     onChangeRouter("/member");
@@ -107,8 +104,9 @@ const NavBar = () => {
                 註冊
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayNone"
-                  }`}
+                className={`${!loginStatus && "signinButton"} ${
+                  loginStatus && "navDisplayNone"
+                }`}
                 onClick={() => onChangeRouter("/login")}
               >
                 登入

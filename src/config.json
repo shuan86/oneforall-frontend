@@ -4,5 +4,6 @@
   "THEME_COLORS": {
     "PRIMARY": "#007bff",
     "SECONDARY": "#fc3"
-  }
+  },
+  "NODE_ENV": "development123"
 }
