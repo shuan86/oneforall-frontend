@@ -79,6 +79,6 @@ export const postNews = async (
     );
     return { ...result.data };
   } catch (error) {
-    console.error("postNews error :", error);
+    console.error("postNews error  :", error);
   }
 };
