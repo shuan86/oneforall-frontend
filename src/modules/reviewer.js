@@ -1,5 +1,7 @@
 import * as sendRequest from "./sendRequest";
 import * as localStorage from "./localstorage";
+import { ReviewerStatus } from "../interfaces/IMember";
+
 export const apply = async (email, tag, applyContent) => {
   try {
     const { token, memberId } = localStorage.getAllData();
@@ -29,10 +31,36 @@ export const RootReviewerDecision = async (reviewerId, decision, reason) => {
       "/reviewer",
       { reviewerId: reviewerId, decision: decision, reason: reason }
     );
-    return {
-      status: result.status,
-    };
+
+    if (result && result.status == 200) {
+      return { ...result.data };
+    }
   } catch (error) {
     console.log("reviewer RootReviewerDecision error:", error);
   }
+  return null;
+};
+export const getApplyReviewers = async () => {
+  let result;
+  const { token, memberId } = localStorage.getAllData();
+  try {
+    result = await sendRequest.rsaTokenGetRequest(
+      token,
+      memberId,
+      "/reviewers",
+      {
+        memberId,
+        token,
+        status: ReviewerStatus.apply,
+      }
+    );
+    if (result && result.status == 200) {
+      const array = result.data;
+      return array;
+    }
+  } catch (error) {
+    console.log("logout error:", error);
+  }
+
+  return null;
 };

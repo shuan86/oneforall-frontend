@@ -3,7 +3,17 @@ export const EnumMemberStatus = {
   reviewer: "reviewer",
   publisher: "publisher",
 };
-
+export const ReviewerStatus = {
+  apply: 0,
+  UnderReview: 1,
+  agreen: 2,
+};
+export const PublisherStatus = {
+  apply: 0,
+  UnderReview: 1,
+  disagree: 2,
+  agree: 3,
+};
 class LocalStorage {
   constructor() {
     this.memberId = "memberId";

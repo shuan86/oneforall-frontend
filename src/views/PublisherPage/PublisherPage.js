@@ -7,8 +7,8 @@ import {
 } from "../../components/Member/MemberCard";
 import { NewsTagKind } from "../../interfaces/INews";
 import "../../public/css/PublicerPage.css";
-import BackupRoundedIcon from '@material-ui/icons/BackupRounded';
-
+import BackupRoundedIcon from "@material-ui/icons/BackupRounded";
+import { postNews } from "../../modules/publisher";
 const PublisherPage = () => {
   const [titleState, setTitleState] = useState("");
   const [authorState, setAuthorState] = useState("");
@@ -16,24 +16,31 @@ const PublisherPage = () => {
   const [contentState, setContentState] = useState("");
   const [depositState, setDepositState] = useState(0);
 
-  const [tags, setTags] = useState([]);
+  const [tagsState, setTags] = useState([]);
   const [imageState, setImageState] = useState("");
 
   const tagsNameArray = Object.keys(NewsTagKind);
-  
+
   useEffect(() => {
     return () => {};
   }, []);
-
+  const onClickSendNews = async () => {
+    await postNews(
+      titleState,
+      authorState,
+      contentState,
+      tagsState,
+      imageState,
+      imageState
+    );
+  };
   return (
     <div className="container">
       <form action="" className="postArticleForm">
         <div className="publisherPersonalData">
           <div className="formInput">
             <label htmlFor="">新聞來源</label>
-            <input 
-              type="text"
-            />
+            <input type="text" />
           </div>
           <div className="formInput">
             <label htmlFor="">署名作者</label>
@@ -108,8 +115,10 @@ const PublisherPage = () => {
           </textarea>
         </div>
         <label htmlFor="file" className="formInput formInputUploadPhoto">
-          <BackupRoundedIcon size="small"/>
-          <label htmlFor="file" className="uploadPhoto">上傳照片</label>
+          <BackupRoundedIcon size="small" />
+          <label htmlFor="file" className="uploadPhoto">
+            上傳照片
+          </label>
           <input
             id="file"
             type="file"
@@ -128,14 +137,14 @@ const PublisherPage = () => {
           />
         </label>
         {/* {`data:image/png;base64,"${atob(imageState)}`} */}
-          {imageState.length > 0 ? <img src={`${imageState}`} /> : null}
+        {imageState.length > 0 ? <img src={`${imageState}`} /> : null}
         <div className="formTotal">
           <div className="currencyTotal">
             <span>發文押金 共</span>
             <span>0.005</span>
             <span>ETH</span>
           </div>
-          <input type="submit" value="確認送出"/>
+          <input type="submit" value="確認送出" onClick={onClickSendNews} />
         </div>
       </form>
     </div>

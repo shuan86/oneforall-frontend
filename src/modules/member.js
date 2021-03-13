@@ -38,12 +38,10 @@ export const logout = async () => {
   const { token, memberId } = localStorage.getAllData();
   localStorage.clearAllData();
   try {
-
     result = await sendRequest.rsaTokenPostRequest(token, memberId, "/logout", {
       memberId,
       token,
     });
-
   } catch (error) {
     console.log("logout error:", error);
   }

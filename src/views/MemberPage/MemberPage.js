@@ -37,14 +37,14 @@ const MemberPage = () => {
 
   return (
     <div className="container">
-      {isReviewer==false ? (
+      {isReviewer ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.reviewer)}
         >
           審查者
         </button>
       ) : null}
-      {isPublisher ==false? (
+      {isPublisher ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.publisher)}
         >
