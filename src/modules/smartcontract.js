@@ -104,30 +104,66 @@ const transactionContract = async (
   contractData,
   prikey
 ) => {
-  await web3.eth.getTransactionCount(sender, (err, txCount) => {
-    const txObject = {
-      nonce: web3.utils.toHex(txCount),
-      gasLimit: web3.utils.toHex(800000), // Raise the gas limit to a much higher amount
-      gasPrice: web3.utils.toHex(web3.utils.toWei("1", "wei")),
-      to: contractAddress,
-      value: web3.utils.toHex(web3.utils.toWei(value, "wei")),
-      data: contractData,
-    };
-
-    const tx = new Tx(txObject);
-    tx.sign(prikey);
-
-    const serializedTx = tx.serialize();
-    const raw = "0x" + serializedTx.toString("hex");
-
-    web3.eth.sendSignedTransaction(raw, (err, txHash) => {
-      if (err) {
-        console.log("transactionContract err:", err);
+  await web3.eth.getTransactionCount(
+    sender,
+    "pending",
+    async (err, txCount) => {
+      let tx = null;
+      let txObject = {
+        nonce: web3.utils.toHex(txCount), //web3.eth.getTransactionCount（）+ 1  web3.utils.toHex(txCount)
+        gasLimit: web3.utils.toHex(800000), // Raise the gas limit to a much higher amount
+        gasPrice: web3.utils.toHex(web3.utils.toWei("1", "wei")),
+        to: contractAddress,
+        value: web3.utils.toHex(web3.utils.toWei(value, "wei")),
+        data: contractData,
+      };
+      let nonceCount = txCount;
+      if (process.env.NODE_ENV == "development") {
+        nonceCount = txCount;
       } else {
-        console.log("transactionContract txHash:", txHash);
+        nonceCount = txCount;
+        const dbNonce = await updateNonce();
+        const randomNonce = getRandomInt(900);
+        nonceCount = dbNonce;
+        console.log(
+          "nonceCount:",
+          nonceCount,
+          "dbNonce:",
+          dbNonce,
+          "sum:",
+          nonceCount
+        );
       }
-    });
-  });
+      txObject = {
+        nonce: web3.utils.toHex(nonceCount), //web3.eth.getTransactionCount（）+ 1  web3.utils.toHex(txCount) web3.utils.toHex(nonceCount)
+        gasLimit: web3.utils.toHex(800000), // Raise the gas limit to a much higher amount
+        gasPrice: web3.utils.toHex(web3.utils.toWei("1500000", "wei")),
+        to: contractAddress,
+        value: web3.utils.toHex(web3.utils.toWei(value, "wei")),
+        data: contractData,
+      };
+
+      if (process.env.NODE_ENV == "development") {
+        tx = new Tx(txObject);
+      } else {
+        tx = new Tx(txObject, { chain: "ropsten", hardfork: "petersburg" }); // tx = new Tx(txObject, {chain:'ropsten', hardfork: 'petersburg'})
+      }
+
+      //const tx = new Tx(txObject)
+      tx.sign(prikey);
+
+      const serializedTx = tx.serialize();
+      const raw = "0x" + serializedTx.toString("hex");
+
+      web3.eth.sendSignedTransaction(raw, (err, txHash) => {
+        if (err) {
+          console.log("transactionContract err:", err);
+        } else {
+          console.log("transactionContract txHash:", txHash);
+        }
+      });
+    }
+  );
 };
 
 const subscribeTestEvent = () => {
@@ -535,3 +571,7 @@ export const getTestData = async () => {
   }
 };
 //execute();
+export const paidArticleDeposit = async (articleId) => {
+  const result = await contract.methods.paidArticleDeposit(articleId).call();
+  console.log("paidArticleDeposit:", result);
+};

@@ -1,4 +1,4 @@
-export const developContractAddr = "0x08d0C4B74562912Bf9675daf2B0042847C928411";
+export const developContractAddr = "0x19f9A99f4282ae8aF91Cb9c8E8C272a09d888Ce4";
 export const productionContractAddr =
   "0x4db118D49E4E1c4B4f959af3CF7F17b3d3A26fAF";
 
@@ -56,26 +56,32 @@ export const ABI = [
       },
       {
         indexed: true,
-        internalType: "string",
-        name: "title",
-        type: "string",
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
       },
       {
         indexed: true,
-        internalType: "string",
-        name: "author",
-        type: "string",
+        internalType: "address",
+        name: "authorAddr",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "enum AbPlatform.ArticleType",
+        name: "articleType",
+        type: "uint8",
+      },
+      {
+        indexed: false,
+        internalType: "enum AbPlatform.NewsType",
+        name: "newsType",
+        type: "uint8",
       },
       {
         indexed: false,
         internalType: "uint256",
         name: "index",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "newsType",
         type: "uint256",
       },
       {
@@ -89,6 +95,12 @@ export const ABI = [
         internalType: "uint256",
         name: "deposit",
         type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "img",
+        type: "string",
       },
     ],
     name: "NewsEvent",
@@ -796,18 +808,51 @@ export const ABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "newsId",
+        name: "articleId",
+        type: "uint256",
+      },
+    ],
+    name: "paidArticleDeposit",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+    payable: true,
+  },
+  {
+    inputs: [],
+    name: "getPaidArticleDepositKeys",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "articleId",
         type: "uint256",
       },
       {
-        internalType: "string",
-        name: "title",
-        type: "string",
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
       },
       {
-        internalType: "string",
-        name: "author",
-        type: "string",
+        internalType: "enum AbPlatform.ArticleType",
+        name: "articleType",
+        type: "uint8",
+      },
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
       },
       {
         internalType: "string",
@@ -816,20 +861,14 @@ export const ABI = [
       },
       {
         internalType: "string",
-        name: "img1",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "img2",
+        name: "img",
         type: "string",
       },
     ],
     name: "postNews",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
-    payable: true,
   },
   {
     inputs: [

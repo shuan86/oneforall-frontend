@@ -1,6 +1,7 @@
 import * as sendRequest from "./sendRequest";
 import * as localStorage from "../modules/localstorage";
 import { PublisherStatus } from "../interfaces/IMember";
+import { encrypt } from "./encrypt";
 
 export const apply = async (companyName, co, phone, email) => {
   try {
@@ -65,19 +66,38 @@ export const postNews = async (
   title,
   authorName,
   content,
-  tags,
-  img1,
-  img2
+  time,
+  deposit,
+  imgArray,
+  tagArray
 ) => {
   try {
+    console.log("postNews:", imgArray);
+
     const { token, memberId } = localStorage.getAllData();
-    const result = await sendRequest.rsaTokenPostRequest(
-      token,
+    const formData = new FormData();
+    const data = {
       memberId,
-      "/publisher",
-      { title, authorName, content, tags, img1, img2 }
+      title,
+      authorName,
+      content,
+      time,
+      deposit,
+      tagArray,
+    };
+    const rsaData = encrypt(JSON.stringify(data));
+    formData.append("rsaData", rsaData);
+    formData.append("image", imgArray);
+
+    const result = await sendRequest.tokenFilePostRequest(
+      token,
+      "/news",
+      formData
     );
-    return { ...result.data };
+    if (result && result.status == 200) {
+      return { ...result.data };
+    }
+    return null;
   } catch (error) {
     console.error("postNews error  :", error);
   }

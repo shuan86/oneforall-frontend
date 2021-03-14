@@ -25,6 +25,25 @@ export const rsaTokenPostRequest = async (
   }
   return result;
 };
+export const tokenFilePostRequest = async (JWTtoken, rout, formData) => {
+  const config = {
+    headers: {
+      Authorization: ` ${JWTtoken}`,
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  const result = await axios.post(
+    configData.SERVER_URL + rout,
+    formData,
+    config
+  );
+  if (result.status == 200) {
+    console.log("sendPostRequest sucessful");
+  }
+  return result;
+};
+
 export const rsaTokenPutRequest = async (
   JWTtoken,
   memberId,

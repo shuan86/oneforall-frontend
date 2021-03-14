@@ -9,30 +9,57 @@ import { NewsTagKind } from "../../interfaces/INews";
 import "../../public/css/PublicerPage.css";
 import BackupRoundedIcon from "@material-ui/icons/BackupRounded";
 import { postNews } from "../../modules/publisher";
+import { paidArticleDeposit } from "../../modules/smartcontract";
+
 const PublisherPage = () => {
   const [titleState, setTitleState] = useState("");
-  const [authorState, setAuthorState] = useState("");
+  const [authorNameState, setAuthorNameState] = useState("");
 
   const [contentState, setContentState] = useState("");
   const [depositState, setDepositState] = useState(0);
 
   const [tagsState, setTags] = useState([]);
   const [imageState, setImageState] = useState("");
+  const [imageBlob, setImageBlob] = useState("");
 
+  let imgArrayBuffter;
   const tagsNameArray = Object.keys(NewsTagKind);
 
   useEffect(() => {
     return () => {};
   }, []);
-  const onClickSendNews = async () => {
-    await postNews(
+  const base64ToArrayBuffer = (dataURI) => {
+    var BASE64_MARKER = ";base64,";
+    var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    var base64 = dataURI.substring(base64Index);
+    var raw = window.atob(base64);
+    var rawLength = raw.length;
+    var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+    for (let i = 0; i < rawLength; i++) {
+      array[i] = raw.charCodeAt(i);
+    }
+    return array;
+  };
+  const onClickPostNews = async (e) => {
+    e.preventDefault();
+    const time = "";
+    const deposit = 0;
+
+    const data = await postNews(
       titleState,
-      authorState,
+      authorNameState,
       contentState,
-      tagsState,
-      imageState,
-      imageState
+      time,
+      deposit,
+      imageBlob,
+      tagsState
     );
+    if (data.articleId) {
+      console.log("articleId:", data.articleId);
+      paidArticleDeposit(data.articleId);
+    } else {
+    }
   };
   return (
     <div className="container">
@@ -47,10 +74,10 @@ const PublisherPage = () => {
             <input
               type="text"
               name="author"
-              value={authorState}
+              value={authorNameState}
               onChange={(event) => {
                 const value = event.target.value;
-                setAuthorState(value);
+                setAuthorNameState(value);
               }}
             />
           </div>
@@ -127,8 +154,25 @@ const PublisherPage = () => {
               let file = e.target.files[0];
               if (file) {
                 const reader = new FileReader();
+                // reader.onload = (readerEvent) => {
+                //   let data = readerEvent.target.result;
+                //   imgArrayBuffter = data;
+                //   const imgblob = new Blob([imgArrayBuffter]);
+                //   setImageBlob(imgblob);
+
+                //   const str = String.fromCharCode.apply(
+                //     null,
+                //     new Uint8Array(data)
+                //   );
+                //   setImageState("data:image/jpg;base64," + btoa(str));
+                // };
+                // reader.readAsArrayBuffer(file);
                 reader.onload = (readerEvent) => {
                   let data = readerEvent.target.result;
+                  const imgblob = new Blob(base64ToArrayBuffer(data));
+                  console.log("imgblob1:", imgblob);
+                  setImageBlob(imgblob);
+
                   setImageState(data);
                 };
                 reader.readAsDataURL(file);
@@ -136,7 +180,6 @@ const PublisherPage = () => {
             }}
           />
         </label>
-        {/* {`data:image/png;base64,"${atob(imageState)}`} */}
         {imageState.length > 0 ? <img src={`${imageState}`} /> : null}
         <div className="formTotal">
           <div className="currencyTotal">
@@ -144,7 +187,7 @@ const PublisherPage = () => {
             <span>0.005</span>
             <span>ETH</span>
           </div>
-          <input type="submit" value="確認送出" onClick={onClickSendNews} />
+          <input type="submit" value="確認送出" onClick={onClickPostNews} />
         </div>
       </form>
     </div>
