@@ -68,6 +68,13 @@ export const rsaTokenPutRequest = async (
   }
   return result;
 };
+export const getRequest = async (rout, dataObject) => {
+  const result = await axios.get(configData.SERVER_URL + rout, {
+    params: { ...dataObject },
+  });
+  return result;
+};
+
 export const rsaTokenGetRequest = async (
   JWTtoken,
   memberId,

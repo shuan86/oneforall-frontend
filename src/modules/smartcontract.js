@@ -572,6 +572,46 @@ export const getTestData = async () => {
 };
 //execute();
 export const paidArticleDeposit = async (articleId) => {
-  const result = await contract.methods.paidArticleDeposit(articleId).call();
-  console.log("paidArticleDeposit:", result);
+  const sendValue = web3.utils.toWei("0.000000005", "ether");
+  const gasPriceWei = web3.utils.toWei("0.00000000005", "ether");
+  console.log("weiValue:", sendValue, "gasPriceWei :", gasPriceWei);
+
+  contract.methods
+    .paidArticleDeposit(articleId)
+    .estimateGas({
+      from: web3.currentProvider.selectedAddress,
+      gas: web3.utils.toWei("0.0000005", "ether"), //5000000000000
+      gasPrice: gasPriceWei,
+      value: sendValue,
+    })
+    .then((gasAmount) => {
+      console.log("gasAmount:", gasAmount);
+      contract.methods
+        .paidArticleDeposit(articleId)
+        .send({
+          from: web3.currentProvider.selectedAddress,
+          gas: gasAmount,
+          gasPrice: gasPriceWei,
+          value: sendValue,
+        })
+        .on("error", function (error) {
+          console.log("paidArticleDeposit error:", error);
+        })
+        .on("transactionHash", function (transactionHash) {
+          console.log("paidArticleDeposit transactionHash:", transactionHash);
+        })
+        .on("receipt", function (receipt) {
+          // console.log("paidArticleDeposit receipt :", receipt.contractAddress);
+        });
+    });
+
+  // contract.methods.setTestEvent(articleId).estimateGas(
+  //   {
+  //     from: web3.currentProvider.selectedAddress,
+  //     },
+  //   function (error, gasAmount) {
+  //     if (gasAmount == 5000000) console.log("Method ran out of gas");
+  //     console.log("gasAmount:", gasAmount);
+  //   }
+  // );
 };

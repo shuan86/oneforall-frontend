@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../public/css/NewsCard.css";
-import {MemberInformation} from "../Member/MemberCard"
+import { MemberInformation } from "../Member/MemberCard";
 
 import authorImg from "../../public/images/author.jpg";
 import audience from "../../public/images/audience.jpg";
@@ -8,29 +8,27 @@ import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
 const NewsCardUnreviewed = ({ articleData, refHook }) => {
-  const { content, deposit, index, newsId, newsType } = articleData;
   return (
-    <div ref={refHook} className="card">
+    <div className="card">
       <NewsCardTop />
-      <NewsCardContent isReviwedCard={false} data={content} />
+      <NewsCardContent isReviwedCard={false} data={articleData} />
       <NewsCardComment />
     </div>
   );
 };
-const NewsCardUnderReview = ({ articleData, refHook }) => {
-  const { content, deposit, index, newsId, newsType } = articleData;
+const NewsCardUnderReview = ({ articleData }) => {
   return (
-    <div ref={refHook} className="card">
+    <div className="card">
       <div className="status">審核中</div>
-      <NewsCardContent isReviwedCard={false} data={content} />
+      <NewsCardContent isReviwedCard={false} data={articleData} />
       <NewsCardComment />
     </div>
   );
 };
-const NewsCardReviewed = ({ refHook }) => {
+const NewsCardReviewed = ({}) => {
   //  console.log('NewsCard');
   return (
-    <div ref={refHook} className="card">
+    <div className="card">
       <div className="status">審核後</div>
 
       <NewsCardContent />
@@ -41,28 +39,38 @@ const NewsCardReviewed = ({ refHook }) => {
 };
 
 const NewsCardTop = () => {
-  return(
+  return (
     <div className="cardTop">
-        <div className="status" >未審核</div>
-        <div className="scrollingText">
-            <div className="userComment">
-            <span>
-              <div className="account color-red">abc12345678</div>
-              <p>大問號？！！！</p>
-            </span>
-          </div>
+      <div className="status">未審核</div>
+      <div className="scrollingText">
+        <div className="userComment">
+          <span>
+            <div className="account color-red">abc12345678</div>
+            <p>大問號？！！！</p>
+          </span>
         </div>
       </div>
-  )
-}
+    </div>
+  );
+};
 const NewsCardContent = ({ isReviwedCard, data }) => {
-  const { title, author, content, time, tags } = JSON.parse(data);
+  const { title, authorName, content, time, tags, images } = data;
   const [tagsData, setTagsData] = useState([]);
-  const [memberFlag, setMemberFlag] = useState(false)
+  const [imageState, setImageState] = useState("");
+
+  const [memberFlag, setMemberFlag] = useState(false);
+
   useEffect(() => {
-    /* console.log("data:", data);
-    console.log("tags:", tags);*/
-    // const keyNames = Object.keys(tags);
+    const imageData = images[0];
+    const arrayBuffer = Uint8Array.from(imageData.data).buffer;
+    console.log("imageData :", imageData);
+    console.log("arrayBuffer:", arrayBuffer);
+    var base64String =
+      "data:image/png;base64," +
+      btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
+    console.log("base64String:", base64String);
+
+    setImageState(base64String);
     setTagsData(tags);
     return () => {};
   }, []);
@@ -70,15 +78,22 @@ const NewsCardContent = ({ isReviwedCard, data }) => {
   return (
     <div className="content">
       <div className="postInfo">
-        <div className="userInfo" onClick={() => {setMemberFlag(!memberFlag)}}>
+        <div
+          className="userInfo"
+          onClick={() => {
+            setMemberFlag(!memberFlag);
+          }}
+        >
           <div className="postData">
             <img src={authorImg} alt="Background" className="userPhoto" />
             <div className="article-data">
-              <div className="account">{author}</div>
+              <div className="account">{authorName}</div>
               <div className="articleTime">{time}</div>
             </div>
           </div>
-          <div className={memberFlag ? "memberInformationCard" : "none"}><MemberInformation setMemberFlag={setMemberFlag}/></div>
+          <div className={memberFlag ? "memberInformationCard" : "none"}>
+            <MemberInformation setMemberFlag={setMemberFlag} />
+          </div>
         </div>
         <a href="" className={isReviwedCard == false ? "none" : "history"}>
           <img src={history} alt="History" />
@@ -97,9 +112,10 @@ const NewsCardContent = ({ isReviwedCard, data }) => {
         <h3>{title}</h3>
         <p>{content}</p>
         <a href="">繼續閱讀</a>
-        <img src={articleImg} alt="" />
+        <img src={imageState.length > 0 ? imageState : articleImg} alt="" />
       </div>
       <div className="like">
+        <div>{<a href="">檢舉</a>}</div>
         <div>
           {useSelector((s) => s.loginStatus) ? <a href="">想知道</a> : null}
           <span>123人想知道</span>
@@ -126,22 +142,27 @@ const NewsCardComment = () => {
       <NewsCardUserComment />
       <NewsCardUserComment />
       <NewsCardUserComment />
-      <a href="" className="moreComment">查看其他留言</a>
+      <a href="" className="moreComment">
+        查看其他留言
+      </a>
     </div>
   );
 };
 
 const NewsCardUserComment = () => {
-  return(
+  return (
     <div className="userComment">
-        <span>
-          <div className="account"><h3>abc12345678</h3><p>20min</p></div>
-          <p>大問號？！！！</p>
-        </span>
-        {/* <div className="timeCode"><p>20min</p></div> */}
-      </div>
-  )
-}
+      <span>
+        <div className="account">
+          <h3>abc12345678</h3>
+          <p>20min</p>
+        </div>
+        <p>大問號？！！！</p>
+      </span>
+      {/* <div className="timeCode"><p>20min</p></div> */}
+    </div>
+  );
+};
 
 const NewsCard = ({ status }) => {
   /*  console.log('NewsCard');

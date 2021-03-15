@@ -1,4 +1,4 @@
-export const developContractAddr = "0x19f9A99f4282ae8aF91Cb9c8E8C272a09d888Ce4";
+export const developContractAddr = "0xc3C2FF5a54dc3bA0e16aa5859A1beB2d85E48D32";
 export const productionContractAddr =
   "0x4db118D49E4E1c4B4f959af3CF7F17b3d3A26fAF";
 
@@ -845,9 +845,9 @@ export const ABI = [
         type: "uint256",
       },
       {
-        internalType: "enum AbPlatform.ArticleType",
-        name: "articleType",
-        type: "uint8",
+        internalType: "address",
+        name: "authorAddr",
+        type: "address",
       },
       {
         internalType: "uint256",

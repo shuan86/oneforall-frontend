@@ -28,19 +28,28 @@ const PublisherPage = () => {
   useEffect(() => {
     return () => {};
   }, []);
-  const base64ToArrayBuffer = (dataURI) => {
-    var BASE64_MARKER = ";base64,";
-    var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-    var base64 = dataURI.substring(base64Index);
-    var raw = window.atob(base64);
-    var rawLength = raw.length;
-    var array = new Uint8Array(new ArrayBuffer(rawLength));
+  // const base64ToArrayBuffer = (dataURI) => {
+  //   var BASE64_MARKER = ";base64,";
+  //   var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+  //   var base64 = dataURI.substring(base64Index);
+  //   var raw = window.atob(base64);
+  //   var rawLength = raw.length;
+  //   var array = new Uint8Array(new ArrayBuffer(rawLength));
 
-    for (let i = 0; i < rawLength; i++) {
-      array[i] = raw.charCodeAt(i);
-    }
-    return array;
-  };
+  //   for (let i = 0; i < rawLength; i++) {
+  //     array[i] = raw.charCodeAt(i);
+  //   }
+  //   return array;
+  // };
+  // function base64ToArrayBuffer(base64) {
+  //   var binary_string = window.atob(base64);
+  //   var len = binary_string.length;
+  //   var bytes = new Uint8Array(len);
+  //   for (var i = 0; i < len; i++) {
+  //     bytes[i] = binary_string.charCodeAt(i);
+  //   }
+  //   return bytes.buffer;
+  // }
   const onClickPostNews = async (e) => {
     e.preventDefault();
     const time = "";
@@ -169,13 +178,32 @@ const PublisherPage = () => {
                 // reader.readAsArrayBuffer(file);
                 reader.onload = (readerEvent) => {
                   let data = readerEvent.target.result;
-                  const imgblob = new Blob(base64ToArrayBuffer(data));
-                  console.log("imgblob1:", imgblob);
-                  setImageBlob(imgblob);
+                  // const imgblob = new Blob(base64ToArrayBuffer(data));
+                  // console.log("file:", data);
+                  // console.log(
+                  //   "base64ToArrayBuffer:",
+                  //   base64ToArrayBuffer(data)
+                  // );
 
+                  // console.log("imgblob1:", imgblob);
+
+                  // setImageBlob(imgblob);
+                  console.log("base64:", data);
                   setImageState(data);
                 };
                 reader.readAsDataURL(file);
+              }
+              if (file) {
+                const reader = new FileReader();
+                reader.readAsArrayBuffer(file);
+                reader.onload = (readerEvent) => {
+                  const data = readerEvent.target.result;
+                  const blob = new Blob([data]);
+                  console.log("array buffer:", data);
+                  console.log("blob:", blob);
+
+                  setImageBlob(blob);
+                };
               }
             }}
           />
