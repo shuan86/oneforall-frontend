@@ -166,7 +166,7 @@ const NewsCardUserComment = () => {
 
 const NewsCard = ({ status }) => {
   /*  console.log('NewsCard');
-      console.log('NewsCardUnreviewed', status);*/
+      console.log('NewsCard Unreviewed', status);*/
   return (
     <div className="card">
       <div className={status ? "status" : "none"}>未審核</div>
