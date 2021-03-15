@@ -72,7 +72,7 @@ const NewsCardContent = ({ isReviwedCard, data }) => {
 
     setImageState(base64String);
     setTagsData(tags);
-    return () => {};
+    return () => {}; //
   }, []);
 
   return (
