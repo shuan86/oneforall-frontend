@@ -7,10 +7,12 @@ import {
   NewsCardReviewed,
 } from "../../components/NewsCard/NewsCard";
 import RankingTable from "../../components/NewsCard/RankingTable";
+import ReportDialog from "../../components/Report/ReportDialog";
+
 import * as contract from "../../modules/smartcontract";
 import { NewsType } from "../../interfaces/IContract";
 import { useInView } from "react-intersection-observer";
-import { getNews } from "../../modules/article";
+import { getNews, createReportedNews } from "../../modules/article";
 
 // const NewsCard = ({ newsStatus }) => {
 //   <div className="NewsCard">
@@ -28,6 +30,11 @@ const HomePage = () => {
   const ref = useRef();
   const [inViewRef, inView] = useInView();
   const [isLastCard, setIsLastCard] = useState(false);
+  /*----------------------------*/
+  const [reportDialogSwitch, setReportDialogSwitch] = useState(false)
+  const [onSelectArticleId, setOnSelectArticleId] = useState(0)
+
+
   // const { ref, inView, entry } = useInView({
   //   /* Optional options */
   //   threshold: 1,
@@ -73,15 +80,28 @@ const HomePage = () => {
   //const observer = useRef();
   useEffect(() => {
     const loadData = async () => {
-      const result = await getNews(0, 10);
+      const result = await getNews(0, 5);
       console.log("home page:", result);
       setNewsDataList(result ? result : null);
     };
     loadData();
-    return () => {};
+    return () => { };
   }, []);
+  const onClickOpenReportDialogBtn = (articleId) => {
+    setReportDialogSwitch(true)
+    setOnSelectArticleId(articleId)
+  }
+  // const onClickSendReport = async () => {
+
+  //   const result = await createReport(onSelectArticleId, 'evidenceState')
+  //   if (result) {
+
+  //   }
+  //   console.log('result:', result);
+  // }
   return (
     <div className="homePageContainer">
+      <ReportDialog isOpen={reportDialogSwitch} setOpen={setReportDialogSwitch} onSelectArticleId={onSelectArticleId} />
       <Filter />
       <div className="container">
         <div className="homePageContent">
@@ -95,7 +115,8 @@ const HomePage = () => {
                   <NewsCardUnreviewed
                     key={index}
                     articleData={value}
-                    // refHook={isLastCardStatus ? setRefs : null}
+                    onClickReportBtn={onClickOpenReportDialogBtn}
+                  // refHook={isLastCardStatus ? setRefs : null}
                   />
                 );
               } else if (value.newsType == NewsType.UnderReviewed) {
@@ -103,7 +124,8 @@ const HomePage = () => {
                   <NewsCardUnderReview
                     key={index}
                     articleData={value}
-                    // refHook={isLastCardStatus ? setRefs : null}
+                    onClickReportBtn={onClickOpenReportDialogBtn}
+                  // refHook={isLastCardStatus ? setRefs : null}
                   />
                 );
               } else if (value.newsType == NewsType.Reviewed) {
@@ -111,7 +133,7 @@ const HomePage = () => {
                   <NewsCardReviewed
                     key={index}
                     articleData={value}
-                    // refHook={isLastCardStatus ? setRefs : null}
+                  // refHook={isLastCardStatus ? setRefs : null}
                   />
                 );
               }

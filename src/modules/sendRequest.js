@@ -7,6 +7,7 @@ export const rsaTokenPostRequest = async (
   rout,
   dataObject
 ) => {
+  console.log('rsaTokenPostRequest');
   dataObject = { ...dataObject, memberId };
   const encryptStr = encrypt(JSON.stringify(dataObject));
   const config = {
@@ -15,6 +16,7 @@ export const rsaTokenPostRequest = async (
   const bodyParameters = {
     rsaData: encryptStr,
   };
+
   const result = await axios.post(
     configData.SERVER_URL + rout,
     bodyParameters,
@@ -23,6 +25,7 @@ export const rsaTokenPostRequest = async (
   if (result.status == 200) {
     console.log("sendPostRequest sucessful");
   }
+
   return result;
 };
 export const tokenFilePostRequest = async (JWTtoken, rout, formData) => {

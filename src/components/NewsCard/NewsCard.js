@@ -7,25 +7,25 @@ import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
-const NewsCardUnreviewed = ({ articleData, refHook }) => {
+const NewsCardUnreviewed = ({ articleData, refHook, onClickReportBtn }) => {
   return (
     <div className="card">
       <NewsCardTop />
-      <NewsCardContent isReviwedCard={false} data={articleData} />
+      <NewsCardContent isReviwedCard={false} data={articleData} onClickReportBtn={onClickReportBtn} />
       <NewsCardComment />
     </div>
   );
 };
-const NewsCardUnderReview = ({ articleData }) => {
+const NewsCardUnderReview = ({ articleData, onClickReportBtn }) => {
   return (
     <div className="card">
       <div className="status">審核中</div>
-      <NewsCardContent isReviwedCard={false} data={articleData} />
+      <NewsCardContent isReviwedCard={false} data={articleData} onClickReportBtn={onClickReportBtn} />
       <NewsCardComment />
     </div>
   );
 };
-const NewsCardReviewed = ({}) => {
+const NewsCardReviewed = ({ }) => {
   //  console.log('NewsCard');
   return (
     <div className="card">
@@ -53,8 +53,8 @@ const NewsCardTop = () => {
     </div>
   );
 };
-const NewsCardContent = ({ isReviwedCard, data }) => {
-  const { title, authorName, content, time, tags, images } = data;
+const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
+  const { articleId, title, authorName, content, time, tags, images } = data;
   const [tagsData, setTagsData] = useState([]);
   const [imageState, setImageState] = useState("");
 
@@ -62,17 +62,18 @@ const NewsCardContent = ({ isReviwedCard, data }) => {
 
   useEffect(() => {
     const imageData = images[0];
-    const arrayBuffer = Uint8Array.from(imageData.data).buffer;
+    let base64String = ''
     console.log("imageData :", imageData);
-    console.log("arrayBuffer:", arrayBuffer);
-    var base64String =
-      "data:image/png;base64," +
-      btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
-    console.log("base64String:", base64String);
+    if (imageData) {
+      const arrayBuffer = Uint8Array.from(imageData.data).buffer;
 
+      base64String =
+        "data:image/png;base64," +
+        btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
+    }
     setImageState(base64String);
     setTagsData(tags);
-    return () => {}; //
+    return () => { }; //
   }, []);
 
   return (
@@ -115,7 +116,7 @@ const NewsCardContent = ({ isReviwedCard, data }) => {
         <img src={imageState.length > 0 ? imageState : articleImg} alt="" />
       </div>
       <div className="like">
-        <div>{<a href="">檢舉</a>}</div>
+        <div>{<a href="#" onClick={() => onClickReportBtn(articleId)}>檢舉</a>}</div>
         <div>
           {useSelector((s) => s.loginStatus) ? <a href="">想知道</a> : null}
           <span>123人想知道</span>

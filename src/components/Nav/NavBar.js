@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../../public/css/common.css";
 import "../../public/css/NavBar.css";
@@ -62,7 +62,7 @@ const NavBar = () => {
 
   const loginStatus = useSelector((s) => s.loginStatus);
   const account = useSelector((s) => s.member.account);
-  const memberListFlag = useSelector((s)=>s.flag);
+  const memberListFlag = useSelector((s) => s.flag);
   const onClickLogout = async () => {
     let memberData = wontUpdateMember();
     memberData = initialMember();
@@ -75,11 +75,13 @@ const NavBar = () => {
   const onClickMemberCenter = () => {
     onChangeRouter("/member");
   };
-  
+
   const onClickMemberListFlag = () => {
     dispatch(setMemberListFlag())
   }
-
+  const onClickPlaceGamePage = () => {
+    history.push("/placeGame");
+  }
   return (
     <div className={"navBar"}>
       <div className="container">
@@ -104,24 +106,25 @@ const NavBar = () => {
                 註冊
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${
-                  loginStatus && "navDisplayNone"
-                }`}
+                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayNone"
+                  }`}
                 onClick={() => onChangeRouter("/login")}
               >
                 登入
               </button>
-              <div className={memberListFlag?"memberList":"none"}>
-                  <div className="memberListItem" onClick={()=>{onClickMemberListFlag();onClickMemberCenter();}}><AccountBoxIcon fontSize="small"/><div className="memberListItemTitle">會員帳號</div></div>
-                  <div className="memberListItem"></div>
-                  <div className="memberListItem" onClick={()=>{onClickMemberListFlag();onClickLogout();}}><ExitToAppIcon fontSize="small"/><div className="memberListItemTitle">登出</div></div>
-                  <div className="fakeDiv" onClick={onClickMemberListFlag}></div>
+              <div className={memberListFlag ? "memberList" : "none"}>
+                <div className="memberListItem" onClick={() => { onClickMemberListFlag(); onClickMemberCenter(); }}><AccountBoxIcon fontSize="small" /><div className="memberListItemTitle">會員帳號</div></div>
+                <div className="memberListItem"></div>
+                <div className="memberListItem" onClick={() => { onClickMemberListFlag(); onClickLogout(); }}><ExitToAppIcon fontSize="small" /><div className="memberListItemTitle">登出</div></div>
+                <div className="fakeDiv" onClick={onClickMemberListFlag}></div>
               </div>
               <div className={`${loginStatus && "navDisplayBlock" && "navUserInfo"
-                    } ${!loginStatus && "navDisplayNone"}`}  onClick={onClickMemberListFlag} >
+                } ${!loginStatus && "navDisplayNone"}`} onClick={onClickMemberListFlag} >
                 <div className="navUserInfoID">{account}</div>
                 <img src="static/media/author.7613283f.jpg" alt="Background" class="navUserInfoPhoto"></img>
               </div>
+              <div className={`${loginStatus && "navDisplayBlock" && "navUserInfo"
+                } ${!loginStatus && "navDisplayNone"}`} onClick={onClickPlaceGamePage}> <div className="navUserInfoID">place game</div></div>
             </div>
           </div>
         </div>

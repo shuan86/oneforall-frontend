@@ -27,7 +27,7 @@ const MemberCard = () => {
   );
 };
 
-const MemberInformation = ({setMemberFlag}) => {
+const MemberInformation = ({ setMemberFlag }) => {
   const onClickCloseMemberInformation = () => {
     setMemberFlag(false);
   }
@@ -35,11 +35,11 @@ const MemberInformation = ({setMemberFlag}) => {
     <div className="memberInformation">
       <div className="close" onClick={onClickCloseMemberInformation}><CloseOutlinedIcon /></div>
       <div className={"memberInformationPersonal"}>
-        <img src="favicon.ico" alt="" className="userPhoto"/>
+        <img src="favicon.ico" alt="" className="userPhoto" />
         <div className={"userAccount"}>
           <div className="userAccountID">
             <p>a1233456</p>
-            <img src={Copper10} alt="medals" className="medals"/>
+            <img src={Copper10} alt="medals" className="medals" />
           </div>
           <p>477分</p>
           <p>註冊日期：2020-03-11</p>
@@ -47,7 +47,7 @@ const MemberInformation = ({setMemberFlag}) => {
       </div>
       <div className="publicKey">
         <p className="">0x59982711466fD1d4C2F1C1F710f721651BCCFDb3</p>
-        <FileCopyOutlinedIcon fontSize="small"/>
+        <FileCopyOutlinedIcon fontSize="small" />
       </div>
       <a href="#">追隨</a>
     </div>
