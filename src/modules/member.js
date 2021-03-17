@@ -6,24 +6,9 @@ export const login = async (account, password) => {
     const data = { account: account, password: password };
     const result = await sendRequest.rsaPostRequest("/login", data);
     if (result.status == 200) {
-      const pubKey = result.data.publicKey;
-      const isMember = await contract.isMember(pubKey);
-      const isReviewer = await contract.isReviewer(pubKey);
-      const isPublisher = await contract.isPublisher(pubKey);
-      localStorage.saveAllData(
-        result.data.memberId,
-        result.data.token,
-        result.data.account,
-        result.data.userName,
-        result.data.email,
-        result.data.publicKey,
-        isMember,
-        isReviewer,
-        isPublisher
-      );
+      return result.data;
     }
-    console.log("login:", data);
-    return result;
+    return null;
   } catch (e) {
     console.error("login error:", e);
   }
@@ -52,11 +37,11 @@ export const enroll = async (account, password, userName, email, publicKey) => {
   try {
     const data = {
       id: 0,
-      account: account,
-      password: password,
-      userName: userName,
-      email: email,
-      publicKey: publicKey,
+      account,
+      password,
+      userName,
+      email,
+      publicKey,
       token: "",
     };
     const result = await sendRequest.rsaPostRequest("/enroll", data);
@@ -64,4 +49,5 @@ export const enroll = async (account, password, userName, email, publicKey) => {
   } catch (error) {
     console.log("enroll error:", error);
   }
+  return null;
 };

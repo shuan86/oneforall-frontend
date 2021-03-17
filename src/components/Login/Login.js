@@ -3,7 +3,7 @@ import { EnrollLoginFiled as Field } from "../FormField/FormField";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as memberMoudel from "../../modules/member";
-import { getAllData as getLocalStorageData } from "../../modules/localstorage";
+import * as localStorage from "../../modules/localstorage";
 
 import {
   initialMember,
@@ -26,19 +26,26 @@ const LoginForm = () => {
     let loginData = initialMember();
     let loginStatusData = updateLoginStatus(false);
     let memberStatusData = initialMemberStatus();
-    const result = await memberMoudel.login(account, password);
-    if (result != null && result.status == 200) {
-      const memberData = {
-        id: result.data.id,
-        account: result.data.account,
-        userNmae: result.data.userName,
-        email: result.data.email,
-        publicKey: result.data.publicKey,
-      };
-      const { isMember, isReviewer, isPublisher } = getLocalStorageData();
+    const memberData = await memberMoudel.login(account, password);
+    if (memberData) {
+      localStorage.saveAllData(
+        memberData.memberId,
+        memberData.token,
+        memberData.account,
+        memberData.userName,
+        memberData.email,
+        memberData.publicKey,
+        memberData.isMember,
+        memberData.isReviewer,
+        memberData.isPublisher
+      );
       loginData = updateMember(memberData);
       loginStatusData = updateLoginStatus(true);
-      memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);
+      memberStatusData = updateMemberStatus(
+        memberData.isMember,
+        memberData.isReviewer,
+        memberData.isPublisher
+      );
       history.push("/index");
     } else {
       alert("login fail");
