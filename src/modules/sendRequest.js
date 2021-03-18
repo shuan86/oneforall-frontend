@@ -7,7 +7,7 @@ export const rsaTokenPostRequest = async (
   rout,
   dataObject
 ) => {
-  console.log('rsaTokenPostRequest');
+  console.log("rsaTokenPostRequest");
   dataObject = { ...dataObject, memberId };
   const encryptStr = encrypt(JSON.stringify(dataObject));
   const config = {
@@ -72,10 +72,14 @@ export const rsaTokenPutRequest = async (
   return result;
 };
 export const getRequest = async (rout, dataObject) => {
-  const result = await axios.get(configData.SERVER_URL + rout, {
-    params: { ...dataObject },
-  });
-  return result;
+  try {
+    const result = await axios.get(configData.SERVER_URL + rout, {
+      params: { ...dataObject },
+    });
+    return result;
+  } catch (error) {
+    console.error("getRequest:", error);
+  }
 };
 
 export const rsaTokenGetRequest = async (
@@ -84,22 +88,26 @@ export const rsaTokenGetRequest = async (
   rout,
   dataObject
 ) => {
-  dataObject = { ...dataObject, memberId };
-  const encryptStr = encrypt(JSON.stringify(dataObject));
-  // const config = {
-  //   headers: { Authorization: ` ${JWTtoken}` },
-  // };
-  const bodyParameters = {
-    rsaData: encryptStr,
-  };
-  const result = await axios.get(configData.SERVER_URL + rout, {
-    headers: { Authorization: ` ${JWTtoken}` },
-    params: { ...bodyParameters },
-  });
-  if (result.status == 200) {
-    console.log("sendPutRequest sucessful");
+  try {
+    dataObject = { ...dataObject, memberId };
+    const encryptStr = encrypt(JSON.stringify(dataObject));
+    // const config = {
+    //   headers: { Authorization: ` ${JWTtoken}` },
+    // };
+    const bodyParameters = {
+      rsaData: encryptStr,
+    };
+    const result = await axios.get(configData.SERVER_URL + rout, {
+      headers: { Authorization: ` ${JWTtoken}` },
+      params: { ...bodyParameters },
+    });
+    if (result.status == 200) {
+      console.log("rsaTokenGetRequest sucessful");
+    }
+    return result;
+  } catch (error) {
+    console.log("rsaTokenGetRequest error:", error);
   }
-  return result;
 };
 export const rsaPostRequest = async (rout, dataObject) => {
   const rsaData = encrypt(JSON.stringify(dataObject));

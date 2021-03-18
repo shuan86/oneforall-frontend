@@ -5,10 +5,7 @@ const useGetNews = (pageNumber) => {
   const [error, setError] = useState(false);
   const [newsDatas, setNewsDatas] = useState([]);
   const [hasMoreData, setHasMoreData] = useState(false);
-  //   useEffect(() => {
-  //     setNewsDatas([]);
-  //     return () => {};
-  //   }, [pageNumber]);
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -17,33 +14,26 @@ const useGetNews = (pageNumber) => {
         setError(false);
         const result = await getNews(
           pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
-          eveyRequestDataAmount * pageNumber
+          pageNumber * eveyRequestDataAmount
         );
         const [articleDatas, articleDataAmount] = result;
+        setHasMoreData(articleDataAmount > newsDatas.length);
+        setLoading(false);
         setNewsDatas((pre) => {
           const tmpData = result
             ? [...new Set([...pre, ...articleDatas])]
             : pre;
-          setHasMoreData(articleDataAmount > tmpData.length);
-
-          console.log(
-            "pre:",
-            pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
-            eveyRequestDataAmount * pageNumber
-          );
-          console.log("new articleDatas:", articleDatas);
-
-          console.log("tmpData:", tmpData);
           return tmpData;
         });
-        setLoading(false);
       } catch (error) {
         console.log("useGetNews error:", error);
         setError(true);
       }
     };
     loadData();
-    return () => {};
+    return () => {
+      console.log("ummounted");
+    };
   }, [pageNumber]);
 
   return { loading, newsDatas, hasMoreData, error };

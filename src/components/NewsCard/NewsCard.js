@@ -7,11 +7,17 @@ import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
+import { NewsType } from "../../interfaces/IContract";
+
 const NewsCardUnreviewed = ({ articleData, refHook, onClickReportBtn }) => {
   return (
     <div className="card">
       <NewsCardTop />
-      <NewsCardContent isReviwedCard={false} data={articleData} onClickReportBtn={onClickReportBtn} />
+      <NewsCardContent
+        isReviwedCard={false}
+        data={articleData}
+        onClickReportBtn={onClickReportBtn}
+      />
       <NewsCardComment />
     </div>
   );
@@ -20,12 +26,16 @@ const NewsCardUnderReview = ({ articleData, onClickReportBtn }) => {
   return (
     <div className="card">
       <div className="status">審核中</div>
-      <NewsCardContent isReviwedCard={false} data={articleData} onClickReportBtn={onClickReportBtn} />
+      <NewsCardContent
+        isReviwedCard={false}
+        data={articleData}
+        onClickReportBtn={onClickReportBtn}
+      />
       <NewsCardComment />
     </div>
   );
 };
-const NewsCardReviewed = ({ }) => {
+const NewsCardReviewed = ({}) => {
   //  console.log('NewsCard');
   return (
     <div className="card">
@@ -62,8 +72,8 @@ const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
 
   useEffect(() => {
     const imageData = images[0];
-    let base64String = ''
-    console.log("imageData :", imageData);
+    let base64String = "";
+    // console.log("imageData :", imageData);
     if (imageData) {
       const arrayBuffer = Uint8Array.from(imageData.data).buffer;
 
@@ -73,7 +83,7 @@ const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
     }
     setImageState(base64String);
     setTagsData(tags);
-    return () => { }; //
+    return () => {}; //
   }, []);
 
   return (
@@ -116,7 +126,13 @@ const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
         <img src={imageState.length > 0 ? imageState : articleImg} alt="" />
       </div>
       <div className="like">
-        <div>{<a href="#" onClick={() => onClickReportBtn(articleId)}>檢舉</a>}</div>
+        <div>
+          {
+            <a href="#" onClick={() => onClickReportBtn(articleId)}>
+              檢舉
+            </a>
+          }
+        </div>
         <div>
           {useSelector((s) => s.loginStatus) ? <a href="">想知道</a> : null}
           <span>123人想知道</span>
@@ -165,16 +181,39 @@ const NewsCardUserComment = () => {
   );
 };
 
-const NewsCard = ({ status }) => {
-  /*  console.log('NewsCard');
-      console.log('NewsCard Unreviewed', status);*/
-  return (
-    <div className="card">
-      <div className={status ? "status" : "none"}>未審核</div>
-      <NewsCardContent status={status} />
-      <NewsCardComment />
-    </div>
-  );
-};
+const NewsCard = React.memo(
+  ({ articleData, onClickReportBtn, refFunc }) => {
+    console.log("articleData:", articleData.id);
+    let tmpNewsCard = (
+      <NewsCardUnreviewed
+        articleData={articleData}
+        onClickReportBtn={onClickReportBtn}
+      />
+    );
+    if (articleData.newsType == NewsType.Unreview) {
+      <NewsCardUnreviewed
+        articleData={articleData}
+        onClickReportBtn={onClickReportBtn}
+      />;
+    } else if (articleData.newsType == NewsType.UnderReviewed) {
+      <NewsCardUnderReview
+        articleData={articleData}
+        onClickReportBtn={onClickReportBtn}
+      />;
+    } else if (articleData.newsType == NewsType.Reviewed) {
+      <NewsCardReviewed
+        articleData={value}
+        onClickReportBtn={onClickOpenReportDialogBtn}
+      />;
+    }
+    return <div ref={refFunc}> {tmpNewsCard} </div>;
+  },
+  (prevProps, nextProps) => {
+    if (prevProps && prevProps.articleData.id === nextProps.articleData.id) {
+      return true;
+    }
+    return false;
+  }
+);
 
-export { NewsCardUnreviewed, NewsCardUnderReview, NewsCardReviewed };
+export { NewsCard };

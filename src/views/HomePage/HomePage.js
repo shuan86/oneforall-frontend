@@ -5,13 +5,14 @@ import {
   NewsCardUnreviewed,
   NewsCardUnderReview,
   NewsCardReviewed,
+  NewsCard,
 } from "../../components/NewsCard/NewsCard";
 import RankingTable from "../../components/NewsCard/RankingTable";
 import ReportDialog from "../../components/Report/ReportDialog";
 import * as contract from "../../modules/smartcontract";
-import { NewsType } from "../../interfaces/IContract";
 import { useInView } from "react-intersection-observer";
 import useGetNews from "../../hooks/useGetNews";
+import { TestCard } from "../../components/Test/Test";
 // const NewsCard = ({ newsStatus }) => {
 //   <div className="NewsCard">
 //     <NewsCardUnreviewed />
@@ -21,65 +22,52 @@ import useGetNews from "../../hooks/useGetNews";
 // };
 
 const HomePage = () => {
-  const [newsDataList, setNewsDataList] = useState([]);
   const [pageNaumber, setPageNumber] = useState(1);
 
-  /*----------------------------*/
   const [reportDialogSwitch, setReportDialogSwitch] = useState(false);
   const [onSelectArticleId, setOnSelectArticleId] = useState(0);
   const { loading, newsDatas, hasMoreData, error } = useGetNews(pageNaumber);
   const observer = useRef();
-  const lastElementRef = useCallback(
-    (node) => {
-      console.log("loading:", loading);
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMoreData) {
-        }
-        setPageNumber((prevPageNumber) =>
-          entries[0].isIntersecting && hasMoreData
-            ? prevPageNumber + 1
-            : prevPageNumber
-        );
-      });
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMoreData]
-  );
-  const onClickOpenReportDialogBtn = (articleId) => {
+
+  // const lastElementRef = useCallback(
+  //   (node) => {
+  //     console.log("lastElementRef loading:", loading);
+  //     console.log("lastElementRef node:", node.current);
+
+  //     if (loading) return;
+  //     if (observer.current) observer.current.disconnect();
+  //     observer.current = new IntersectionObserver((entries) => {
+  //       if (entries[0].isIntersecting && hasMoreData) {
+  //       }
+  //       setPageNumber((prevPageNumber) =>
+  //         entries[0].isIntersecting && hasMoreData
+  //           ? prevPageNumber + 1
+  //           : prevPageNumber
+  //       );
+  //     });
+  //     if (node) observer.current.observe(node);
+  //   },
+  //   [loading, hasMoreData]
+  // );
+  const lastElementRef = (node) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasMoreData) {
+      }
+      setPageNumber((prevPageNumber) =>
+        entries[0].isIntersecting && hasMoreData
+          ? prevPageNumber + 1
+          : prevPageNumber
+      );
+    });
+    if (node) observer.current.observe(node);
+  };
+
+  const onClickOpenReportDialogBtn = useCallback((articleId) => {
     setReportDialogSwitch(true);
     setOnSelectArticleId(articleId);
-  };
-  const NewsCard = ({ articleData, onClickReportBtn }) => {
-    let tmpNewsCard = (
-      <NewsCardUnreviewed
-        articleData={articleData}
-        onClickReportBtn={onClickReportBtn}
-      />
-    );
-    if (articleData.newsType == NewsType.Unreview) {
-      <NewsCardUnreviewed
-        articleData={articleData}
-        onClickReportBtn={onClickReportBtn}
-      />;
-    } else if (articleData.newsType == NewsType.UnderReviewed) {
-      <NewsCardUnderReview
-        articleData={articleData}
-        onClickReportBtn={onClickReportBtn}
-      />;
-    } else if (articleData.newsType == NewsType.Reviewed) {
-      <NewsCardReviewed
-        articleData={value}
-        onClickReportBtn={onClickOpenReportDialogBtn}
-      />;
-    }
-    return tmpNewsCard;
-  };
-  // useEffect(() => {
-  //   console.log("newsDatas:", newsDatas);
-  //   newsDatas.map((value, index) => {});
-  // }, [newsDatas]);
+  });
   return (
     <div className="homePageContainer">
       <ReportDialog
@@ -92,35 +80,27 @@ const HomePage = () => {
         <div className="homePageContent">
           <div className="NewsCard">
             {newsDatas.map((value, index) => {
-              // console.log("value.id:", value.id);
+              const { id } = value;
               if (newsDatas.length == index + 1) {
                 return (
-                  <div ref={lastElementRef} key={value.id}>
-                    <NewsCard
-                      articleData={value}
-                      onClickReportBtn={onClickOpenReportDialogBtn}
-                    />
-                  </div>
-                  // <div key={value.id}>
-                  //   <NewsCard
-                  //     articleData={value}
-                  //     onClickReportBtn={onClickOpenReportDialogBtn}
-                  //   />
-                  // </div>
+                  <NewsCard
+                    key={id}
+                    articleData={value}
+                    onClickReportBtn={onClickOpenReportDialogBtn}
+                    refFunc={lastElementRef}
+                  />
                 );
               } else {
                 return (
-                  <div key={value.id}>
-                    <NewsCard
-                      articleData={value}
-                      onClickReportBtn={onClickOpenReportDialogBtn}
-                    />
-                  </div>
+                  <NewsCard
+                    key={id}
+                    articleData={value}
+                    onClickReportBtn={onClickOpenReportDialogBtn}
+                    refFunc={null}
+                  />
                 );
               }
             })}
-            {/* <div ref={lastElementRef}>123</div> */}
-            <div>{loading && "Loading..."}</div>
           </div>
           <div className="Ranking">
             <RankingTable />
