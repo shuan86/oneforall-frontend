@@ -14,12 +14,14 @@ const Tx = require("ethereumjs-tx").Transaction;
 
 const INewEvent = {
   newsId: 0,
-  index: 0,
+  memberId: 0,
+  authorAddr: "",
+  articleType: 0,
   newsType: 0,
-  title: "",
-  author: "",
-  content: "",
-  deposit: "",
+  index: 0,
+  data: "",
+  deposit: 0,
+  img: "",
 };
 const INewImageEvent = {
   newsId: 0,
@@ -29,15 +31,14 @@ const INewImageEvent = {
 };
 const ICompleteNewsData = {
   newsId: 0,
-  index: 0,
+  memberId: 0,
+  authorAddr: "",
+  articleType: 0,
   newsType: 0,
-  title: "",
-  author: "",
-  content: "",
-
-  deposit: "",
-  imgContent1: "",
-  imgContent2: "",
+  index: 0,
+  data: "",
+  deposit: 0,
+  img: "",
 };
 //import Tx from "ethereumjs-tx";
 // const web3 = new Web3("ws://localhost:7545"); //web3.currentProvider
@@ -303,7 +304,6 @@ export const getRangeNewsId = async (startIndex, endIndex) => {
   const result = await contract.methods
     .getRangeNewsId(startIndex, endIndex)
     .call();
-  console.log("getLastestNews:", result);
   const array = result[Object.keys(result)[0]];
   const amount = result[Object.keys(result)[1]];
   let idArray = [];
@@ -314,9 +314,12 @@ export const getRangeNewsId = async (startIndex, endIndex) => {
 };
 export const getNewsAmount = async () => {
   const result = await contract.methods.getNewsAmout().call();
-  console.log("getNewsAmount:", result);
-
+  return result;
   // test();
+};
+export const getAllNewsDataKeys = async () => {
+  const result = await contract.methods.getAllNewsDataKeys().call();
+  return result;
 };
 export const getNewsByNewsIdEvent = async (newsId) => {
   const eventName = "NewsEvent";
@@ -324,24 +327,36 @@ export const getNewsByNewsIdEvent = async (newsId) => {
     const result = await getPastEventFilter(eventName, {
       newsId: newsId,
     });
-    const lastestDataIndex = result.length - 1;
+    if (result.length > 0) {
+      const lastestDataIndex = result.length - 1;
+      let data = { ...INewEvent };
+      ICompleteNewsData;
+      data.id = result[lastestDataIndex].returnValues[0];
 
-    /* console.log(
-      `getNewsContractByNewsId ${eventName}:`,
-      result[0].returnValues[0]
-    );*/
-    let data = { ...INewEvent };
-    data.newsId = result[lastestDataIndex].returnValues[0];
-    data.title = result[lastestDataIndex].returnValues[1];
-    data.author = result[lastestDataIndex].returnValues[2];
-    data.index = result[lastestDataIndex].returnValues[3];
-    data.newsType = result[lastestDataIndex].returnValues[4];
-    data.content = result[lastestDataIndex].returnValues[5];
-    data.deposit = result[lastestDataIndex].returnValues[6];
-    return data;
+      data.memberId = result[lastestDataIndex].returnValues[1];
+      data.authorAddr = result[lastestDataIndex].returnValues[2];
+      data.articleType = result[lastestDataIndex].returnValues[3];
+      data.newsType = result[lastestDataIndex].returnValues[4];
+      data.index = result[lastestDataIndex].returnValues[5];
+      data.data = result[lastestDataIndex].returnValues[6];
+      data.deposit = result[lastestDataIndex].returnValues[7];
+      data.img = result[lastestDataIndex].returnValues[8];
+      const { title, authorName, content, time, tagArray, newsId } = JSON.parse(
+        data.data
+      );
+      data.title = title;
+      data.authorName = authorName;
+      data.content = content;
+      data.time = time;
+      data.tagArray = tagArray;
+      data.newsId = newsId;
+      return data;
+    }
   } catch (e) {
     console.log(`getNewsContractByNewsId error ${eventName}:`, e);
+    return null;
   }
+  return null;
 };
 export const getNewsImageByNewsIdEvent = async (newsId, index) => {
   const eventName = "NewsEventImage";

@@ -1,4 +1,4 @@
-export const developContractAddr = "0x5a26d5c51A0FCbBA9513f73Fdd9b6833464de7c2";
+export const developContractAddr = "0x0942CD82E139fA95BC0cd493706c1698FDb63d23";
 export const productionContractAddr =
   "0x4db118D49E4E1c4B4f959af3CF7F17b3d3A26fAF";
 
@@ -1021,6 +1021,20 @@ export const ABI = [
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
+  },
+  {
+    inputs: [],
+    name: "getAllNewsDataKeys",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
       },
     ],
     stateMutability: "view",

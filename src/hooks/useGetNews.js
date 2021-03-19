@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getNews } from "../modules/article";
-const useGetNews = (pageNumber) => {
+const useGetNews = (pageNumber, eveyRequestDataAmount) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [newsDatas, setNewsDatas] = useState([]);
@@ -9,7 +9,6 @@ const useGetNews = (pageNumber) => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const eveyRequestDataAmount = 2;
         setLoading(true);
         setError(false);
         const result = await getNews(
@@ -19,11 +18,14 @@ const useGetNews = (pageNumber) => {
         const [articleDatas, articleDataAmount] = result;
         setHasMoreData(articleDataAmount > newsDatas.length);
         setLoading(false);
+        // setNewsDatas((pre) => {
+        //   const tmpData = result
+        //     ? [...new Set([...pre, ...articleDatas])]
+        //     : pre;
+        //   return tmpData;
+        // });
         setNewsDatas((pre) => {
-          const tmpData = result
-            ? [...new Set([...pre, ...articleDatas])]
-            : pre;
-          return tmpData;
+          return pre;
         });
       } catch (error) {
         console.log("useGetNews error:", error);

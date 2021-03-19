@@ -13,42 +13,56 @@ import * as contract from "../../modules/smartcontract";
 import { useInView } from "react-intersection-observer";
 import useGetNews from "../../hooks/useGetNews";
 import { TestCard } from "../../components/Test/Test";
-// const NewsCard = ({ newsStatus }) => {
-//   <div className="NewsCard">
-//     <NewsCardUnreviewed />
-//     <NewsCardUnderReview />
-//     <NewsCardReviewed />
-//   </div>;
-// };
 
 const HomePage = () => {
+  const eveyRequestDataAmount = 2;
   const [pageNaumber, setPageNumber] = useState(1);
+  const [contractNewsDatas, setContractNewsData] = useState([]);
 
   const [reportDialogSwitch, setReportDialogSwitch] = useState(false);
   const [onSelectArticleId, setOnSelectArticleId] = useState(0);
-  const { loading, newsDatas, hasMoreData, error } = useGetNews(pageNaumber);
+  const { loading, newsDatas, hasMoreData, error } = useGetNews(
+    pageNaumber,
+    eveyRequestDataAmount
+  );
   const observer = useRef();
 
-  // const lastElementRef = useCallback(
-  //   (node) => {
-  //     console.log("lastElementRef loading:", loading);
-  //     console.log("lastElementRef node:", node.current);
+  useEffect(() => {
+    const excuteContract = async () => {
+      const newsAmount = await contract.getNewsAmount();
+      if (pageNaumber * eveyRequestDataAmount < newsAmount) {
+        const contractNewsIdArray = await contract.getRangeNewsId(
+          pageNaumber * eveyRequestDataAmount - eveyRequestDataAmount + 1,
+          pageNaumber * eveyRequestDataAmount
+        );
+        console.log("contractNewsIdArray:", contractNewsIdArray);
+        let tmpArray = [];
+        for (let i = 0; i < contractNewsIdArray.length; i++) {
+          if (newsDatas && newsDatas.length > 0) {
+            const noDifferentData = newsDatas.every((item) => {
+              return item.id != contractNewsIdArray[i];
+            });
+            console.log("noDifferentData:", noDifferentData);
+            if (noDifferentData == false) {
+              const result = await contract.getNewsByNewsIdEvent(
+                contractNewsIdArray[i]
+              );
+              console.log("result:", result);
+              if (result) tmpArray.push(contractNewsIdArray[i]);
+            }
+          } else {
+            const result = await contract.getNewsByNewsIdEvent(
+              contractNewsIdArray[i]
+            );
+            console.log("result:", result);
+          }
+        }
 
-  //     if (loading) return;
-  //     if (observer.current) observer.current.disconnect();
-  //     observer.current = new IntersectionObserver((entries) => {
-  //       if (entries[0].isIntersecting && hasMoreData) {
-  //       }
-  //       setPageNumber((prevPageNumber) =>
-  //         entries[0].isIntersecting && hasMoreData
-  //           ? prevPageNumber + 1
-  //           : prevPageNumber
-  //       );
-  //     });
-  //     if (node) observer.current.observe(node);
-  //   },
-  //   [loading, hasMoreData]
-  // );
+        setContractNewsData((pre) => [...pre, ...tmpArray]);
+      }
+    };
+    if (loading == false) excuteContract(pageNaumber * eveyRequestDataAmount);
+  }, [loading]);
   const lastElementRef = (node) => {
     if (loading) return;
     if (observer.current) observer.current.disconnect();
@@ -79,6 +93,17 @@ const HomePage = () => {
       <div className="container">
         <div className="homePageContent">
           <div className="NewsCard">
+            {contractNewsDatas.map((value, index) => {
+              console.log("contractNewsDatas:", value);
+              return (
+                <NewsCard
+                  key={id}
+                  articleData={value}
+                  onClickReportBtn={onClickOpenReportDialogBtn}
+                  refFunc={null}
+                />
+              );
+            })}
             {newsDatas.map((value, index) => {
               const { id } = value;
               if (newsDatas.length == index + 1) {
