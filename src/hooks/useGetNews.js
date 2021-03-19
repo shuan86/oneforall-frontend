@@ -18,15 +18,15 @@ const useGetNews = (pageNumber, eveyRequestDataAmount) => {
         const [articleDatas, articleDataAmount] = result;
         setHasMoreData(articleDataAmount > newsDatas.length);
         setLoading(false);
-        // setNewsDatas((pre) => {
-        //   const tmpData = result
-        //     ? [...new Set([...pre, ...articleDatas])]
-        //     : pre;
-        //   return tmpData;
-        // });
         setNewsDatas((pre) => {
-          return pre;
+          const tmpData = result
+            ? [...new Set([...pre, ...articleDatas])]
+            : pre;
+          return tmpData;
         });
+        // setNewsDatas((pre) => {
+        //   return pre;
+        // });
       } catch (error) {
         console.log("useGetNews error:", error);
         setError(true);

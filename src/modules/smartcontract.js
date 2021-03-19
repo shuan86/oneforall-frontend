@@ -60,11 +60,19 @@ const initContract = () => {
   }
   return null;
 };
-
-const web3 = initContract();
-
-const contract = new web3.eth.Contract(contractABI, contractAddr);
-
+let web3 = null;
+let contract = null;
+//  web3 = initContract();
+//  contract = new web3.eth.Contract(contractABI, contractAddr);
+if (web3 == null || contract == null) {
+  console.error("you need to init we3.js");
+}
+export const checkContractIsOpen = () => {
+  if (web3 == null || contract == null) {
+    return false;
+  }
+  return true;
+};
 const test = async () => {
   console.log("web3.version:", web3.version);
   const vistors = await contract.methods.getVistors().call();

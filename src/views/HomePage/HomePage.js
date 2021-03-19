@@ -61,7 +61,8 @@ const HomePage = () => {
         setContractNewsData((pre) => [...pre, ...tmpArray]);
       }
     };
-    if (loading == false) excuteContract(pageNaumber * eveyRequestDataAmount);
+    if (contract.checkContractIsOpen() && loading == false)
+      excuteContract(pageNaumber * eveyRequestDataAmount);
   }, [loading]);
   const lastElementRef = (node) => {
     if (loading) return;
@@ -93,7 +94,7 @@ const HomePage = () => {
       <div className="container">
         <div className="homePageContent">
           <div className="NewsCard">
-            {contractNewsDatas.map((value, index) => {
+            {/* {contractNewsDatas.map((value, index) => {
               console.log("contractNewsDatas:", value);
               return (
                 <NewsCard
@@ -103,7 +104,7 @@ const HomePage = () => {
                   refFunc={null}
                 />
               );
-            })}
+            })} */}
             {newsDatas.map((value, index) => {
               const { id } = value;
               if (newsDatas.length == index + 1) {
