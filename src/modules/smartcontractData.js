@@ -1,4 +1,4 @@
-export const developContractAddr = "0x0942CD82E139fA95BC0cd493706c1698FDb63d23";
+export const developContractAddr = "0x00aB62b63eB11614B16BF34FE2910BF23dC0AAA8";
 export const productionContractAddr =
   "0x4db118D49E4E1c4B4f959af3CF7F17b3d3A26fAF";
 
@@ -197,6 +197,37 @@ export const ABI = [
       },
     ],
     name: "NewsEventImage",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address[]",
+        name: "authorAddr",
+        type: "address[]",
+      },
+      {
+        indexed: false,
+        internalType: "uint256[]",
+        name: "pos",
+        type: "uint256[]",
+      },
+      {
+        indexed: false,
+        internalType: "enum AbPlatform.PixelColor[]",
+        name: "color",
+        type: "uint8[]",
+      },
+    ],
+    name: "PixelGameEvent",
     type: "event",
   },
   {
@@ -1158,6 +1189,43 @@ export const ABI = [
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address[]",
+        name: "authorAddr",
+        type: "address[]",
+      },
+      {
+        internalType: "uint256[]",
+        name: "pos",
+        type: "uint256[]",
+      },
+      {
+        internalType: "enum AbPlatform.PixelColor[]",
+        name: "color",
+        type: "uint8[]",
+      },
+    ],
+    name: "setPixelGame",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getPixelGameKeys",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    constant: true,
   },
   {
     inputs: [

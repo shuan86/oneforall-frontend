@@ -9,6 +9,7 @@
         "ethereumjs-tx": "^2.1.2",
         "jsencrypt": "^3.0.0",
         "react": "^16.8",
+        "react-color": "^2.19.3",
         "react-dom": "^16.8",
         "react-intersection-observer": "^8.31.0",
         "react-redux": "^7.2.2",
