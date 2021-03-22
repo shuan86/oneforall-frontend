@@ -19,12 +19,25 @@ const initialMemberStatus = () => ({
   type: "initialMemberStatus",
 });
 const updateMemberStatus = (isVistor, isReviewer, isPublisher) => ({
-  payload: { isVistor: isVistor, isReviewer: isReviewer, isPublisher: isPublisher },
+  payload: {
+    isVistor: isVistor,
+    isReviewer: isReviewer,
+    isPublisher: isPublisher,
+  },
   type: "updateMemberStatus",
 });
 
-const setMemberListFlag =(value) => ({
+const setMemberListFlag = (value) => ({
   payload: value,
-  type:  "setMemberListFlag",
-})
-export { initialMember, updateMember, wontUpdateMember, updateLoginStatus, initialMemberStatus, updateMemberStatus, setMemberListFlag };
+  type: "setMemberListFlag",
+});
+
+export {
+  initialMember,
+  updateMember,
+  wontUpdateMember,
+  updateLoginStatus,
+  initialMemberStatus,
+  updateMemberStatus,
+  setMemberListFlag,
+};

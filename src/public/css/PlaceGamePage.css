@@ -1,0 +1,17 @@
+.pxelContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.row {
+  display: flex;
+  width: fit-content;
+}
+.pixel {
+  width: 20px;
+  height: 20px;
+  border: 1px black solid;
+}
+.pixel:hover {
+  cursor: pointer;
+}
