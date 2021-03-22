@@ -204,7 +204,7 @@
 .article a {
   display: inline-block;
   padding: 15px;
-  color: var(--black);
+  color: var(--black-alpha-60);
   font-size: 1rem;
   font-weight: 700;
 }
@@ -213,32 +213,70 @@
   text-decoration: underline;
 }
 
-.like {
-  padding: 15px 15px;
+.report {
   display: flex;
-  justify-content: space-between;
+  padding: 0 15px;
+  margin: 15px 0;
+  color: var(--black);
 }
 
-.like a {
+.report .reportButton {
+  display: flex;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.report .reportButton:hover {
+  text-decoration: underline;
+}
+
+.report .reportButton svg {
+  width: 22px;
+  height: 22px;
+}
+
+.report .reportButton div {
+  font-size: 16px;
+}
+
+.reportArticleAdress {
+  color: var(--black-alpha-60);
+}
+
+.like {
+  display: flex;
+  margin: 0 16px;
+  /* justify-content: space-between; */
+  height: 40px;
+  border: 1px solid var(--gray-border);
+  border-right: 0;
+  border-left: 0;
+}
+
+.like div {
   display: inline-block;
-  color: #fff;
-  padding: 10px 15px;
-  background-color: var(--sky-blue);
-  transition: background-color .2s ease-in;
+  flex: 1;
+  height: 40px;
+  font-weight: 700;
+}
+
+.like div a {
+  display: inline-block;
+  color: var(--black-alpha-60);
+  text-align: center;
+  line-height: 40px;
+  height: 100%;
+  width: 100%;
   border-radius: 5px;
+  transition: background-color .2s ease-in;
 }
 
-.like a:hover {
-  background-color: var(--navy-blue);
+.like div a:hover {
+  background-color: var(--light-gray);
 }
 
-.like a:active {
-  background-color: var(--deep-blue);
-}
-
-.like span {
-  padding: 0 10px;
-  letter-spacing: 1px;
+.like div a:active {
+  transform: scale(0.95)
 }
 
 /*comment*/
@@ -261,7 +299,7 @@
   display: flex;
   justify-content: space-between;
   height: 40px;
-  margin-bottom: 16px;
+  margin: 16px 0;
   padding: 0 16px;
 }
 
