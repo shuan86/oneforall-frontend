@@ -4,6 +4,8 @@ import "../../public/css/RankingItem.css";
 import inspector from "../../public/images/inspector.jpg";
 import { MemberInformation } from "../Member/MemberCard";
 
+import Copper10 from '../../public/images/medals/copper30.png'
+
 const RankingItem = ({
   memberFlag,
   setMemberFlag,
@@ -30,8 +32,9 @@ const RankingItem = ({
     <div className="rankingItem">
       <a href="#" className={"rankingPosition"} onClick={onClickSetRankingFlag}>
         <div className={"rankAccount"}>
-          <img src={inspector} alt="rankAccount" width={"20px"} />
+          {/* <img src={inspector} alt="rankAccount" width={"20px"} /> */}
           <span>{memberName}</span>
+          <img src={Copper10} alt="medals" className="medals" />
         </div>
         <div className={"rankScore"}>
           <span>{exp}</span>

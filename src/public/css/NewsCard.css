@@ -46,6 +46,9 @@
   border-radius: 10px;
   margin: 50px 0;
   margin-bottom: 70px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 0 7px 5px;
+  ;
 }
 
 .cardTop {
@@ -253,6 +256,10 @@
   border-left: 0;
 }
 
+.border-b-0 {
+  border-bottom: 0;
+}
+
 .like div {
   display: inline-block;
   flex: 1;
@@ -260,22 +267,25 @@
   font-weight: 700;
 }
 
-.like div a {
+.like div button {
   display: inline-block;
+  cursor: pointer;
   color: var(--black-alpha-60);
   text-align: center;
   line-height: 40px;
   height: 100%;
   width: 100%;
+  border: 0;
   border-radius: 5px;
+  background-color: #fff;
   transition: background-color .2s ease-in;
 }
 
-.like div a:hover {
+.like div button:hover {
   background-color: var(--light-gray);
 }
 
-.like div a:active {
+.like div button:active {
   transform: scale(0.95)
 }
 

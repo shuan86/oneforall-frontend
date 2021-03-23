@@ -8,6 +8,7 @@ import * as memberModuel from "../../modules/member";
 import { getAllData as getLocalStorageData } from "../../modules/localstorage";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 
 import {
   initialMember,
@@ -128,7 +129,17 @@ const NavBar = () => {
                   <AccountBoxIcon fontSize="small" />
                   <div className="memberListItemTitle">會員帳號</div>
                 </div>
-                <div className="memberListItem"></div>
+                <div
+                  className="memberListItem"
+                  onClick={() => {
+                    onClickMemberListFlag();
+                    onClickPlaceGamePage();
+                  }}
+                >
+                  <SportsEsportsIcon fontSize="small" />
+                  <div className="memberListItemTitle">PlaceGame</div>
+                </div>
+                <div className="memberListBorder"></div>
                 <div
                   className="memberListItem"
                   onClick={() => {
@@ -153,15 +164,6 @@ const NavBar = () => {
                   alt="Background"
                   className="navUserInfoPhoto"
                 ></img>
-              </div>
-              <div
-                className={`${
-                  loginStatus && "navDisplayBlock" && "navUserInfo"
-                } ${!loginStatus && "navDisplayNone"}`}
-                onClick={onClickPlaceGamePage}
-              >
-                {" "}
-                <div className="navUserInfoID">place game</div>
               </div>
             </div>
           </div>

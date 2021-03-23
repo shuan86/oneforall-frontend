@@ -1,0 +1,85 @@
+.dialog {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1300;
+    height: 100%;
+    width: 100%;
+}
+
+.background {
+    position: absolute;
+    z-index: -1;
+    background-color: var(--black-alpha-60);
+    width: 100%;
+    height: 100%;
+}
+
+.dialog .front {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 580px;
+    background-color: #fff;
+    padding: 17px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-top: -20%;
+    margin-left: -290px;
+}
+
+.dialog .front .dialogSelect {
+    margin-top: 16px;
+    text-align: start;
+}
+
+.dialog .front select {
+    height: 40px;
+    padding: 0 5px;
+    background-color: var(--light-gray);
+    border: 2px solid var(--light-gray);
+    border-radius: 5px;
+    outline: none;
+    transition: border .2s ease-in, background-color .2s ease-in;
+}
+
+.dialog .front select:hover {
+    border: 2px solid var(--gray);
+}
+
+.dialog .front h3 {
+    text-align: start;
+    font-size: 20px;
+}
+
+.dialog .front .formInput {
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 0;
+    border: 0;
+    box-shadow: none;
+}
+
+.dialog .front .formInput:last-child input {
+    color: #fff;
+    border: 0;
+    height: 40px;
+    cursor: pointer;
+    background-color: var(--sky-blue);
+}
+
+.dialog .front .formInput:last-child input:hover {
+    background-color: var(--navy-blue);
+}
+
+.dialog .front .formInput:last-child input:active {
+    background-color: var(--deep-blue);
+}
+
+.dialog .front .formInput label {
+    text-align: start;
+}
+
+.dialog .front .formInput textarea {
+    height: 300px;
+}

@@ -4,6 +4,7 @@ import {
   MemberCard,
   VistorRight,
   ReviewerRight,
+  AuthorRight
 } from "../../components/Member/MemberCard";
 import { EnumMemberStatus } from "../../interfaces/IMember";
 import { useHistory } from "react-router-dom";
@@ -37,7 +38,7 @@ const MemberPage = () => {
 
   return (
     <div className="container">
-      {isReviewer ? (
+       {isReviewer ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.reviewer)}
         >
@@ -57,8 +58,8 @@ const MemberPage = () => {
         {memberStatus == EnumMemberStatus.vistor ? (
           <VistorRight isReviewer={isReviewer} isPublisher={isPublisher} />
         ) : null}
-        {memberStatus == EnumMemberStatus.reviewer ? <ReviewerRight /> : null}
-        {memberStatus == EnumMemberStatus.publisher ? <ReviewerRight /> : null}
+        {memberStatus == EnumMemberStatus.reviewer ? <ReviewerRight isPublisher={isPublisher}/> : null}
+        {memberStatus == EnumMemberStatus.publisher ? <AuthorRight isPublisher={isPublisher}/> : null}
       </div>
     </div>
   );

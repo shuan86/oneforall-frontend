@@ -33,63 +33,43 @@ const FormDialog = () => {
     <div className={"missionBtn"}>
       <button onClick={handleClickOpen}>我想成為發文者</button>
       <div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">申請表格</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="companyName"
-              label="請輸入公司名稱"
-              type="text"
-              fullWidth
-              value={companyName}
-              onChange={(v) => setCompanyName(v.target.value)}
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="co"
-              label="請輸入公司行號"
-              type="text"
-              fullWidth
-              value={co}
-              onChange={(v) => setCO(v.target.value)}
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="phone"
-              label="請輸入公司電話"
-              type="text"
-              fullWidth
-              value={phone}
-              onChange={(v) => setPhone(v.target.value)}
-            />
-            <TextField
-              autoFocus
-              margin="dense"
-              id="email"
-              label="請輸入公司信箱"
-              type="email"
-              fullWidth
-              value={email}
-              onChange={(v) => setEmail(v.target.value)}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={onClickApplyPublisher} color="primary">
-              Send
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <div className={open? "dialog" : "none"} >
+          <div className="background" onClick={handleClose}></div>
+          <div className="front">
+            <h3 id="form-dialog-title">發文者申請表單</h3>
+            <div className="formInput">
+              <label htmlFor="">請輸入公司名稱</label>
+              <input type="text" 
+                id="companyName"
+                onChange={(v) => setCompanyName(v.target.value)}
+              />
+            </div>
+            <div className="formInput">
+              <label htmlFor="">請輸入公司行號</label>
+              <input type="text" 
+                id="co"
+                onChange={(v) => setCO(v.target.value)}
+              />
+            </div>
+            <div className="formInput">
+              <label htmlFor="">請輸入公司電話</label>
+              <input type="text"
+                id="phone"
+                onChange={(v) => setPhone(v.target.value)}
+              />
+            </div>
+            <div className="formInput">
+              <label htmlFor="">請輸入公司信箱</label>
+              <input type="email" 
+                id="email"
+                onChange={(v) => setEmail(v.target.value)}
+              />
+            </div>
+            <div className="formInput">
+              <input type="submit" value="確認送出" onClick={onClickApplyPublisher}/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -16,11 +16,11 @@ const NewsCardUnreviewed = ({ articleData, refHook, onClickReportBtn }) => {
     <div className="card">
       <NewsCardTop />
       <NewsCardContent
-        isReviwedCard={false}
+        isReviewedCard={false}
         data={articleData}
         onClickReportBtn={onClickReportBtn}
       />
-      <NewsCardComment />
+      <NewsCardComment isReviewedCard={false}/>
     </div>
   );
 };
@@ -29,11 +29,11 @@ const NewsCardUnderReview = ({ articleData, onClickReportBtn }) => {
     <div className="card">
       <div className="status">審核中</div>
       <NewsCardContent
-        isReviwedCard={false}
+        isReviewedCard={false}
         data={articleData}
         onClickReportBtn={onClickReportBtn}
       />
-      <NewsCardComment />
+      <NewsCardComment isReviewedCard={false}/>
     </div>
   );
 };
@@ -65,7 +65,7 @@ const NewsCardTop = () => {
     </div>
   );
 };
-const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
+const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
   const { articleId, title, authorName, content, time, tags, images } = data;
   const [tagsData, setTagsData] = useState([]);
   const [imageState, setImageState] = useState("");
@@ -108,7 +108,7 @@ const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
             <MemberInformation setMemberFlag={setMemberFlag} />
           </div>
         </div>
-        <a href="" className={isReviwedCard == false ? "none" : "history"}>
+        <a href="" className={isReviewedCard == false ? "none" : "history"}>
           <img src={history} alt="History" />
         </a>
       </div>
@@ -128,44 +128,51 @@ const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
         <img src={imageState.length > 0 ? imageState : articleImg} alt="" />
         <div className="report">
           <div className="reportButton" onClick={() => onClickReportBtn(articleId)}>
-              <ReportIcon />
+              <ReportIcon fontSize="small"/>
               <div>檢舉</div>
           </div>
           <div className="reportArticleAdress">0x59982711466fD1d4C2F1C1F710f721651BCCFDb3</div>
-        </div>
-      </div>
-      <div className="like">
-        <div>
-          <a href="">123人想知道</a>
-        </div>
-        <div>
-          <a href="">10留言</a>
-        </div>
-        <div className={isReviwedCard == false ? "none" : "vote"}>
-          <a href="">同意</a>
-          <a href="">反對</a>
         </div>
       </div>
     </div>
   );
 };
 
-const NewsCardComment = () => {
+const NewsCardComment = ({isReviewedCard}) => {
   //console.log('NewsCardComment');
+  const [commentFlag, setCommentFlag] = useState(false)
+  const onClickCommentCollapse = () => {
+    setCommentFlag(true)
+  }
+
   return (
     <div className="comment">
-      <div className="userInput">
-        <input type="text" placeholder="告訴我們你的想法" />
-        <a href="">傳送</a>
+      <div className={commentFlag ? "like" : "like border-b-0"}>
+        <div>
+          <button>123 人想知道</button>
+        </div>
+        <div>
+          <button onClick={onClickCommentCollapse}>10 留言</button>
+        </div>
+        <div className={isReviewedCard == false ? "none" : "vote"}>
+          <button>同意</button>
+          <button>反對</button>
+        </div>
       </div>
-      <NewsCardUserComment />
-      <NewsCardUserComment />
-      <NewsCardUserComment />
-      <NewsCardUserComment />
-      <NewsCardUserComment />
-      <a href="" className="moreComment">
-        查看其他留言
-      </a>
+      <div className={commentFlag ? null : "none"}>
+        <div className="userInput">
+          <input type="text" placeholder="告訴我們你的想法" />
+          <a href="">傳送</a>
+        </div>
+        <NewsCardUserComment />
+        <NewsCardUserComment />
+        <NewsCardUserComment />
+        <NewsCardUserComment />
+        <NewsCardUserComment />
+        <a href="" className="moreComment">
+          查看其他留言
+        </a>
+      </div>
     </div>
   );
 };
