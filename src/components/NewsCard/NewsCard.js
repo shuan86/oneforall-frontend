@@ -9,6 +9,8 @@ import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
 import { NewsType } from "../../interfaces/IContract";
 
+import ReportIcon from '@material-ui/icons/Report';
+
 const NewsCardUnreviewed = ({ articleData, refHook, onClickReportBtn }) => {
   return (
     <div className="card">
@@ -124,18 +126,20 @@ const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
         <p>{content}</p>
         <a href="">繼續閱讀</a>
         <img src={imageState.length > 0 ? imageState : articleImg} alt="" />
+        <div className="report">
+          <div className="reportButton" onClick={() => onClickReportBtn(articleId)}>
+              <ReportIcon />
+              <div>檢舉</div>
+          </div>
+          <div className="reportArticleAdress">0x59982711466fD1d4C2F1C1F710f721651BCCFDb3</div>
+        </div>
       </div>
       <div className="like">
         <div>
-          {
-            <a href="#" onClick={() => onClickReportBtn(articleId)}>
-              檢舉
-            </a>
-          }
+          <a href="">123人想知道</a>
         </div>
         <div>
-          {useSelector((s) => s.loginStatus) ? <a href="">想知道</a> : null}
-          <span>123人想知道</span>
+          <a href="">10留言</a>
         </div>
         <div className={isReviwedCard == false ? "none" : "vote"}>
           <a href="">同意</a>
