@@ -5,7 +5,8 @@ export const Row = ({
   width,
   selectedColor,
   setSelectedPos,
-  selectedPos,
+  loadPixelData,
+  canClickPixelFlag,
 }) => {
   const [rowIndex, setRowIndex] = useState(-1);
   const pixelArray = [];
@@ -21,7 +22,8 @@ export const Row = ({
         pos={height * width + (i + 1)}
         selectedColor={selectedColor}
         setSelectedPos={setSelectedPos}
-        selectedPos={selectedPos}
+        loadPixelData={loadPixelData}
+        canClickPixelFlag={canClickPixelFlag}
       />
     );
   }

@@ -13,7 +13,7 @@ import HomePage from "./views/HomePage/HomePage";
 import MemberPage from "./views/MemberPage/MemberPage";
 import PublisherPage from "./views/PublisherPage/PublisherPage";
 import ReviewerPage from "./views/ReviewerPage/ReviewerPage";
-import PlaceGamePage from "./views/PlaceGamePage/PlaceGamePage";
+import PixelGamePage from "./views/PixelGamePage/PixelGamePage";
 
 import EnrollPage from "./views/EnrollPage/EnrollPage";
 import LoginPage from "./views/LoginPage/LoginPage";
@@ -27,7 +27,7 @@ const App = () => (
       <div>
         <Navbar />
         <Switch>
-          <Route path="/placeGame" component={PlaceGamePage} />
+          <Route path="/pixelGame" component={PixelGamePage} />
           <Route path="/publisher" component={PublisherPage} />
           <Route path="/reviewer" component={ReviewerPage} />
           <Route path="/member" component={MemberPage} />

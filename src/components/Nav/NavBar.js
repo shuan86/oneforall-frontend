@@ -79,8 +79,8 @@ const NavBar = () => {
   const onClickMemberListFlag = () => {
     dispatch(setMemberListFlag());
   };
-  const onClickPlaceGamePage = () => {
-    history.push("/placeGame");
+  const onClickPixelGamePage = () => {
+    history.push("/pixelGame");
   };
   return (
     <div className={"navBar"}>
@@ -158,10 +158,10 @@ const NavBar = () => {
                 className={`${
                   loginStatus && "navDisplayBlock" && "navUserInfo"
                 } ${!loginStatus && "navDisplayNone"}`}
-                onClick={onClickPlaceGamePage}
+                onClick={onClickPixelGamePage}
               >
                 {" "}
-                <div className="navUserInfoID">place game</div>
+                <div className="navUserInfoID">Pixel Game</div>
               </div>
             </div>
           </div>
