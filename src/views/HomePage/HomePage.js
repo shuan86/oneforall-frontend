@@ -18,13 +18,16 @@ const HomePage = () => {
   const eveyRequestDataAmount = 2;
   const [pageNaumber, setPageNumber] = useState(1);
   const [contractNewsDatas, setContractNewsData] = useState([]);
-
   const [reportDialogSwitch, setReportDialogSwitch] = useState(false);
   const [onSelectArticleId, setOnSelectArticleId] = useState(0);
-  const { loading, newsDatas, hasMoreData, error } = useGetNews(
-    pageNaumber,
-    eveyRequestDataAmount
-  );
+
+  const {
+    loading,
+    newsDatas,
+    memberLikeArray,
+    hasMoreData,
+    error,
+  } = useGetNews(pageNaumber, eveyRequestDataAmount);
   const observer = useRef();
 
   useEffect(() => {
@@ -94,17 +97,6 @@ const HomePage = () => {
       <div className="container">
         <div className="homePageContent">
           <div className="NewsCard">
-            {/* {contractNewsDatas.map((value, index) => {
-              console.log("contractNewsDatas:", value);
-              return (
-                <NewsCard
-                  key={id}
-                  articleData={value}
-                  onClickReportBtn={onClickOpenReportDialogBtn}
-                  refFunc={null}
-                />
-              );
-            })} */}
             {newsDatas.map((value, index) => {
               const { id } = value;
               if (newsDatas.length == index + 1) {
@@ -112,6 +104,7 @@ const HomePage = () => {
                   <NewsCard
                     key={id}
                     articleData={value}
+                    memberLikeArray={memberLikeArray}
                     onClickReportBtn={onClickOpenReportDialogBtn}
                     refFunc={lastElementRef}
                   />
@@ -121,6 +114,7 @@ const HomePage = () => {
                   <NewsCard
                     key={id}
                     articleData={value}
+                    memberLikeArray={memberLikeArray}
                     onClickReportBtn={onClickOpenReportDialogBtn}
                     refFunc={null}
                   />

@@ -1,4 +1,4 @@
-export const developContractAddr = "0x00aB62b63eB11614B16BF34FE2910BF23dC0AAA8";
+export const developContractAddr = "0xb19003d6C2ad45a1697A205e77cab89Ade1Fe816";
 export const productionContractAddr =
   "0x4db118D49E4E1c4B4f959af3CF7F17b3d3A26fAF";
 
@@ -74,15 +74,15 @@ export const ABI = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: "uint256",
-        name: "dbId",
+        name: "articleId",
         type: "uint256",
       },
       {
-        indexed: false,
+        indexed: true,
         internalType: "uint256",
-        name: "articleId",
+        name: "memberId",
         type: "uint256",
       },
       {
@@ -105,6 +105,37 @@ export const ABI = [
       },
     ],
     name: "CommentEvent",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "articleId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "authorAddr",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "time",
+        type: "string",
+      },
+    ],
+    name: "LikeArticleEvent",
     type: "event",
   },
   {
@@ -985,12 +1016,12 @@ export const ABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "dbId",
+        name: "articleId",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "articleId",
+        name: "memberId",
         type: "uint256",
       },
       {
@@ -1010,6 +1041,34 @@ export const ABI = [
       },
     ],
     name: "comment",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "articleId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "memberId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "authorAddr",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "time",
+        type: "string",
+      },
+    ],
+    name: "likeArticle",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

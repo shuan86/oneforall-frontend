@@ -5,6 +5,7 @@ const useGetNews = (pageNumber, eveyRequestDataAmount) => {
   const [error, setError] = useState(false);
   const [newsDatas, setNewsDatas] = useState([]);
   const [hasMoreData, setHasMoreData] = useState(false);
+  const [memberLikeArray, setMemberLikeArray] = useState([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -15,7 +16,7 @@ const useGetNews = (pageNumber, eveyRequestDataAmount) => {
           pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
           pageNumber * eveyRequestDataAmount
         );
-        const [articleDatas, articleDataAmount] = result;
+        const [articleDatas, articleDataAmount, tmpMemberLikeArray] = result;
         setHasMoreData(articleDataAmount > newsDatas.length);
         setLoading(false);
         setNewsDatas((pre) => {
@@ -24,6 +25,7 @@ const useGetNews = (pageNumber, eveyRequestDataAmount) => {
             : pre;
           return tmpData;
         });
+        setMemberLikeArray(tmpMemberLikeArray);
         // setNewsDatas((pre) => {
         //   return pre;
         // });
@@ -38,7 +40,7 @@ const useGetNews = (pageNumber, eveyRequestDataAmount) => {
     };
   }, [pageNumber]);
 
-  return { loading, newsDatas, hasMoreData, error };
+  return { loading, newsDatas, memberLikeArray, hasMoreData, error };
 };
 
 export default useGetNews;

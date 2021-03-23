@@ -9,7 +9,7 @@ import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
 import { NewsType } from "../../interfaces/IContract";
 
-import ReportIcon from '@material-ui/icons/Report';
+import ReportIcon from "@material-ui/icons/Report";
 
 const NewsCardUnreviewed = ({ articleData, refHook, onClickReportBtn }) => {
   return (
@@ -66,7 +66,17 @@ const NewsCardTop = () => {
   );
 };
 const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
-  const { articleId, title, authorName, content, time, tags, images } = data;
+  const {
+    articleId,
+    title,
+    authorName,
+    content,
+    time,
+    tags,
+    images,
+    likeAmount,
+    commentAmount,
+  } = data;
   const [tagsData, setTagsData] = useState([]);
   const [imageState, setImageState] = useState("");
 
@@ -127,19 +137,24 @@ const NewsCardContent = ({ isReviwedCard, data, onClickReportBtn }) => {
         <a href="">繼續閱讀</a>
         <img src={imageState.length > 0 ? imageState : articleImg} alt="" />
         <div className="report">
-          <div className="reportButton" onClick={() => onClickReportBtn(articleId)}>
-              <ReportIcon />
-              <div>檢舉</div>
+          <div
+            className="reportButton"
+            onClick={() => onClickReportBtn(articleId)}
+          >
+            <ReportIcon />
+            <div>檢舉</div>
           </div>
-          <div className="reportArticleAdress">0x59982711466fD1d4C2F1C1F710f721651BCCFDb3</div>
+          <div className="reportArticleAdress">
+            0x59982711466fD1d4C2F1C1F710f721651BCCFDb3
+          </div>
         </div>
       </div>
       <div className="like">
         <div>
-          <a href="">123人想知道</a>
+          <a href="">{likeAmount}人想知道</a>
         </div>
         <div>
-          <a href="">10留言</a>
+          <a href="">{commentAmount}留言</a>
         </div>
         <div className={isReviwedCard == false ? "none" : "vote"}>
           <a href="">同意</a>
@@ -186,8 +201,9 @@ const NewsCardUserComment = () => {
 };
 
 const NewsCard = React.memo(
-  ({ articleData, onClickReportBtn, refFunc }) => {
+  ({ articleData, memberLikeArray, onClickReportBtn, refFunc }) => {
     console.log("articleData:", articleData.id);
+    console.log("memberLikeArray:", memberLikeArray);
     let tmpNewsCard = (
       <NewsCardUnreviewed
         articleData={articleData}
