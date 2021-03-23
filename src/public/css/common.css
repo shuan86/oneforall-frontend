@@ -29,6 +29,7 @@ body {
     /* IE and Edge */
     scrollbar-width: none;
     /*隱藏scroll bar*/
+    background-color: var(--background-blue);
 }
 
 body::-webkit-scrollbar {
@@ -76,6 +77,7 @@ body::-webkit-scrollbar {
     --pink: #C93485;
     --brown: #B74319;
     --indigo: #1700FF;
+    --background-blue: #ecedf3;
 }
 
 ::placeholder {

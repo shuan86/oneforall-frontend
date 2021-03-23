@@ -25,6 +25,8 @@
     padding: 16px;
     margin-bottom: 16px;
     border-radius: 10px;
+    background-color: #fff;
+    box-shadow: var(--black-alpha-05) 0 0 7px 5px;
 }
 
 .formInput label {

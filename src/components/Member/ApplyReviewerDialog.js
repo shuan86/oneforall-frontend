@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import "../../public/css/Dialog.css";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -34,6 +35,7 @@ const FormDialog = () => {
 
   const [tagKind, setTagKind] = React.useState([]);
   let tmpTagArray = [];
+  console.log(`applyContent:${applyContent},email:${email},tag:${tag}`);
   useEffect(() => {
     for (const t of Object.keys(NewsTagKind)) {
       tmpTagArray.push(t);
@@ -73,69 +75,45 @@ const FormDialog = () => {
         我想成為審查者
       </button>
       <div>
-        <Dialog
-          open={open}
-          onClose={() => {
-            setOpen(false);
-          }}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">申請表格</DialogTitle>
-
-          <DialogContent>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="NewsKindLabel">新聞種類</InputLabel>
-              <Select
-                labelId="NewsKindLabel"
-                id="select"
-                value={tag}
-                onChange={onSelectNewsTagChange}
-                open={selectUI}
-                onOpen={() => setSelectUI(true)}
-                onClose={() => setSelectUI(false)}
-              >
+        <div className={open? "dialog" : "none"} >
+          <div className="background" onClick={handleClose}></div>
+          <div className="front">
+            <h3 id="form-dialog-title">審查者申請表單</h3>
+            <div className="dialogSelect">
+              <label htmlFor="" id="NewsKindLabel"></label>
+              <select value={tag} id="select" onChange={onSelectNewsTagChange}>
                 {tagKind.map((value, index) => {
                   return (
-                    <MenuItem lry={index} value={value}>
-                      <em>{value}</em>
-                    </MenuItem>
+                    <option lry={index} value={value}>
+                      {value}
+                    </option>
                   );
                 })}
-              </Select>
-            </FormControl>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
-              onChange={(e) => {
-                const value = e.target.value;
-                setEmail(value);
-              }}
-            />
-            <TextareaAutosize
-              rowsMax={4}
-              aria-label="maximum height"
-              placeholder="請輸入原因(限100字)"
-              defaultValue=""
-              style={{ height: 150, width: "100% " }}
-              onChange={(e) => {
-                const value = e.target.value;
-                setApplyContent(value);
-              }}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={onClickApplyReviewer} color="primary">
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
+              </select>
+            </div>
+            <div className="formInput">
+              <label htmlFor="">信箱</label>
+              <input type="email" 
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setEmail(value);
+                }}
+              />
+            </div>
+            <div className="formInput">
+              <label htmlFor="">輸入原因</label>
+              <textarea cols="10" rows="10"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setApplyContent(value);
+                }}
+              ></textarea>
+            </div>
+            <div className="formInput">
+              <input type="submit" value="確認送出" onClick={onClickApplyReviewer}/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

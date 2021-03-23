@@ -1,6 +1,7 @@
 .navBar {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px;
+    background-color: #fff;
 }
 
 .navContent {
@@ -182,7 +183,7 @@
     padding-right: 5px;
 }
 
-.memberListItem:nth-child(2) {
+.memberListBorder {
     height: 1px;
     width: 100%;
     margin: 10px 0;
@@ -190,12 +191,12 @@
     background-color: var(--gray-border);
 }
 
-.memberListItem:not(:nth-child(2)):hover {
+.memberListItem:hover {
     background-color: var(--light-gray);
     border-radius: 5px;
 }
 
-.memberListItem:not(:nth-child(2)):active {
+.memberListItem:active {
     background-color: var(--gray);
     border-radius: 5px;
 }

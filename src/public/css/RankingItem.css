@@ -5,8 +5,15 @@
     border-radius: 5px;
 }
 
+.rankingPosition .medals {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    vertical-align: top;
+}
+
 .rankingPosition:hover {
-    background-color: var(--light-gray);
+    background-color: var(--black-alpha-05);
 }
 
 .rankingPosition:active {
@@ -26,12 +33,6 @@
     align-items: center;
     color: var(--black);
 }
-
-.rankAccount>span {
-    padding-left: 10px;
-
-}
-
 
 .rankScore {
     float: left;

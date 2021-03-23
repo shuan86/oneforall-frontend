@@ -3,16 +3,21 @@
 .memberContainer {
     display: flex;
     justify-content: space-between;
-    margin: 10px 60px;
+    margin: 0 auto;
+    margin-top: 30px;
+    max-width: 880px;
 }
 
 
 .personalInfo {
-    width: 500px;
+    width: 100%;
     height: 700px;
     border: solid 1.5px var(--gray-border);
-    border-radius: 20px;
-    margin-top: 30px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: var(--black-alpha-05) 0 0 7px 5px;
+    flex: 1;
+    margin-right: 20px;
 }
 
 .personalPhoto {
@@ -28,41 +33,50 @@
 }
 
 .infoContent {
-    width: 400px;
     margin: 40px auto;
 }
 
 .infoContent>p {
-    font-size: 13px;
+    font-size: 16px;
     letter-spacing: 1.1px;
-    color: var(--gray);
+    color: var(--black-alpha-40);
     letter-spacing: 1.75px;
-    margin-bottom: 5px;
-    margin-top: 15px;
+    padding: 0 20px;
 }
 
 .infoContent>p:nth-child(even) {
-    font-size: 16px;
     letter-spacing: 1.75px;
     color: var(--black);
+    padding-top: 5px;
     padding-bottom: 15px;
-    border-bottom: solid 1.5px var(--gray-border);
-    margin-top: 5px;
+    border-bottom: solid 1px var(--gray-border);
 }
 
-.infoContent>p:nth-child(2) {
-    color: var(--black);
-    font-size: 25px;
-    font-weight: 400;
+.infoContent>p:nth-child(odd) {
+    padding-top: 15px;
+}
+
+.infoContent>p:first-child {
+    border-top: solid 1px var(--gray-border);
+}
+
+.memberRight {
+    display: flex;
+    flex-direction: column;
+    min-width: 360px;
+    flex: 1;
 }
 
 .memberTable {
-    margin-top: 30px;
-    width: 430px;
-    height: 180px;
+    width: 100%;
+    padding: 0 15px;
     border: solid 1px var(--gray-border);
-    border-radius: 20px;
+    border-radius: 5px;
     align-content: flex-end;
+    background-color: #fff;
+    box-shadow: var(--black-alpha-05) 0 0 7px 5px;
+    box-sizing: border-box;
+    flex: 1;
 }
 
 .memberTable>p {
@@ -75,18 +89,18 @@
 }
 
 .tablePosition {
-    width: 401px;
+    width: 100%;
     margin: 20px auto;
     display: flex;
     justify-content: space-between;
 }
 
 .memberScore {
-    width: 200px;
+    flex: 1;
 }
 
 .memberFollower {
-    width: 201px;
+    flex: 1;
     border-left: solid 1px var(--gray-border);
 }
 
@@ -94,7 +108,7 @@
 .memberFollower p:nth-child(1),
 .memberPost p:nth-child(1) {
     font-size: 16px;
-    color: var(--gray);
+    color: var(--black-alpha-40);
     letter-spacing: 1.05px;
     text-align: center;
 }
@@ -109,26 +123,70 @@
     font-weight: 500;
 }
 
-.memberInform,
-.adviseMission,
-.missionBtn {
-    width: 430px;
-    height: 280px;
-    border-radius: 20px;
+.memberInform {
+    width: 100%;
+    border-radius: 5px;
     border: solid 1px var(--gray-border);
     margin-top: 20px;
+    padding: 0 5px;
+    background-color: #fff;
+    box-shadow: var(--black-alpha-05) 0 0 7px 5px;
+    box-sizing: border-box;
+    overflow: scroll;
+    overflow-x: hidden;
+    flex: 1;
+}
+
+.memberInform::-webkit-scrollbar {
+    width: 10px;
+    /* width of the entire scrollbar */
+}
+
+.memberInform::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255, 0);
+    /* color of the tracking area */
+}
+
+.memberInform::-webkit-scrollbar-thumb {
+    background-color: var(--black-alpha-15);
+    /* color of the scroll thumb */
+    border-radius: 5px;
+    /* roundness of the scroll thumb */
+    /* border: 3px solid orange; */
+    /* creates padding around scroll thumb */
 }
 
 .memberInform>p,
 .adviseMission>p {
-    color: var(--gray);
-    margin: 15px 0 10px 20px;
+    color: var(--black-alpha-40);
+    /* margin: 15px 0 10px 20px; */
+    margin-top: 10px;
+    padding-left: 16px;
+}
+
+.adviseMission>p,
+.adviseMission .informContainer {
+    padding: 0;
 }
 
 .informContainer,
 .missionContent,
 .voteContainer {
-    margin: 10px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.informContainer:hover {
+    background-color: var(--black-alpha-05);
+}
+
+.informContainer:active {
+    background-color: var(--black-alpha-15);
+}
+
+.informContainer {
+    padding: 5px 16px;
 }
 
 .informContainer p:nth-child(1),
@@ -140,27 +198,35 @@
 
 .informContainer p:nth-child(2),
 .voteContainer p:nth-child(2) {
-    color: var(--gray);
+    color: var(--black-alpha-40);
     font-size: 14px;
-    margin-top: 5px;
-}
-
-.adviseMission {
-    height: 100px;
 }
 
 .missionBtn {
-    height: 70px;
+    width: 100%;
     text-align: center;
+    margin: 15px 0;
 }
 
 .missionBtn>button {
-    line-height: 70px;
+    width: 100%;
+    line-height: 40px;
     border: none;
-    background-color: white;
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: 1.75px;
+    background-color: var(--black-alpha-05);
     color: var(--black);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.missionBtn>button:hover {
+    background-color: var(--black-alpha-15);
+}
+
+.missionBtn>button:active {
+    background-color: var(--black-alpha-15);
+    transform: scale(0.95)
 }
 
 .memberPost {
@@ -231,7 +297,8 @@
 .memberInformationPersonal .medals {
     width: 20px;
     height: 20px;
-    margin-left: 10px;
+    margin-left: 5px;
+    vertical-align: top;
 }
 
 .memberInformation .userAccount p:nth-child(2),
