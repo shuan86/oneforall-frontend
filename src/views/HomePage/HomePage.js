@@ -21,13 +21,14 @@ const HomePage = () => {
   const [reportDialogSwitch, setReportDialogSwitch] = useState(false);
   const [onSelectArticleId, setOnSelectArticleId] = useState(0);
 
-  const {
-    loading,
-    newsDatas,
-    memberLikeArray,
-    hasMoreData,
-    error,
-  } = useGetNews(pageNaumber, eveyRequestDataAmount);
+  const { loading, newsDatas, hasMoreData, error } = useGetNews(
+    pageNaumber,
+    eveyRequestDataAmount
+  );
+  useEffect(() => {
+    return () => {};
+  }, []);
+
   const observer = useRef();
 
   useEffect(() => {
@@ -97,14 +98,16 @@ const HomePage = () => {
       <div className="container">
         <div className="homePageContent">
           <div className="NewsCard">
+            {/* {console.log("memberLikeArray:", memberLikeArray)} */}
             {newsDatas.map((value, index) => {
               const { id } = value;
+              // console.log("index:", index);
+
               if (newsDatas.length == index + 1) {
                 return (
                   <NewsCard
                     key={id}
                     articleData={value}
-                    memberLikeArray={memberLikeArray}
                     onClickReportBtn={onClickOpenReportDialogBtn}
                     refFunc={lastElementRef}
                   />
@@ -114,7 +117,6 @@ const HomePage = () => {
                   <NewsCard
                     key={id}
                     articleData={value}
-                    memberLikeArray={memberLikeArray}
                     onClickReportBtn={onClickOpenReportDialogBtn}
                     refFunc={null}
                   />

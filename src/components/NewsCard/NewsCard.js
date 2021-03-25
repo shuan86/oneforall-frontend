@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "../../public/css/NewsCard.css";
 import { MemberInformation } from "../Member/MemberCard";
-
+import * as article from "../../modules/article";
 import authorImg from "../../public/images/author.jpg";
 import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
 import { NewsType } from "../../interfaces/IContract";
-
 import ReportIcon from "@material-ui/icons/Report";
+import { useFirstUpdate } from "../../hooks/useFirstUpdate";
+import * as articleWebsocket from "../../modules/articleWebsocket";
 
-const NewsCardUnreviewed = ({ articleData, refHook, onClickReportBtn }) => {
+const NewsCardUnreviewed = ({
+  articleData,
+  refHook,
+  onClickReportBtn,
+  index,
+}) => {
+  const { articleId, likeAmount, commentAmount, isMemberLike } = articleData;
   return (
     <div className="card">
       <NewsCardTop />
@@ -20,11 +27,22 @@ const NewsCardUnreviewed = ({ articleData, refHook, onClickReportBtn }) => {
         data={articleData}
         onClickReportBtn={onClickReportBtn}
       />
-      <NewsCardComment isReviewedCard={false} />
+      <NewsCardComment
+        articleId={articleId}
+        isReviewedCard={false}
+        likeAmount={likeAmount}
+        commentAmount={commentAmount}
+        isMemberLike={isMemberLike}
+      />
     </div>
   );
 };
-const NewsCardUnderReview = ({ articleData, onClickReportBtn }) => {
+const NewsCardUnderReview = ({
+  articleData,
+  onClickReportBtn,
+  likeAmount,
+  commentAmount,
+}) => {
   return (
     <div className="card">
       <div className="status">審核中</div>
@@ -33,11 +51,15 @@ const NewsCardUnderReview = ({ articleData, onClickReportBtn }) => {
         data={articleData}
         onClickReportBtn={onClickReportBtn}
       />
-      <NewsCardComment isReviewedCard={false} />
+      <NewsCardComment
+        isReviewedCard={false}
+        likeAmount={likeAmount}
+        commentAmount={commentAmount}
+      />
     </div>
   );
 };
-const NewsCardReviewed = ({}) => {
+const NewsCardReviewed = ({ likeAmount, commentAmount, isMemberLike }) => {
   //  console.log('NewsCard');
   return (
     <div className="card">
@@ -45,7 +67,11 @@ const NewsCardReviewed = ({}) => {
 
       <NewsCardContent />
       <NewsCard status={false} />
-      <NewsCardComment />
+      <NewsCardComment
+        likeAmount={likeAmount}
+        commentAmount={commentAmount}
+        isMemberLike={isMemberLike}
+      />
     </div>
   );
 };
@@ -140,37 +166,137 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
   );
 };
 
-const NewsCardComment = ({ isReviewedCard }) => {
-  //console.log('NewsCardComment');
-  const [commentFlag, setCommentFlag] = useState(false);
+const NewsCardComment = ({
+  articleId,
+  isReviewedCard,
+  likeAmount,
+  commentAmount,
+  isMemberLike,
+}) => {
+  const isNotFirstRun = useFirstUpdate(articleId);
+  const [likeState, setLikeState] = useState(false);
+  const [likeAmountState, setLikeAmountState] = useState(0);
+  const [commentAmountState, setCommentAmountState] = useState(0);
+  const [openCommentFlag, setOpenCommentFlag] = useState(false);
+  const [inputCommentState, setInputCommentState] = useState("");
+  const [commentsDataArray, setCommentsDataArray] = useState([]);
+  const [requireCommentIndex, setRequireCommentIndex] = useState(1);
+  const maxRequestAmount = 3;
+  useEffect(() => {
+    setCommentAmountState(commentAmount);
+    setLikeState(isMemberLike);
+    setLikeAmountState(likeAmount);
+  }, []);
+
   const onClickCommentCollapse = () => {
-    setCommentFlag(true);
+    // setSelectedArticleId((pre) => (openCommentFlag == false ? articleId : pre));
+    setOpenCommentFlag((pre) => !pre);
+    // console.log("onClickCommentCollapse selectedArticleId:", selectedArticleId);
+  };
+  const getCommentsRangeFunc = (data) => {
+    console.log("getCommentsFunc:", data);
+    const [tmpCommentDataArray, commentAmount] = data;
+    setCommentsDataArray(tmpCommentDataArray);
+    setCommentAmountState(commentAmount);
+    setRequireCommentIndex((pre) => pre + maxRequestAmount);
   };
 
+  const creatCommentFunc = (msg) => {
+    setCommentAmountState((pre) => pre + 1);
+    console.log("creatCommentFunc:", inputCommentState);
+  };
+  useEffect(() => {
+    if (openCommentFlag) {
+      console.log("articleWebsocket");
+      articleWebsocket.connectArticleServer();
+      articleWebsocket.startArticleWebsocket(
+        getCommentsRangeFunc,
+        creatCommentFunc
+      );
+      article.getCommentsRange(
+        articleId,
+        requireCommentIndex,
+        requireCommentIndex + maxRequestAmount
+      );
+    } else {
+      article.disconnect(articleId);
+    }
+
+    return () => {
+      article.disconnect(articleId);
+    };
+  }, [openCommentFlag]);
+
+  const onClickLike = async () => {
+    let amount = 0;
+    let likeStatus = false;
+    if (isNotFirstRun) {
+      if (!likeState) {
+        const { likeAmount, isSucessfulCreateLike } = await article.createLike(
+          articleId
+        );
+        amount = likeAmount;
+        likeStatus = isSucessfulCreateLike ? true : false;
+      } else {
+        const { likeAmount, isSucessfulRemoveLike } = await article.deleteLike(
+          articleId
+        );
+        amount = likeAmount;
+        likeStatus = isSucessfulRemoveLike ? false : true;
+      }
+    }
+    setLikeAmountState((pre) =>
+      isNotFirstRun && amount != null ? amount : pre
+    );
+    setLikeState((pre) => (isNotFirstRun && amount != null ? likeStatus : pre));
+  };
+  const onInputCommentChange = (e) => {
+    const value = e.target.value;
+    setInputCommentState(value);
+  };
+
+  const onClickSendComment = () => {
+    const length = inputCommentState.length;
+    length > 0 && article.createComment(articleId, inputCommentState);
+  };
   return (
     <div className="comment">
-      <div className={commentFlag ? "like" : "like border-b-0"}>
+      <div className={openCommentFlag ? "like" : "like border-b-0"}>
         <div>
-          <button>123 人想知道</button>
+          <button
+            style={{ color: likeState ? "blue" : "red" }}
+            onClick={onClickLike}
+          >
+            {likeAmountState} 人想知道
+          </button>
         </div>
         <div>
-          <button onClick={onClickCommentCollapse}>10 留言</button>
+          <button onClick={onClickCommentCollapse}>
+            {commentAmountState} 留言
+          </button>
         </div>
         <div className={isReviewedCard == false ? "none" : "vote"}>
           <button>同意</button>
           <button>反對</button>
         </div>
       </div>
-      <div className={commentFlag ? null : "none"}>
+      <div className={openCommentFlag ? null : "none"}>
         <div className="userInput">
-          <input type="text" placeholder="告訴我們你的想法" />
-          <a href="">傳送</a>
+          <input
+            type="text"
+            placeholder="告訴我們你的想法"
+            onChange={onInputCommentChange}
+          />
+          <button onClick={onClickSendComment}>傳送</button>
         </div>
-        <NewsCardUserComment />
-        <NewsCardUserComment />
-        <NewsCardUserComment />
-        <NewsCardUserComment />
-        <NewsCardUserComment />
+        {commentsDataArray.map((value, index) => {
+          return <Comment key={value.id} data={value} />;
+        })}
+
+        {/* <Comment />
+        <Comment />
+        <Comment />
+        <Comment /> */}
         <a href="" className="moreComment">
           查看其他留言
         </a>
@@ -179,15 +305,16 @@ const NewsCardComment = ({ isReviewedCard }) => {
   );
 };
 
-const NewsCardUserComment = () => {
+const Comment = ({ data }) => {
+  const { account, time, content } = data;
   return (
     <div className="userComment">
       <span>
         <div className="account">
-          <h3>abc12345678</h3>
-          <p>20min</p>
+          <h3>{account}</h3>
+          <p>{time}</p>
         </div>
-        <p>大問號？！！！</p>
+        <p>{content}</p>
       </span>
       {/* <div className="timeCode"><p>20min</p></div> */}
     </div>
@@ -195,30 +322,34 @@ const NewsCardUserComment = () => {
 };
 
 const NewsCard = React.memo(
-  ({ articleData, memberLikeArray, onClickReportBtn, refFunc }) => {
-    console.log("articleData:", articleData.id);
-    console.log("memberLikeArray:", memberLikeArray);
+  ({ articleData, onClickReportBtn, refFunc }) => {
     let tmpNewsCard = (
       <NewsCardUnreviewed
         articleData={articleData}
         onClickReportBtn={onClickReportBtn}
       />
     );
-    if (articleData.newsType == NewsType.Unreview) {
-      <NewsCardUnreviewed
-        articleData={articleData}
-        onClickReportBtn={onClickReportBtn}
-      />;
-    } else if (articleData.newsType == NewsType.UnderReviewed) {
-      <NewsCardUnderReview
-        articleData={articleData}
-        onClickReportBtn={onClickReportBtn}
-      />;
+    if (articleData.newsType == NewsType.UnderReviewed) {
+      tmpNewsCard = (
+        <NewsCardUnderReview
+          articleData={articleData}
+          onClickReportBtn={onClickReportBtn}
+        />
+      );
     } else if (articleData.newsType == NewsType.Reviewed) {
-      <NewsCardReviewed
-        articleData={value}
-        onClickReportBtn={onClickOpenReportDialogBtn}
-      />;
+      tmpNewsCard = (
+        <NewsCardReviewed
+          articleData={value}
+          onClickReportBtn={onClickOpenReportDialogBtn}
+        />
+      );
+    } else {
+      tmpNewsCard = (
+        <NewsCardUnreviewed
+          articleData={articleData}
+          onClickReportBtn={onClickReportBtn}
+        />
+      );
     }
     return <div ref={refFunc}> {tmpNewsCard} </div>;
   },

@@ -1,6 +1,6 @@
 import * as sendRequest from "./sendRequest";
 import * as localStorage from "./localstorage";
-import * as ws from "../modules/websocket";
+import * as ws from "./pixelWebsocket";
 
 export const initPixelGame = async (
   joinPixelGameFunc,

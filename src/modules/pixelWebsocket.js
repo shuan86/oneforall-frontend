@@ -37,5 +37,5 @@ export const startPixelGameWebSocket = (
 };
 export const sendData = (eventName, data) => {
   //以 emit 送訊息，並以 getMessage 為名稱送給 server 捕捉
-  ws.emit(eventName, data);
+  if (ws) ws.emit(eventName, data);
 };
