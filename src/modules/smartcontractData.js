@@ -1,4 +1,4 @@
-export const developContractAddr = "0xb19003d6C2ad45a1697A205e77cab89Ade1Fe816";
+export const developContractAddr = "0xDBC108C2dD665F8D8dace9ddef8A72aD400aDC56";
 export const productionContractAddr =
   "0x4db118D49E4E1c4B4f959af3CF7F17b3d3A26fAF";
 
@@ -127,12 +127,6 @@ export const ABI = [
         internalType: "address",
         name: "authorAddr",
         type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "time",
-        type: "string",
       },
     ],
     name: "LikeArticleEvent",
@@ -1061,11 +1055,6 @@ export const ABI = [
         internalType: "address",
         name: "authorAddr",
         type: "address",
-      },
-      {
-        internalType: "string",
-        name: "time",
-        type: "string",
       },
     ],
     name: "likeArticle",

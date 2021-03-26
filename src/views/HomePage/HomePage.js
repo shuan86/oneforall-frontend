@@ -19,15 +19,16 @@ const HomePage = () => {
   const [pageNaumber, setPageNumber] = useState(1);
   const [contractNewsDatas, setContractNewsData] = useState([]);
   const [reportDialogSwitch, setReportDialogSwitch] = useState(false);
-  const [onSelectArticleId, setOnSelectArticleId] = useState(0);
+  const [selectArticleId, setSelectArticleId] = useState(-1);
 
-  const {
-    loading,
-    newsDatas,
-    memberLikeArray,
-    hasMoreData,
-    error,
-  } = useGetNews(pageNaumber, eveyRequestDataAmount);
+  const { loading, newsDatas, hasMoreData, error } = useGetNews(
+    pageNaumber,
+    eveyRequestDataAmount
+  );
+  useEffect(() => {
+    return () => {};
+  }, []);
+
   const observer = useRef();
 
   useEffect(() => {
@@ -84,29 +85,33 @@ const HomePage = () => {
 
   const onClickOpenReportDialogBtn = useCallback((articleId) => {
     setReportDialogSwitch(true);
-    setOnSelectArticleId(articleId);
+    setSelectArticleId(articleId);
   });
   return (
     <div className="homePageContainer">
       <ReportDialog
         isOpen={reportDialogSwitch}
         setOpen={setReportDialogSwitch}
-        onSelectArticleId={onSelectArticleId}
+        onSelectArticleId={selectArticleId}
       />
       <Filter />
       <div className="container">
         <div className="homePageContent">
           <div className="NewsCard">
+            {/* {console.log("memberLikeArray:", memberLikeArray)} */}
             {newsDatas.map((value, index) => {
               const { id } = value;
+              // console.log("index:", index);
+
               if (newsDatas.length == index + 1) {
                 return (
                   <NewsCard
                     key={id}
                     articleData={value}
-                    memberLikeArray={memberLikeArray}
                     onClickReportBtn={onClickOpenReportDialogBtn}
                     refFunc={lastElementRef}
+                    selectArticleId={selectArticleId}
+                    setSelectArticleId={setSelectArticleId}
                   />
                 );
               } else {
@@ -114,9 +119,10 @@ const HomePage = () => {
                   <NewsCard
                     key={id}
                     articleData={value}
-                    memberLikeArray={memberLikeArray}
                     onClickReportBtn={onClickOpenReportDialogBtn}
                     refFunc={null}
+                    selectArticleId={selectArticleId}
+                    setSelectArticleId={setSelectArticleId}
                   />
                 );
               }

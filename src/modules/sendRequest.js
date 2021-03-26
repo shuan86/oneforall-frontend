@@ -120,3 +120,31 @@ export const rsaPostRequest = async (rout, dataObject) => {
   }
   return result;
 };
+export const rsaTokenDeleteRequest = async (
+  JWTtoken,
+  memberId,
+  rout,
+  dataObject
+) => {
+  dataObject = { ...dataObject, memberId };
+  const encryptStr = encrypt(JSON.stringify(dataObject));
+  const config = {
+    headers: { Authorization: ` ${JWTtoken}` },
+  };
+  const bodyParameters = {
+    rsaData: encryptStr,
+  };
+  const result = await axios.delete(
+    configData.SERVER_URL + rout,
+    {
+      ...config,
+      data: { ...bodyParameters },
+    },
+    config
+  );
+  if (result.status == 200) {
+    console.log("send delete sucessful");
+  }
+
+  return result;
+};
