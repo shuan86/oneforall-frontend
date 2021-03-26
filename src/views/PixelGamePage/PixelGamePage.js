@@ -47,7 +47,7 @@ const PlaceGamePage = () => {
     setClickPixelCount((pre) => (clickPixelCount > 0 ? pre - 1 : pre));
     setCanClickPixelFlag((pre) => (clickPixelCount > 0 ? true : false));
     return () => {};
-  }, [selectedPos, selectedColor]);
+  }, [selectedPos]);
   const changeColor = (color) => {
     setSelectedColor(color.hex);
   };

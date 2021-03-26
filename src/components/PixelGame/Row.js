@@ -4,6 +4,7 @@ export const Row = ({
   height,
   width,
   selectedColor,
+  selectedPos,
   setSelectedPos,
   loadPixelData,
   canClickPixelFlag,
@@ -24,6 +25,7 @@ export const Row = ({
         setSelectedPos={setSelectedPos}
         loadPixelData={loadPixelData}
         canClickPixelFlag={canClickPixelFlag}
+        selectedPos={selectedPos}
       />
     );
   }

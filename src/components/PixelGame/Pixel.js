@@ -8,6 +8,7 @@ export const Pixel = React.memo(
     setSelectedPos,
     loadPixelData,
     canClickPixelFlag,
+    selectedPos,
   }) => {
     const [pixelColor, setPixelColor] = useState("#ffffff");
     const [oldColor, setOldColor] = useState(pixelColor);
@@ -49,15 +50,7 @@ export const Pixel = React.memo(
       setPixelColor((pre) => (canClickPixelFlag ? selectedColor : pre));
       setSelectedPos((pre) => (canClickPixelFlag ? pos : pre));
       setCanChangeColor(canClickPixelFlag ? false : true);
-
-      // setSelectedDataArray((pre) => {
-      //   const index = pre.findIndex((item) => item.pos == pos);
-      //   if (index != -1) {
-      //     return pre;
-      //   } else {
-      //     return [...pre, { pos, color: selectedColor }];
-      //   }
-      // });
+      console.log("onClickPixel:", selectedPos);
     };
     return (
       <div
@@ -70,28 +63,35 @@ export const Pixel = React.memo(
     );
   },
   (pre, next) => {
-    if (next.pos == 10) {
-      console.log(
-        "next.selectedIndex:",
-        next.selectedIndex,
-        "next.pos:",
-        next.pos,
-        "pre selectedColor:",
-        pre.selectedColor
-      );
-      // if (next.loadPixelData != undefined) {
+    if (next.pos == 2) {
+      // console.log(
+      //   "next.selectedPos:",
+      //   next.selectedPos,
+      //   "next.pos:",
+      //   next.pos,
+      //   "pre selectedColor:",
+      //   pre.selectedColor
+      // );
+      // if (pre.loadPixelData != undefined && next.loadPixelData != undefined) {
+      //   console.log("pre:", pre.loadPixelData[0].pos);
       //   for (let i = 0; i < next.loadPixelData.length; i++) {
-      //     if (next.loadPixelData[i].pos == next.pos) {
-      //       console.log(
-      //         "next.loadPixelData1123:",
-      //         next.loadPixelData[0].pos,
-      //         next.pos
-      //       );
-
+      //     if (
+      //       next.loadPixelData[i].pos == pre.pos &&
+      //       next.loadPixelData[i].color != pre.color
+      //     ) {
+      //       console.log("22222:", next.pos);
       //       return false;
       //     }
       //   }
       // }
+      // if (
+      //   next.selectedPos != next.pos &&
+      //   pre.selectedColor != next.selectedColor
+      // ) {
+      //   console.log("ssss");
+      //   return false;
+      // }
+      // return true;
     }
     if (next.loadPixelData != undefined) {
       for (let i = 0; i < next.loadPixelData.length; i++) {
@@ -101,13 +101,12 @@ export const Pixel = React.memo(
       }
     }
     if (
-      pre.selectedPos != next.pos &&
-      next.selectedColor != next.selectedColor
+      next.selectedPos != next.pos &&
+      pre.selectedColor != next.selectedColor
     ) {
       return false;
     }
-    // if (next.selectedPos != next.pos && pre.selectedColor == next.selectedColor)
-    //   return true;
-    return false;
+
+    return true;
   }
 );

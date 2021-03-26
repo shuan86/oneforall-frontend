@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-export const useFirstUpdate = (articleId) => {
+export const useFirstUpdate = () => {
   const isNotFirstRun = useRef(false);
   const [notFirsStatus, setNotFirsStatus] = useState(false);
   useEffect(() => {

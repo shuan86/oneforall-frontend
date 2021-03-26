@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../public/css/NewsCard.css";
 import { MemberInformation } from "../Member/MemberCard";
 import * as article from "../../modules/article";
@@ -17,6 +17,8 @@ const NewsCardUnreviewed = ({
   refHook,
   onClickReportBtn,
   index,
+  selectArticleId,
+  setSelectArticleId,
 }) => {
   const { articleId, likeAmount, commentAmount, isMemberLike } = articleData;
   return (
@@ -33,6 +35,8 @@ const NewsCardUnreviewed = ({
         likeAmount={likeAmount}
         commentAmount={commentAmount}
         isMemberLike={isMemberLike}
+        selectArticleId={selectArticleId}
+        setSelectArticleId={setSelectArticleId}
       />
     </div>
   );
@@ -172,15 +176,21 @@ const NewsCardComment = ({
   likeAmount,
   commentAmount,
   isMemberLike,
+  selectArticleId,
+  setSelectArticleId,
 }) => {
-  const isNotFirstRun = useFirstUpdate(articleId);
+  const isNotFirstRun = useFirstUpdate();
   const [likeState, setLikeState] = useState(false);
   const [likeAmountState, setLikeAmountState] = useState(0);
   const [commentAmountState, setCommentAmountState] = useState(0);
   const [openCommentFlag, setOpenCommentFlag] = useState(false);
   const [inputCommentState, setInputCommentState] = useState("");
+  const [createCommentsDataArray, setCreateCommentsDataArray] = useState([]);
+
   const [commentsDataArray, setCommentsDataArray] = useState([]);
   const [requireCommentIndex, setRequireCommentIndex] = useState(1);
+  // const [memberCommentIdArray, setMemberCommentIdArray] = useState([]);
+  const memberCommentIdArray = useRef([]);
   const maxRequestAmount = 3;
   useEffect(() => {
     setCommentAmountState(commentAmount);
@@ -189,29 +199,43 @@ const NewsCardComment = ({
   }, []);
 
   const onClickCommentCollapse = () => {
-    // setSelectedArticleId((pre) => (openCommentFlag == false ? articleId : pre));
     setOpenCommentFlag((pre) => !pre);
-    // console.log("onClickCommentCollapse selectedArticleId:", selectedArticleId);
   };
   const getCommentsRangeFunc = (data) => {
-    console.log("getCommentsFunc:", data);
+    if (data == "401") {
+      alert("login fail");
+      return;
+    }
     const [tmpCommentDataArray, commentAmount] = data;
-    setCommentsDataArray(tmpCommentDataArray);
+    setCommentsDataArray((pre) => [...pre, ...tmpCommentDataArray]);
     setCommentAmountState(commentAmount);
     setRequireCommentIndex((pre) => pre + maxRequestAmount);
   };
 
-  const creatCommentFunc = (msg) => {
+  const newCommentFunc = (data) => {
+    if (data == "401") {
+      alert("login fail");
+      return;
+    }
     setCommentAmountState((pre) => pre + 1);
-    console.log("creatCommentFunc:", inputCommentState);
+    setRequireCommentIndex((pre) => pre + 1);
+    setCreateCommentsDataArray((pre) => {
+      return [data, ...pre];
+    });
+    memberCommentIdArray.current.push(data.id);
   };
   useEffect(() => {
+    setOpenCommentFlag((pre) => {
+      return selectArticleId != articleId ? false : true;
+    });
+    return () => {};
+  }, [selectArticleId]);
+  useEffect(() => {
     if (openCommentFlag) {
-      console.log("articleWebsocket");
       articleWebsocket.connectArticleServer();
       articleWebsocket.startArticleWebsocket(
         getCommentsRangeFunc,
-        creatCommentFunc
+        newCommentFunc
       );
       article.getCommentsRange(
         articleId,
@@ -219,12 +243,13 @@ const NewsCardComment = ({
         requireCommentIndex + maxRequestAmount
       );
     } else {
-      article.disconnect(articleId);
     }
-
-    return () => {
-      article.disconnect(articleId);
-    };
+    setSelectArticleId((pre) => {
+      // article.disconnect(articleId);
+      const result = openCommentFlag ? articleId : pre;
+      return result;
+    });
+    return () => {};
   }, [openCommentFlag]);
 
   const onClickLike = async () => {
@@ -259,6 +284,14 @@ const NewsCardComment = ({
     const length = inputCommentState.length;
     length > 0 && article.createComment(articleId, inputCommentState);
   };
+  const onClickMoreComment = () => {
+    article.getCommentsRange(
+      articleId,
+      requireCommentIndex,
+      requireCommentIndex + maxRequestAmount
+    );
+  };
+
   return (
     <div className="comment">
       <div className={openCommentFlag ? "like" : "like border-b-0"}>
@@ -289,74 +322,83 @@ const NewsCardComment = ({
           />
           <button onClick={onClickSendComment}>傳送</button>
         </div>
-        {commentsDataArray.map((value, index) => {
-          return <Comment key={value.id} data={value} />;
+        {createCommentsDataArray.map((value) => {
+          return <Comment key={value.id} id={value.id} data={value} />;
         })}
-
-        {/* <Comment />
-        <Comment />
-        <Comment />
-        <Comment /> */}
-        <a href="" className="moreComment">
+        {commentsDataArray.map((value) => {
+          if (memberCommentIdArray.current.every((id) => id != value.id))
+            return <Comment key={value.id} id={value.id} data={value} />;
+        })}
+        <button className="moreComment" onClick={onClickMoreComment}>
           查看其他留言
-        </a>
+        </button>
       </div>
     </div>
   );
 };
-
-const Comment = ({ data }) => {
-  const { account, time, content } = data;
-  return (
-    <div className="userComment">
-      <span>
-        <div className="account">
-          <h3>{account}</h3>
-          <p>{time}</p>
-        </div>
-        <p>{content}</p>
-      </span>
-      {/* <div className="timeCode"><p>20min</p></div> */}
-    </div>
-  );
-};
+const Comment = React.memo(
+  ({ data, id }) => {
+    const { account, time, content } = data;
+    return (
+      <div className="userComment">
+        <span>
+          <div className="account">
+            <h3>{account}</h3>
+            <p>{time}</p>
+          </div>
+          <p>{content}</p>
+        </span>
+        {/* <div className="timeCode"><p>20min</p></div> */}
+      </div>
+    );
+  },
+  (pre, next) => {
+    return pre.id != next.id ? false : true;
+  }
+);
 
 const NewsCard = React.memo(
-  ({ articleData, onClickReportBtn, refFunc }) => {
-    let tmpNewsCard = (
-      <NewsCardUnreviewed
-        articleData={articleData}
-        onClickReportBtn={onClickReportBtn}
-      />
-    );
+  ({
+    articleData,
+    onClickReportBtn,
+    refFunc,
+    selectArticleId,
+    setSelectArticleId,
+  }) => {
+    let tmpNewsCard;
     if (articleData.newsType == NewsType.UnderReviewed) {
-      tmpNewsCard = (
-        <NewsCardUnderReview
-          articleData={articleData}
-          onClickReportBtn={onClickReportBtn}
-        />
-      );
+      // // tmpNewsCard = (
+      // //   <NewsCardUnderReview
+      // //     articleData={articleData}
+      // //     onClickReportBtn={onClickReportBtn}
+      // //   />
+      // );
     } else if (articleData.newsType == NewsType.Reviewed) {
-      tmpNewsCard = (
-        <NewsCardReviewed
-          articleData={value}
-          onClickReportBtn={onClickOpenReportDialogBtn}
-        />
-      );
+      // tmpNewsCard = (
+      //   <NewsCardReviewed
+      //     articleData={value}
+      //     onClickReportBtn={onClickOpenReportDialogBtn}
+      //   />
+      // );
     } else {
       tmpNewsCard = (
         <NewsCardUnreviewed
           articleData={articleData}
           onClickReportBtn={onClickReportBtn}
+          selectArticleId={selectArticleId}
+          setSelectArticleId={setSelectArticleId}
         />
       );
     }
     return <div ref={refFunc}> {tmpNewsCard} </div>;
   },
-  (prevProps, nextProps) => {
-    if (prevProps && prevProps.articleData.id === nextProps.articleData.id) {
+  (pre, next) => {
+    if (pre.selectArticleId != next.selectArticleId) return false;
+    if (pre && pre.articleData.id === next.articleData.id) {
       return true;
     }
+    // if(pre.selectArticleId!=next.selectArticleId)     selectArticleId={selectArticleId}
+    // setSelectArticleId={setSelectArticleId}
     return false;
   }
 );

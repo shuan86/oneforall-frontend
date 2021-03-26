@@ -3,7 +3,7 @@ import config from "../config.json";
 const port = 3002;
 let ws = null;
 export const articleEvent = {
-  createComment: "createComment",
+  newComment: "newComment",
   getCommentsRange: "getCommentsRange",
   disconnectServer: "disconnectServer",
 };
@@ -16,17 +16,14 @@ export const connectArticleServer = () => {
     ws = webSocket(`http://localhost:${port}`);
   }
 };
-export const startArticleWebsocket = (
-  getCommentsRangeFunc,
-  createCommentFunc
-) => {
+export const startArticleWebsocket = (getCommentsRangeFunc, newCommentFunc) => {
   if (ws) {
     console.log("websocket success connect!");
     ws.on(articleEvent.getCommentsRange, (msg) => {
       getCommentsRangeFunc(msg);
     });
-    ws.on(articleEvent.createComment, (msg) => {
-      createCommentFunc(msg);
+    ws.on(articleEvent.newComment, (msg) => {
+      newCommentFunc(msg);
     });
   }
 };

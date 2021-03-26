@@ -128,7 +128,7 @@ export const getCommentsRange = (articleId, startIndex, endIndex) => {
 };
 export const createComment = (articleId, comment) => {
   const { token, memberId } = localStorage.getAllData();
-  ws.sendData(ws.articleEvent.createComment, {
+  ws.sendData(ws.articleEvent.newComment, {
     token,
     memberId,
     articleId,
@@ -139,4 +139,5 @@ export const createComment = (articleId, comment) => {
 export const disconnect = (articleId) => {
   const { token, memberId } = localStorage.getAllData();
   ws.sendData(ws.articleEvent.disconnectServer, { token, memberId, articleId });
+  console.log("disconnect");
 };

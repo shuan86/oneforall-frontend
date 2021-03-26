@@ -19,7 +19,7 @@ const HomePage = () => {
   const [pageNaumber, setPageNumber] = useState(1);
   const [contractNewsDatas, setContractNewsData] = useState([]);
   const [reportDialogSwitch, setReportDialogSwitch] = useState(false);
-  const [onSelectArticleId, setOnSelectArticleId] = useState(0);
+  const [selectArticleId, setSelectArticleId] = useState(-1);
 
   const { loading, newsDatas, hasMoreData, error } = useGetNews(
     pageNaumber,
@@ -85,14 +85,14 @@ const HomePage = () => {
 
   const onClickOpenReportDialogBtn = useCallback((articleId) => {
     setReportDialogSwitch(true);
-    setOnSelectArticleId(articleId);
+    setSelectArticleId(articleId);
   });
   return (
     <div className="homePageContainer">
       <ReportDialog
         isOpen={reportDialogSwitch}
         setOpen={setReportDialogSwitch}
-        onSelectArticleId={onSelectArticleId}
+        onSelectArticleId={selectArticleId}
       />
       <Filter />
       <div className="container">
@@ -110,6 +110,8 @@ const HomePage = () => {
                     articleData={value}
                     onClickReportBtn={onClickOpenReportDialogBtn}
                     refFunc={lastElementRef}
+                    selectArticleId={selectArticleId}
+                    setSelectArticleId={setSelectArticleId}
                   />
                 );
               } else {
@@ -119,6 +121,8 @@ const HomePage = () => {
                     articleData={value}
                     onClickReportBtn={onClickOpenReportDialogBtn}
                     refFunc={null}
+                    selectArticleId={selectArticleId}
+                    setSelectArticleId={setSelectArticleId}
                   />
                 );
               }
