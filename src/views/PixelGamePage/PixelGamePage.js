@@ -68,14 +68,13 @@ const PlaceGamePage = () => {
     );
   }
   return (
-    <div className="pxelContainer">
-      <div>
+    <div className="pixelContainer">
+      <div className="colorCountDown">
         <CirclePicker color={selectedColor} onChangeComplete={changeColor} />
+        <p>本日剩餘次數</p>
+        <h1>{clickPixelCount}</h1>
+        {loadPixelFlag ? <div className="">{rowArray}</div> : null}
       </div>
-      <div>
-        <h1>今日剩餘次數:{clickPixelCount}</h1>
-      </div>
-      {loadPixelFlag ? <div>{rowArray}</div> : null}
     </div>
   );
 };

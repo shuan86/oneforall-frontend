@@ -8,12 +8,36 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    /* padding: 10px 0; */
 }
 
+.linkList {
+    display: flex;
+    align-items: center;
+}
+
+.linkList div {
+    display: inline-block;
+    color: var(--black);
+    height: 60px;
+    line-height: 60px;
+    font-size: 18px;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.linkList div:not(:first-child) {
+    padding: 0 30px;
+    margin-right: 0;
+}
+
+.linkList div:hover {
+    background-color: var(--black-alpha-05);
+}
 
 .logo {
     cursor: pointer;
+    height: 100%;
 }
 
 .navRight {

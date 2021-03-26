@@ -2,28 +2,39 @@
 
 /*filter*/
 .filter {
-  width: 100%;
-  margin: 0 auto;
+  display: inline-block;
   margin-top: 30px;
-  border-bottom: 1px solid var(--gray-border);
+  box-shadow: rgb(0 0 0 / 5%) 0 0 7px 5px;
+  background-color: #fff;
+  border-radius: 5px;
 }
 
 .filter a {
   display: inline-block;
   color: var(--black);
-  margin-left: 10px;
-  padding: 5px 10px;
+  padding: 10px;
   transition: color .2s ease-in;
 }
 
 .filter a:hover {
-  color: var(--navy-blue);
+  background-color: var(--black-alpha-05);
 }
 
-.filter a:first-child {
-  color: var(--navy-blue);
-  border-bottom: 3px solid var(--navy-blue);
+
+.filter a:nth-child(1) {
+  color: #fff;
+  background-color: var(--navy-blue);
+  border-radius: 5px 0 0 5px;
 }
+
+.filter a:nth-child(2) {
+  border-right: 1px solid var(--gray-border);
+}
+
+.filter a:nth-child(3) {
+  border-radius: 0 5px 5px 0;
+}
+
 
 /*content*/
 

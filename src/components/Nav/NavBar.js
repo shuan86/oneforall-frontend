@@ -87,14 +87,20 @@ const NavBar = () => {
     <div className={"navBar"}>
       <div className="container">
         <div className="navContent">
-          <img
-            className={"logo"}
-            src={Logo}
-            alt="logoImg"
-            width={"158px"}
-            onClick={() => onChangeRouter("/")}
-          />
-          <div className={"leftRight"}>
+          <div className="linkList">
+            <div>
+              <img
+                className={"logo"}
+                src={Logo}
+                alt="logoImg"
+                width={"158px"}
+                onClick={() => onChangeRouter("/")}
+              />
+            </div>
+            <div>新聞</div>
+            <div>討論</div>
+          </div>
+          <div>
             <div className={"navFeature"}>
               <div className="searchBarContainer">
                 <button className={"searchBarIcon"}></button>

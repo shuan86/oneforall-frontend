@@ -82,7 +82,7 @@ const LoginForm = () => {
           setErrorMessage={setErrorMessage}
           thisFieldErrorMsg={errorMessage.password}
         />
-        <button onClick={onClickSubmit}>送出</button>
+        <button onClick={onClickSubmit}>登入</button>
       </div>
     </div>
   );

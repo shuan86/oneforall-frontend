@@ -45,7 +45,7 @@ const MemberPage = () => {
           審查者
         </button>
       ) : null}
-      {isPublisher ? (
+      {isPublisher ==false ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.publisher)}
         >

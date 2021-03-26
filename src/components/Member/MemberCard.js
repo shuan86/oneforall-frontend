@@ -69,8 +69,11 @@ const VistorRight = ({ isPublisher, isReviewer }) => {
             <p>83</p>
           </div>
         </div>
+        <div className="missionBtn">
+          <button>我要發文</button>
+        </div>
         {isReviewer == false ? <ApplyReviewerDialog /> : null}
-        {isPublisher == false ? <ApplyPublisherDialog /> : null}
+        {isPublisher == false ? <ApplyPublisherDialog /> : null}        
       </div>
       <div className={"memberInform"}>
         <p>投票紀錄</p>
