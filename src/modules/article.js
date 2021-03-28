@@ -1,6 +1,12 @@
 import * as sendRequest from "./sendRequest";
 import * as localStorage from "../modules/localstorage";
 import * as ws from "../modules/articleWebsocket";
+export const ArticleType = { Unreview: 0, UnderReviewed: 1, Reviewed: 2 };
+export const ArticleTagKind = {
+  sport: false,
+  food: false,
+};
+
 export const getNews = async (startIndex, endIndex) => {
   try {
     const { memberId } = localStorage.getAllData();
@@ -15,6 +21,34 @@ export const getNews = async (startIndex, endIndex) => {
 
   return null;
 };
+export const getUnderReviewedNews = async (startIndex, endIndex) => {
+  try {
+    const { memberId } = localStorage.getAllData();
+    const data = { startIndex, endIndex, memberId };
+    const result = await sendRequest.getRequest("/underReviewedNewses", data);
+    if (result && result.status == 200) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("getUnderReviewedNews error:", error);
+  }
+
+  return null;
+};
+export const getReviewedNews = async (startIndex, endIndex) => {
+  try {
+    const { memberId } = localStorage.getAllData();
+    const data = { startIndex, endIndex, memberId };
+    const result = await sendRequest.getRequest("/reviewedNewses", data);
+    if (result && result.status == 200) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("getReviewedNews error:", error);
+  }
+
+  return null;
+};
 export const createReportedNews = async (articleId, evidence) => {
   try {
     const { token, memberId } = localStorage.getAllData();
@@ -22,7 +56,7 @@ export const createReportedNews = async (articleId, evidence) => {
       token,
       memberId,
       "/reportedNews",
-      { articleId, evidence }
+      { articleId, evidence, memberId }
     );
     if (result && result.status == 200) {
       return result.data;

@@ -76,7 +76,8 @@ const ReviewerPage = () => {
         pre.filter((item) => item.memberId !== memberId)
       );
     };
-    contract.subscribeEnrollReviewerEvent(handleSubScribeFunc);
+    contract.checkContractIsOpen() &&
+      contract.subscribeEnrollReviewerEvent(handleSubScribeFunc);
   }, []);
   useEffect(() => {
     const excuteContract = async () => {
@@ -98,7 +99,7 @@ const ReviewerPage = () => {
       }
       setApplyReviewerState((pre) => [...pre, ...reviewerList]);
     };
-    if (isDbDataLoadedFlag) excuteContract();
+    if (isDbDataLoadedFlag && contract.checkContractIsOpen()) excuteContract();
   }, [isDbDataLoadedFlag]);
   return (
     <div>

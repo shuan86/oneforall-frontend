@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "../../public/css/MemberCard.css";
 import ApplyReviewerDialog from "./ApplyReviewerDialog";
 import ApplyPublisherDialog from "./ApplyPublisherDialog";
 
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
-import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
+import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
-import Copper10 from '../../public/images/medals/copper10.png'
-
+import Copper10 from "../../public/images/medals/copper10.png";
+import { getMemberInfo } from "../../modules/member";
 const MemberCard = () => {
   return (
     <div className={"personalInfo"}>
@@ -27,26 +27,57 @@ const MemberCard = () => {
   );
 };
 
-const MemberInformation = ({ setMemberFlag }) => {
+const MemberInformation = ({
+  memberInfoFlag,
+  setMemberInfoFlag,
+  authorName,
+}) => {
+  const [accountState, setAccountState] = useState("a1233456");
+  const [expState, setExpState] = useState(0);
+  const [createTimeState, setCreateTimeState] = useState("2021-01-01");
+  const [publickeyState, setPublickey] = useState(
+    "0x59982711466fD1d4C2F1C1F710f721651BCCFDb3"
+  );
+
   const onClickCloseMemberInformation = () => {
-    setMemberFlag(false);
-  }
+    setMemberInfoFlag(false);
+  };
+  useEffect(() => {
+    const asyncFunc = async () => {
+      if (memberInfoFlag) {
+        const result = await getMemberInfo(authorName);
+        if (result) {
+          const { account, publicKey, exp, createTime } = result;
+          setAccountState(account);
+          setPublickey(publicKey);
+          setExpState(exp);
+          setCreateTimeState(createTime);
+        }
+        console.log("MemberInformation:", result);
+      }
+    };
+    asyncFunc();
+    return () => {};
+  }, [memberInfoFlag]);
+
   return (
     <div className="memberInformation">
-      <div className="close" onClick={onClickCloseMemberInformation}><CloseOutlinedIcon /></div>
+      <div className="close" onClick={onClickCloseMemberInformation}>
+        <CloseOutlinedIcon />
+      </div>
       <div className={"memberInformationPersonal"}>
         <img src="favicon.ico" alt="" className="userPhoto" />
         <div className={"userAccount"}>
           <div className="userAccountID">
-            <p>a1233456</p>
+            <p>{accountState}</p>
             <img src={Copper10} alt="medals" className="medals" />
           </div>
-          <p>477分</p>
-          <p>註冊日期：2020-03-11</p>
+          <p>{expState}分</p>
+          <p>註冊日期：{createTimeState}</p>
         </div>
       </div>
       <div className="publicKey">
-        <p className="">0x59982711466fD1d4C2F1C1F710f721651BCCFDb3</p>
+        <p className="">{publickeyState}</p>
         <FileCopyOutlinedIcon fontSize="small" />
       </div>
       <a href="#">追隨</a>
@@ -72,8 +103,8 @@ const VistorRight = ({ isPublisher, isReviewer }) => {
         <div className="missionBtn">
           <button>我要發文</button>
         </div>
-        {isReviewer == false ? <ApplyReviewerDialog /> : null}
-        {isPublisher == false ? <ApplyPublisherDialog /> : null}        
+        {!isReviewer ? <ApplyReviewerDialog /> : null}
+        {!isPublisher ? <ApplyPublisherDialog /> : null}
       </div>
       <div className={"memberInform"}>
         <p>投票紀錄</p>
@@ -85,7 +116,7 @@ const VistorRight = ({ isPublisher, isReviewer }) => {
   );
 };
 
-const ReviewerRight = ({isPublisher}) => {
+const ReviewerRight = ({ isPublisher }) => {
   return (
     <div className="memberRight">
       <div className={"memberTable"}>
@@ -107,15 +138,17 @@ const ReviewerRight = ({isPublisher}) => {
             <button>我要審核去</button>
           </div>
         </div>
-      {isPublisher == false ? (
-        <div className="missionBtn">
-          <button
-            onClick={() => onClickChangeMemberStatus(EnumMemberStatus.publisher)}
-          >
-            發文者
-          </button>
-        </div>
-      ) : null}
+        {isPublisher == false ? (
+          <div className="missionBtn">
+            <button
+              onClick={() =>
+                onClickChangeMemberStatus(EnumMemberStatus.publisher)
+              }
+            >
+              發文者
+            </button>
+          </div>
+        ) : null}
       </div>
       <div className={"memberInform"}>
         <p>通知</p>
@@ -128,27 +161,27 @@ const ReviewerRight = ({isPublisher}) => {
 };
 
 const AuthorRight = () => {
-    console.log('AuthorRight');
-    return (
-        <div className="memberRight">
-            <div className={'memberTable'}>
-                <p>發文者</p>
-                <div className={'memberPost'}>
-                    <p>已提交新聞數</p>
-                    <p>128</p>
-                </div>
-                <div className={'missionBtn'}>
-                  <button>我要上傳文章</button>
-                </div>
-            </div>
-            <div className={'memberInform'}>
-                <p>發文紀錄</p>
-                <PublishedContent />
-                <PublishedContent />
-                <PublishedContent />
-            </div>
+  console.log("AuthorRight");
+  return (
+    <div className="memberRight">
+      <div className={"memberTable"}>
+        <p>發文者</p>
+        <div className={"memberPost"}>
+          <p>已提交新聞數</p>
+          <p>128</p>
         </div>
-    );
+        <div className={"missionBtn"}>
+          <button>我要上傳文章</button>
+        </div>
+      </div>
+      <div className={"memberInform"}>
+        <p>發文紀錄</p>
+        <PublishedContent />
+        <PublishedContent />
+        <PublishedContent />
+      </div>
+    </div>
+  );
 };
 
 const InformContent = () => {
@@ -190,7 +223,13 @@ const PublishedContent = () => {
       </p>
       <p>12-15 21:30</p>
     </div>
-  )
-}
+  );
+};
 
-export { MemberCard, ReviewerRight, VistorRight, AuthorRight, MemberInformation };
+export {
+  MemberCard,
+  ReviewerRight,
+  VistorRight,
+  AuthorRight,
+  MemberInformation,
+};

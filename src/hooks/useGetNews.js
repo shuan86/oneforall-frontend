@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { getNews } from "../modules/article";
-const useGetNews = (pageNumber, eveyRequestDataAmount) => {
+import {
+  getNews,
+  getUnderReviewedNews,
+  getReviewedNews,
+  ArticleType,
+} from "../modules/article";
+const useGetNews = (pageNumber, eveyRequestDataAmount, articleType) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [newsDatas, setNewsDatas] = useState([]);
@@ -11,16 +16,36 @@ const useGetNews = (pageNumber, eveyRequestDataAmount) => {
       try {
         setLoading(true);
         setError(false);
-        const result = await getNews(
-          pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
-          pageNumber * eveyRequestDataAmount
-        );
-        const [articleDatas, articleDataAmount, tmpIsMemberLikeArray] = result;
+        let result;
+        if (articleType == ArticleType.Unreview) {
+          result = await getNews(
+            pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
+            pageNumber * eveyRequestDataAmount
+          );
+        } else if (articleType == ArticleType.UnderReviewed) {
+          result = await getUnderReviewedNews(
+            pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
+            pageNumber * eveyRequestDataAmount
+          );
+        } else if (articleType == ArticleType.Reviewed) {
+          result = await getReviewedNews(
+            pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
+            pageNumber * eveyRequestDataAmount
+          );
+        }
+
+        const [
+          articleDatas,
+          articleDataAmount,
+          tmpIsMemberLikeArray,
+          tmpIsMemberReportedArray,
+        ] = result;
         setHasMoreData(articleDataAmount > newsDatas.length);
         setLoading(false);
         articleDatas = articleDatas.map((item, index) => ({
           ...item,
           isMemberLike: tmpIsMemberLikeArray[index],
+          isMemberReported: tmpIsMemberReportedArray[index],
         }));
         setNewsDatas((pre) => {
           console.log(
@@ -42,7 +67,7 @@ const useGetNews = (pageNumber, eveyRequestDataAmount) => {
     return () => {
       console.log("ummounted");
     };
-  }, [pageNumber]);
+  }, [pageNumber, articleType]);
 
   return { loading, newsDatas, hasMoreData, error };
 };

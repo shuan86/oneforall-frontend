@@ -10,58 +10,49 @@ import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 import "../../public/css/MemberCard.css";
 import { createReportedNews } from "../../modules/article";
-const FormDialog = ({
-    isOpen,
-    setOpen,
-    onSelectArticleId
-
-}) => {
-    const [evidenceState, setEvidenceState] = useState('')
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const onReasonChange = (event) => {
-        setEvidenceState(event.target.value);
+const FormDialog = ({ isOpen, setOpen, onSelectArticleId }) => {
+  const [evidenceState, setEvidenceState] = useState("");
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const onReasonChange = (event) => {
+    setEvidenceState(event.target.value);
+  };
+  const onClickSendReport = async () => {
+    const result = await createReportedNews(onSelectArticleId, evidenceState);
+    if (result) {
     }
-    const onClickSendReport = async () => {
-        const result = await createReportedNews(onSelectArticleId, evidenceState)
-        if (result) {
-
-        }
-        setOpen(false)
-    }
-    //missionBtn
-    return (
-        <div >
-            <div>
-                <Dialog
-                    open={isOpen}
-                    onClose={handleClose}
-                    aria-labelledby="form-dialog-title"
-                >
-                    <DialogTitle id="form-dialog-title">同意與否表格</DialogTitle>
-                    <DialogContent>
-                        <TextareaAutosize
-                            rowsMax={4}
-                            aria-label="maximum height"
-                            placeholder="請輸入原因(限100字)"
-                            defaultValue=""
-                            style={{ width: 400 }}
-                            onChange={onReasonChange}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-
-                        <Button
-                            onClick={() => onClickSendReport()}
-                            color="primary"
-                        >
-                            Send
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
-        </div>
-    );
+    setOpen(false);
+  };
+  //missionBtn
+  return (
+    <div>
+      <div>
+        <Dialog
+          open={isOpen}
+          onClose={handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">檢舉表單</DialogTitle>
+          <DialogContent>
+            <TextareaAutosize
+              rowsMin={5}
+              rowsMax={10}
+              aria-label="maximum height"
+              placeholder="請輸入原因(限300字)"
+              defaultValue=""
+              style={{ width: 500 }}
+              onChange={onReasonChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => onClickSendReport()} color="primary">
+              Send
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </div>
+  );
 };
 export default FormDialog;

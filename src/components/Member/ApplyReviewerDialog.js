@@ -13,7 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import FormControl from "@material-ui/core/FormControl";
-import { NewsTagKind } from "../../interfaces/INews";
+import { ArticleTagKind } from "../../modules/article";
 import { makeStyles } from "@material-ui/core/styles";
 import { apply } from "../../modules/reviewer";
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +37,7 @@ const FormDialog = () => {
   let tmpTagArray = [];
   console.log(`applyContent:${applyContent},email:${email},tag:${tag}`);
   useEffect(() => {
-    for (const t of Object.keys(NewsTagKind)) {
+    for (const t of Object.keys(ArticleTagKind)) {
       tmpTagArray.push(t);
       console.log("data:", t);
     }
@@ -75,7 +75,7 @@ const FormDialog = () => {
         我想成為審查者
       </button>
       <div>
-        <div className={open? "dialog" : "none"} >
+        <div className={open ? "dialog" : "none"}>
           <div className="background" onClick={handleClose}></div>
           <div className="front">
             <h3 id="form-dialog-title">審查者申請表單</h3>
@@ -93,7 +93,8 @@ const FormDialog = () => {
             </div>
             <div className="formInput">
               <label htmlFor="">信箱</label>
-              <input type="email" 
+              <input
+                type="email"
                 onChange={(e) => {
                   const value = e.target.value;
                   setEmail(value);
@@ -102,7 +103,9 @@ const FormDialog = () => {
             </div>
             <div className="formInput">
               <label htmlFor="">輸入原因</label>
-              <textarea cols="10" rows="10"
+              <textarea
+                cols="10"
+                rows="10"
                 onChange={(e) => {
                   const value = e.target.value;
                   setApplyContent(value);
@@ -110,7 +113,11 @@ const FormDialog = () => {
               ></textarea>
             </div>
             <div className="formInput">
-              <input type="submit" value="確認送出" onClick={onClickApplyReviewer}/>
+              <input
+                type="submit"
+                value="確認送出"
+                onClick={onClickApplyReviewer}
+              />
             </div>
           </div>
         </div>

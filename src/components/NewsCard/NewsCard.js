@@ -7,11 +7,11 @@ import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
-import { NewsType } from "../../interfaces/IContract";
+import { ArticleType } from "../../modules/article";
 import ReportIcon from "@material-ui/icons/Report";
 import { useFirstUpdate } from "../../hooks/useFirstUpdate";
 import * as articleWebsocket from "../../modules/articleWebsocket";
-
+import * as member from "../../modules/member";
 const NewsCardUnreviewed = ({
   articleData,
   refHook,
@@ -96,11 +96,21 @@ const NewsCardTop = () => {
   );
 };
 const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
-  const { articleId, title, authorName, content, time, tags, images } = data;
+  const {
+    articleId,
+    title,
+    authorName,
+    content,
+    time,
+    tags,
+    images,
+    isMemberReported,
+  } = data;
   const [tagsData, setTagsData] = useState([]);
   const [imageState, setImageState] = useState("");
+  const [reportState, setReportState] = useState(false);
 
-  const [memberFlag, setMemberFlag] = useState(false);
+  const [memberInfoFlag, setMemberInfoFlag] = useState(false);
 
   useEffect(() => {
     const imageData = images[0];
@@ -123,8 +133,8 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
       <div className="postInfo">
         <div
           className="userInfo"
-          onClick={() => {
-            setMemberFlag(!memberFlag);
+          onClick={async () => {
+            setMemberInfoFlag((pre) => !pre);
           }}
         >
           <div className="postData">
@@ -134,8 +144,12 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
               <div className="articleTime">{time}</div>
             </div>
           </div>
-          <div className={memberFlag ? "memberInformationCard" : "none"}>
-            <MemberInformation setMemberFlag={setMemberFlag} />
+          <div className={memberInfoFlag ? "memberInformationCard" : "none"}>
+            <MemberInformation
+              authorName={authorName}
+              memberInfoFlag={memberInfoFlag}
+              setMemberInfoFlag={setMemberInfoFlag}
+            />
           </div>
         </div>
         <a href="" className={isReviewedCard == false ? "none" : "history"}>
@@ -154,12 +168,20 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
       <div className="article">
         <h3>{title}</h3>
         <p>{content}</p>
-        <a href="">繼續閱讀</a>
+        <a href="#">繼續閱讀</a>
         <img src={imageState.length > 0 ? imageState : articleImg} alt="" />
-        <div className="report">
+        <div
+          className="report"
+          style={{
+            display: isMemberReported || reportState ? "none" : "block",
+          }}
+        >
           <div
             className="reportButton"
-            onClick={() => onClickReportBtn(articleId)}
+            onClick={() => {
+              onClickReportBtn(articleId);
+              setReportState(true);
+            }}
           >
             <ReportIcon fontSize="small" />
             <div>檢舉</div>
@@ -366,14 +388,15 @@ const NewsCard = React.memo(
     setSelectArticleId,
   }) => {
     let tmpNewsCard;
-    if (articleData.newsType == NewsType.UnderReviewed) {
+    // console.log("articleData:", articleData);
+    if (articleData.newsType == ArticleType.UnderReviewed) {
       // // tmpNewsCard = (
       // //   <NewsCardUnderReview
       // //     articleData={articleData}
       // //     onClickReportBtn={onClickReportBtn}
       // //   />
       // );
-    } else if (articleData.newsType == NewsType.Reviewed) {
+    } else if (articleData.newsType == ArticleType.Reviewed) {
       // tmpNewsCard = (
       //   <NewsCardReviewed
       //     articleData={value}

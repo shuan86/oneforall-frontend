@@ -74,7 +74,9 @@ const PublisherPage = () => {
         pre.filter((item) => item.memberId !== memberId)
       );
     };
-    contract.subscribeEnrollPublisherEvent(handleSubScribeFunc);
+
+    contract.checkContractIsOpen() &&
+      contract.subscribeEnrollPublisherEvent(handleSubScribeFunc);
   }, []);
   useEffect(() => {
     const excuteContract = async () => {
@@ -95,7 +97,7 @@ const PublisherPage = () => {
       }
       setApplyPublisherState((pre) => [...pre, ...publisherList]);
     };
-    if (isDbDataLoadedFlag) excuteContract();
+    if (isDbDataLoadedFlag && contract.checkContractIsOpen()) excuteContract();
   }, [isDbDataLoadedFlag]);
   return (
     <div>

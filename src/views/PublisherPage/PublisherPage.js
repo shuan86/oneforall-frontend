@@ -5,11 +5,14 @@ import {
   VistorRight,
   ReviewerRight,
 } from "../../components/Member/MemberCard";
-import { NewsTagKind } from "../../interfaces/INews";
+import { ArticleTagKind } from "../../modules/article";
 import "../../public/css/PublicerPage.css";
 import BackupRoundedIcon from "@material-ui/icons/BackupRounded";
 import { postNews } from "../../modules/publisher";
-import { paidArticleDeposit } from "../../modules/smartcontract";
+import {
+  paidArticleDeposit,
+  checkContractIsOpen,
+} from "../../modules/smartcontract";
 
 const PublisherPage = () => {
   const [titleState, setTitleState] = useState("");
@@ -23,7 +26,7 @@ const PublisherPage = () => {
   const [imageBlob, setImageBlob] = useState("");
 
   let imgArrayBuffter;
-  const tagsNameArray = Object.keys(NewsTagKind);
+  const tagsNameArray = Object.keys(ArticleTagKind);
 
   useEffect(() => {
     return () => {};
@@ -64,10 +67,8 @@ const PublisherPage = () => {
       imageBlob,
       tagsState
     );
-    if (data.articleId) {
-      console.log("articleId:", data.articleId);
+    if (data.articleId && checkContractIsOpen()) {
       paidArticleDeposit(data.articleId);
-    } else {
     }
   };
   return (
@@ -163,32 +164,8 @@ const PublisherPage = () => {
               let file = e.target.files[0];
               if (file) {
                 const reader = new FileReader();
-                // reader.onload = (readerEvent) => {
-                //   let data = readerEvent.target.result;
-                //   imgArrayBuffter = data;
-                //   const imgblob = new Blob([imgArrayBuffter]);
-                //   setImageBlob(imgblob);
-
-                //   const str = String.fromCharCode.apply(
-                //     null,
-                //     new Uint8Array(data)
-                //   );
-                //   setImageState("data:image/jpg;base64," + btoa(str));
-                // };
-                // reader.readAsArrayBuffer(file);
                 reader.onload = (readerEvent) => {
                   let data = readerEvent.target.result;
-                  // const imgblob = new Blob(base64ToArrayBuffer(data));
-                  // console.log("file:", data);
-                  // console.log(
-                  //   "base64ToArrayBuffer:",
-                  //   base64ToArrayBuffer(data)
-                  // );
-
-                  // console.log("imgblob1:", imgblob);
-
-                  // setImageBlob(imgblob);
-                  console.log("base64:", data);
                   setImageState(data);
                 };
                 reader.readAsDataURL(file);
@@ -199,9 +176,6 @@ const PublisherPage = () => {
                 reader.onload = (readerEvent) => {
                   const data = readerEvent.target.result;
                   const blob = new Blob([data]);
-                  console.log("array buffer:", data);
-                  console.log("blob:", blob);
-
                   setImageBlob(blob);
                 };
               }

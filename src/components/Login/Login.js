@@ -27,6 +27,7 @@ const LoginForm = () => {
     let loginStatusData = updateLoginStatus(false);
     let memberStatusData = initialMemberStatus();
     const memberData = await memberMoudel.login(account, password);
+    console.log("memberData:", memberData);
     if (memberData) {
       localStorage.saveAllData(
         memberData.memberId,
