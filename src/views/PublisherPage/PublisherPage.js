@@ -159,9 +159,10 @@ const PublisherPage = () => {
           <input
             id="file"
             type="file"
-            accept=".png "
+            accept=".png"
             onChange={(e) => {
               let file = e.target.files[0];
+              console.log("file size:", file.size);
               if (file) {
                 const reader = new FileReader();
                 reader.onload = (readerEvent) => {
