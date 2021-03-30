@@ -113,12 +113,14 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
   const [memberInfoFlag, setMemberInfoFlag] = useState(false);
 
   useEffect(() => {
-    const imageData = images[0];
+    let imageData;
     let base64String = "";
-    // console.log("imageData :", imageData);
+    if (images && images.length > 0) {
+      imageData = images[0];
+    }
+
     if (imageData) {
       const arrayBuffer = Uint8Array.from(imageData.data).buffer;
-
       base64String =
         "data:image/png;base64," +
         btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));

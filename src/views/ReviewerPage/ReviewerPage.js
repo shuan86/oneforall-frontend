@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import * as contract from "../../modules/smartcontract";
 import * as article from "../../modules/article";
-import RootPublisherDataTable from "../../components/Root/DataTable";
-import AgreeDisagreePublisherDialog from "../../components/Root/DecisionDialog";
+import RootDataTable from "../../components/Root/DataTable";
+import AgreeDisagreeDialog from "../../components/Root/DecisionDialog";
 import { checkArrayHasMemberId } from "../../modules/arrayCheck";
 const ReviewerPage = () => {
   const [reportNewsState, setReportNewsState] = useState([]);
@@ -34,7 +34,7 @@ const ReviewerPage = () => {
       decision,
       decisionReason
     );
-    console.log('onClickFinalDecision:', result);
+    console.log("onClickFinalDecision:", result);
     setReportNewsState((pre) =>
       result ? pre.filter((item) => item.articleId !== result.articleId) : pre
     );
@@ -44,14 +44,11 @@ const ReviewerPage = () => {
   useEffect(() => {
     const loadData = async () => {
       const dbReportNewsArrayData = await article.getAllApplyReportedNews();
-      console.log('dbReviewerArrayData:', dbReportNewsArrayData);
+      console.log("dbReviewerArrayData:", dbReportNewsArrayData);
       if (dbReportNewsArrayData != null) {
         for (let i = 0; i < dbReportNewsArrayData.length; i++) {
           const tmp = dbReportNewsArrayData[i];
-          const isExist = checkArrayHasMemberId(
-            reportNewsState,
-            tmp.articleId
-          );
+          const isExist = checkArrayHasMemberId(reportNewsState, tmp.articleId);
           if (isExist == false) {
             articleList.push({ ...tmp, id: num });
             num++;
@@ -95,12 +92,12 @@ const ReviewerPage = () => {
   // }, [isDbDataLoadedFlag]);
   return (
     <div>
-      <RootPublisherDataTable
+      <RootDataTable
         columns={columns}
         rows={reportNewsState}
         onSelected={onSelected}
       />
-      <AgreeDisagreePublisherDialog
+      <AgreeDisagreeDialog
         isOpen={dialogSwitch}
         setOpen={setDialogSwitch}
         onReasonChange={onReasonChange}
