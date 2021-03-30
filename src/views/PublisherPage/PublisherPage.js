@@ -8,7 +8,7 @@ import {
 import { ArticleTagKind } from "../../modules/article";
 import "../../public/css/PublicerPage.css";
 import BackupRoundedIcon from "@material-ui/icons/BackupRounded";
-import { postNews } from "../../modules/publisher";
+import { postNews } from "../../modules/article";
 import {
   paidArticleDeposit,
   checkContractIsOpen,
@@ -163,6 +163,10 @@ const PublisherPage = () => {
             onChange={(e) => {
               let file = e.target.files[0];
               console.log("file size:", file.size);
+              if (file.size > 120000) {
+                alert("圖片太大(最大100k)");
+                return;
+              }
               if (file) {
                 const reader = new FileReader();
                 reader.onload = (readerEvent) => {

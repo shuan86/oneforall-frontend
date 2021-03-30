@@ -1,6 +1,7 @@
 import * as sendRequest from "./sendRequest";
 import * as localStorage from "../modules/localstorage";
 import * as ws from "../modules/articleWebsocket";
+import { encrypt } from "../modules/encrypt";
 export const ArticleType = { Unreview: 0, UnderReviewed: 1, Reviewed: 2 };
 export const ArticleTagKind = {
   sport: false,
@@ -49,6 +50,20 @@ export const getReviewedNews = async (startIndex, endIndex) => {
 
   return null;
 };
+export const getArticle = async (articleId) => {
+  try {
+    const { memberId } = localStorage.getAllData();
+    const data = { articleId };
+    const result = await sendRequest.getRequest("/article", data);
+    if (result && result.status == 200) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("getArticle error:", error);
+  }
+
+  return null;
+};
 export const createReportedNews = async (articleId, evidence) => {
   try {
     const { token, memberId } = localStorage.getAllData();
@@ -75,7 +90,7 @@ export const getAllApplyReportedNews = async () => {
       token,
       memberId,
       "/reportedNews",
-      {}
+      { memberId }
     );
     if (result && result.status == 200) {
       return result.data;
@@ -87,6 +102,7 @@ export const getAllApplyReportedNews = async () => {
   return null;
 };
 export const updateReportedNewsStatus = async (
+  reportMemberId,
   articleId,
   isAgree,
   decisionReason
@@ -97,7 +113,7 @@ export const updateReportedNewsStatus = async (
       token,
       memberId,
       "/reportedNews",
-      { articleId, isAgree, decisionReason }
+      { articleId, isAgree, decisionReason, reportMemberId }
     );
     if (result && result.status == 200) {
       return result.data;
@@ -174,4 +190,62 @@ export const disconnect = (articleId) => {
   const { token, memberId } = localStorage.getAllData();
   ws.sendData(ws.articleEvent.disconnectServer, { token, memberId, articleId });
   console.log("disconnect");
+};
+export const postNews = async (
+  title,
+  authorName,
+  content,
+  time,
+  deposit,
+  imgArray,
+  tagArray
+) => {
+  try {
+    const { token, memberId } = localStorage.getAllData();
+    content = content.replace(/\r\n/g, "\n");
+    content = content.replace(/\n/g, "\n");
+    const formData = new FormData();
+    const data = {
+      memberId,
+      title,
+      authorName,
+      content,
+      time,
+      deposit,
+      tagArray,
+    };
+    console.log("postNews:", data);
+    console.log("postNews:", imgArray);
+    // const rsaData = encrypt(JSON.stringify(data));
+    const rsaData = JSON.stringify(data);
+    formData.append("rsaData", rsaData);
+    formData.append("image", imgArray);
+
+    const result = await sendRequest.tokenFilePostRequest(
+      token,
+      "/news",
+      formData
+    );
+    if (result && result.status == 200) {
+      return { ...result.data };
+    }
+    return null;
+  } catch (error) {
+    console.error("postNews error  :", error);
+  }
+};
+export const getBase64Str = async (imageData) => {
+  try {
+    if (imageData) {
+      const arrayBuffer = Uint8Array.from(imageData.data).buffer;
+      const base64String =
+        "data:image/png;base64," +
+        btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
+      return base64String;
+    }
+  } catch (error) {
+    console.error("getBase64Str error:", error);
+    return null;
+  }
+  return null;
 };

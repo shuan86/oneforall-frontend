@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as contract from "../../modules/smartcontract";
 import * as article from "../../modules/article";
 import RootDataTable from "../../components/Root/DataTable";
-import AgreeDisagreeDialog from "../../components/Root/DecisionDialog";
+import AgreeDisagreeDialog from "../../components/Article/ArticleReportDialog";
 import { checkArrayHasMemberId } from "../../modules/arrayCheck";
 const ReviewerPage = () => {
   const [reportNewsState, setReportNewsState] = useState([]);
@@ -15,8 +15,9 @@ const ReviewerPage = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "articleId", headerName: "articleId", width: 330 },
+    { field: "title", headerName: "title", width: 330 },
+    { field: "authorName", headerName: "authorName", width: 330 },
     { field: "evidence", headerName: "evidence", width: 330 },
-    { field: "status", headerName: "status", width: 330 },
   ];
   let num = 0;
   const onSelected = (sel) => {
@@ -30,6 +31,7 @@ const ReviewerPage = () => {
   };
   const onClickFinalDecision = async (decision) => {
     const result = await article.updateReportedNewsStatus(
+      selectedData.memberId,
       selectedData.articleId,
       decision,
       decisionReason
@@ -102,6 +104,7 @@ const ReviewerPage = () => {
         setOpen={setDialogSwitch}
         onReasonChange={onReasonChange}
         onClickFinalDecision={onClickFinalDecision}
+        selectedData={selectedData}
       />
     </div>
   );

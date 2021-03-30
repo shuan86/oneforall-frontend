@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "../../public/css/MemberCard.css";
+
 import ApplyReviewerDialog from "./ApplyReviewerDialog";
 import ApplyPublisherDialog from "./ApplyPublisherDialog";
 
@@ -27,41 +28,30 @@ const MemberCard = () => {
   );
 };
 
-const MemberInformation = ({
-  memberInfoFlag,
-  setMemberInfoFlag,
-  authorName,
-}) => {
-  const [accountState, setAccountState] = useState("a1233456");
-  const [expState, setExpState] = useState(0);
-  const [createTimeState, setCreateTimeState] = useState("2021-01-01");
-  const [publickeyState, setPublickey] = useState(
-    "0x59982711466fD1d4C2F1C1F710f721651BCCFDb3"
-  );
-
+const MemberInformation = ({ memberInfoFlag, setMemberInfoFlag, memberId }) => {
+  const [memberInfoState, setmemberInfoState] = useState({
+    account: " ",
+    publicKey: " ",
+    exp: "0",
+    createTime: "2021-01-01",
+  });
   const onClickCloseMemberInformation = () => {
     setMemberInfoFlag(false);
   };
   useEffect(() => {
     const asyncFunc = async () => {
+      let result;
       if (memberInfoFlag) {
-        const result = await getMemberInfo(authorName);
-        if (result) {
-          const { account, publicKey, exp, createTime } = result;
-          setAccountState(account);
-          setPublickey(publicKey);
-          setExpState(exp);
-          setCreateTimeState(createTime);
-        }
-        console.log("MemberInformation:", result);
+        result = await getMemberInfo(memberId);
       }
+      setmemberInfoState((pre) => (memberInfoFlag && result ? result : pre));
     };
     asyncFunc();
     return () => {};
   }, [memberInfoFlag]);
 
   return (
-    <div className="memberInformation">
+    <div className={memberInfoFlag ? "memberInformation" : "none"}>
       <div className="close" onClick={onClickCloseMemberInformation}>
         <CloseOutlinedIcon />
       </div>
@@ -69,15 +59,15 @@ const MemberInformation = ({
         <img src="favicon.ico" alt="" className="userPhoto" />
         <div className={"userAccount"}>
           <div className="userAccountID">
-            <p>{accountState}</p>
+            <p>{memberInfoState.account}</p>
             <img src={Copper10} alt="medals" className="medals" />
           </div>
-          <p>{expState}分</p>
-          <p>註冊日期：{createTimeState}</p>
+          <p>{memberInfoState.exp}分</p>
+          <p>註冊日期：{memberInfoState.createTime}</p>
         </div>
       </div>
       <div className="publicKey">
-        <p className="">{publickeyState}</p>
+        <p className="">{memberInfoState.publicKey}</p>
         <FileCopyOutlinedIcon fontSize="small" />
       </div>
       <a href="#">追隨</a>

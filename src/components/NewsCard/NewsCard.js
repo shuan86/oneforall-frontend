@@ -21,6 +21,7 @@ const NewsCardUnreviewed = ({
   setSelectArticleId,
 }) => {
   const { articleId, likeAmount, commentAmount, isMemberLike } = articleData;
+
   return (
     <div className="card">
       <NewsCardTop />
@@ -97,8 +98,10 @@ const NewsCardTop = () => {
 };
 const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
   const {
+    memberId,
     articleId,
     title,
+    account,
     authorName,
     content,
     time,
@@ -118,7 +121,6 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
     if (images && images.length > 0) {
       imageData = images[0];
     }
-
     if (imageData) {
       const arrayBuffer = Uint8Array.from(imageData.data).buffer;
       base64String =
@@ -142,13 +144,13 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
           <div className="postData">
             <img src={authorImg} alt="Background" className="userPhoto" />
             <div className="article-data">
-              <div className="account">{authorName}</div>
+              <div className="account">{account}</div>
               <div className="articleTime">{time}</div>
             </div>
           </div>
           <div className={memberInfoFlag ? "memberInformationCard" : "none"}>
             <MemberInformation
-              authorName={authorName}
+              memberId={memberId}
               memberInfoFlag={memberInfoFlag}
               setMemberInfoFlag={setMemberInfoFlag}
             />
@@ -169,9 +171,9 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
       </div>
       <div className="article">
         <h3>{title}</h3>
-        <p>{content}</p>
+        <p style={{ whiteSpace: "pre-wrap" }}>{content}</p>
         <a href="#">繼續閱讀</a>
-        <img src={imageState.length > 0 ? imageState : articleImg} alt="" />
+        <img src={imageState.length > 0 ? imageState : ""} alt="" />
         <div
           className="report"
           style={{

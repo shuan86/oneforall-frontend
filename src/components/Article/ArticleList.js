@@ -74,7 +74,6 @@ const ArticleList = ({ articleType, selectedArticleType }) => {
     observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && hasMoreData) {
       }
-      console.log("hasMoreData:", hasMoreData);
       setPageNumber((prevPageNumber) =>
         entries[0].isIntersecting && hasMoreData
           ? prevPageNumber + 1

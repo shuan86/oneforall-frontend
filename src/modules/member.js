@@ -51,16 +51,16 @@ export const enroll = async (account, password, userName, email, publicKey) => {
   }
   return null;
 };
-export const getMemberInfo = async (account) => {
+export const getMemberInfo = async (getMemberId) => {
   try {
     const { memberId, token } = localStorage.getAllData();
     const result = await sendRequest.rsaTokenGetRequest(
       token,
       memberId,
       "/member",
-      { account }
+      { getMemberId }
     );
-    console.log("getMemberInfo:", memberId, "account:", account);
+    console.log("getMemberInfo:", memberId, "memberId:", memberId);
     if (result && result.status == 200) {
       return result.data;
     }

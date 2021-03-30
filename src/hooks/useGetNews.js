@@ -36,14 +36,16 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleType) => {
 
         const [
           articleDatas,
-          articleDataAmount,
+          authorAccountArray,
           tmpIsMemberLikeArray,
           tmpIsMemberReportedArray,
+          articleDataAmount,
         ] = result;
         setHasMoreData(articleDataAmount > newsDatas.length);
         setLoading(false);
         articleDatas = articleDatas.map((item, index) => ({
           ...item,
+          account: authorAccountArray[index],
           isMemberLike: tmpIsMemberLikeArray[index],
           isMemberReported: tmpIsMemberReportedArray[index],
         }));
@@ -64,9 +66,7 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleType) => {
       }
     };
     loadData();
-    return () => {
-      console.log("ummounted");
-    };
+    return () => {};
   }, [pageNumber, articleType]);
 
   return { loading, newsDatas, hasMoreData, error };
