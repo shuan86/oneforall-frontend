@@ -2,13 +2,20 @@
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px;
     background-color: #fff;
+    position: relative;
 }
 
 .navContent {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     /* padding: 10px 0; */
+}
+
+.responsiveNav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .linkList {
@@ -19,16 +26,16 @@
 .linkList div {
     display: inline-block;
     color: var(--black);
+    padding: 0 30px;
     height: 60px;
     line-height: 60px;
     font-size: 18px;
-    margin-right: 30px;
+    margin-left: 30px;
     cursor: pointer;
 }
 
 .linkList div:not(:first-child) {
-    padding: 0 30px;
-    margin-right: 0;
+    margin-left: 0;
 }
 
 .linkList div:hover {
@@ -229,22 +236,122 @@
     font-size: 14px;
 }
 
+.closeNavButton {
+    display: none;
+}
+
+
 @media screen and (max-width: 800px) {
+    .responsiveNav {
+        position: absolute;
+        background-color: #fff;
+        top: 0px;
+        left: 0;
+        z-index: 1500;
+        width: 100vw;
+        flex-direction: column-reverse;
+        box-shadow: rgb(0 0 0 / 5%) 0 0 7px 5px;
+    }
+
+    .navContent {
+        justify-content: space-between;
+        padding: 5px 0;
+    }
+
+    .navFeature {
+        flex-direction: column-reverse;
+        width: 100%;
+    }
+
+    .navUserInfo {
+        width: 100%;
+        height: 60px;
+        align-items: center;
+        padding-left: 15px;
+        box-sizing: border-box;
+    }
+
     .rankingTable {
         display: none;
     }
 
+    .navUserInfo img {
+        display: none;
+    }
+
     .navUserInfoID {
+        font-size: 1.25rem;
+        padding: 0;
+    }
+
+    .searchBarContainer {
+        height: 60px;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    .searchBarIcon {
         display: none;
     }
 
     .searchBar {
-        display: none;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .linkList {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .linkList div {
+        width: 100%;
+        margin: 0;
+        text-align: start;
+        padding: 0;
+        padding-left: 15px;
+        box-sizing: border-box;
+    }
+
+    .hambergurButton {
+        width: 50px;
+        height: 50px;
+        background-color: green;
+    }
+
+    .closeNavButton {
+        display: inline-block;
+        position: absolute;
+        right: 16px;
+        top: 16px;
+        z-index: 10;
+        border-radius: 5px;
+    }
+
+    .closeNavButton:active svg {
+        background-color: var(--light-gray);
+        border-radius: 5px;
+    }
+
+    .memberList {
+        position: static;
+        box-shadow: none;
+        width: 100%;
+        padding: 0;
+        padding-left: 7px;
+        box-sizing: border-box;
+    }
+
+    .navFeature .phoneDisplay {
+        display: block !important;
+    }
+
+    .memberListItemTitle {
+        font-size: 18px;
     }
 }
 
 /* @media screen and (max-width: 360px) {
     .logo {
         display: none;
-    }
-} */
+    }} */

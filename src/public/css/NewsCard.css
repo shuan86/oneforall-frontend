@@ -13,7 +13,6 @@
   display: inline-block;
   color: var(--black);
   padding: 10px;
-  transition: color 0.2s ease-in;
 }
 
 .filter a:hover {
@@ -21,8 +20,8 @@
 }
 
 .filter a:nth-child(1) {
-  color: #fff;
-  background-color: var(--navy-blue);
+  /* color: #fff;
+  background-color: var(--navy-blue); */
   border-radius: 5px 0 0 5px;
 }
 
@@ -279,6 +278,7 @@
   display: inline-block;
   cursor: pointer;
   color: var(--black-alpha-60);
+  font-weight: 700;
   text-align: center;
   line-height: 40px;
   height: 100%;
@@ -342,7 +342,7 @@
   background-color: #fff;
 }
 
-.userInput a {
+.userInput button {
   display: inline;
   color: #fff;
   width: 10%;
@@ -352,17 +352,18 @@
   padding: 0 10px;
   margin-left: 10px;
   border-radius: 5px;
+  border: none;
   background-color: var(--sky-blue);
   transition: background-color 0.2s ease-in;
 }
 
-.userInput a:hover {
+.userInput button:hover {
   color: #fff;
   background-color: var(--navy-blue);
   text-decoration: none;
 }
 
-.userInput a:active {
+.userInput button:active {
   color: #fff;
   background-color: var(--deep-blue);
   text-decoration: none;
@@ -417,7 +418,16 @@
 .moreComment {
   display: inline-block;
   width: 100%;
+  cursor: pointer;
   padding: 16px 0;
+  padding-left: 16px;
+  text-align: start;
+  background-color: var(--white);
+  border: none;
+}
+
+.moreComment:hover {
+  text-decoration: underline;
 }
 
 /*vote*/
@@ -470,6 +480,7 @@
     margin-right: 0;
     margin-left: 0;
     width: 100%;
+    border: 0;
   }
 
   .status {

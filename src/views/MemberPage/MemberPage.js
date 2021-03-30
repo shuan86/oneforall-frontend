@@ -15,6 +15,7 @@ const MemberPage = () => {
 
   const isReviewer = useSelector((state) => state.memberStatus.isReviewer);
   const isPublisher = useSelector((state) => state.memberStatus.isPublisher);
+  const isVistor = useSelector((state) => state.memberStatus.isVistor);
   // const [isReviewer, setIsReviewer] = useState(useSelector((state) => state.memberStatus.isReviewer))
   // const [isPublisher, setIsPublisher] = useState(useSelector((state) => state.memberStatus.isPublisher))
 
@@ -38,7 +39,7 @@ const MemberPage = () => {
 
   return (
     <div className="container">
-      {isReviewer ? (
+      {/* {isReviewer ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.reviewer)}
         >
@@ -51,19 +52,44 @@ const MemberPage = () => {
         >
           發文者
         </button>
-      ) : null}
+      ) : null} */}
 
       <div className="memberContainer">
         <MemberCard />
-        {memberStatus == EnumMemberStatus.vistor ? (
-          <VistorRight isReviewer={isReviewer} isPublisher={isPublisher} />
+        {/* {memberStatus == EnumMemberStatus.vistor ? (
+          <VistorRight 
+            isReviewer={isReviewer}
+            isPublisher={isPublisher}
+            onClickChangeMemberStatus={onClickChangeMemberStatus}
+            EnumMemberStatus={EnumMemberStatus}
+          />
         ) : null}
         {memberStatus == EnumMemberStatus.reviewer ? (
-          <ReviewerRight isPublisher={isPublisher} />
+          <ReviewerRight 
+            isPublisher={isPublisher} 
+            onClickChangeMemberStatus={onClickChangeMemberStatus}
+            EnumMemberStatus={EnumMemberStatus}/>
         ) : null}
         {memberStatus == EnumMemberStatus.publisher ? (
           <AuthorRight isPublisher={isPublisher} />
-        ) : null}
+        ) : null} */}
+        {isVistor && !isReviewer && !isPublisher ?  <VistorRight 
+            isReviewer={isReviewer}
+            isPublisher={isPublisher}
+            onClickChangeMemberStatus={onClickChangeMemberStatus}
+            EnumMemberStatus={EnumMemberStatus}
+        />:null }
+        {isVistor && isReviewer && !isPublisher ?  <ReviewerRight 
+            isPublisher={isPublisher} 
+            onClickChangeMemberStatus={onClickChangeMemberStatus}
+            EnumMemberStatus={EnumMemberStatus}
+        />:null }
+        {isVistor && !isReviewer && isPublisher ? 
+        <AuthorRight isPublisher={isPublisher} /> 
+        :null }
+        
+           
+            
       </div>
     </div>
   );

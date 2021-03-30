@@ -319,7 +319,7 @@ const NewsCardComment = ({
       <div className={openCommentFlag ? "like" : "like border-b-0"}>
         <div>
           <button
-            style={{ color: likeState ? "blue" : "red" }}
+            style={{ color: likeState ? "var(--deep-blue)" : null }}
             onClick={onClickLike}
           >
             {likeAmountState} 人想知道
