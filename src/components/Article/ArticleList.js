@@ -12,7 +12,7 @@ import RankingTable from "../NewsCard/RankingTable";
 import ReportDialog from "../Report/ReportDialog";
 import * as contract from "../../modules/smartcontract";
 import useGetNews from "../../hooks/useGetNews";
-import { ArticleType } from "../../modules/article";
+import { ArticleStatus } from "../../modules/article";
 const ArticleList = ({ articleType, selectedArticleType }) => {
   const eveyRequestDataAmount = 2;
   const [pageNaumber, setPageNumber] = useState(1);
@@ -112,6 +112,7 @@ const ArticleList = ({ articleType, selectedArticleType }) => {
                     refFunc={lastElementRef}
                     selectArticleId={selectArticleId}
                     setSelectArticleId={setSelectArticleId}
+                    articleType={articleType}
                   />
                 );
               } else {
@@ -123,6 +124,7 @@ const ArticleList = ({ articleType, selectedArticleType }) => {
                     refFunc={null}
                     selectArticleId={selectArticleId}
                     setSelectArticleId={setSelectArticleId}
+                    articleType={articleType}
                   />
                 );
               }

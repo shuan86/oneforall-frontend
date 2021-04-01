@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../../public/css/NewsCard.css";
-import { ArticleType } from "../../modules/article";
+import { ArticleStatus } from "../../modules/article";
 const Filter = ({ setSelectedArticleType }) => {
-  const [bgColor, setBgColor] = useState(["blue", "", ""]);
+  const [bgColor, setBgColor] = useState(["var(--navy-blue)", "", ""]);
+  const [ftColor, setFtColor] = useState(["var(--white)", "", ""]);
 
   const onClickFilter = (articleType) => {
-    if (articleType == ArticleType.Unreview) {
-      setSelectedArticleType(ArticleType.Unreview);
-      setBgColor(["blue", "", ""]);
-    } else if (articleType == ArticleType.UnderReviewed) {
-      setSelectedArticleType(ArticleType.UnderReviewed);
-      setBgColor(["", "blue", ""]);
+    if (articleType == ArticleStatus.unreview) {
+      setSelectedArticleType(ArticleStatus.unreview);
+      setBgColor(["var(--navy-blue)", "", ""]);
+      setFtColor(["var(--white)", "", ""]);
+    } else if (articleType == ArticleStatus.underReview) {
+      setSelectedArticleType(ArticleStatus.underReview);
+      setBgColor(["", "var(--navy-blue)", ""]);
+      setFtColor(["", "var(--white)", ""]);
     } else {
-      setSelectedArticleType(ArticleType.Reviewed);
-      setBgColor(["", "", "blue"]);
+      setSelectedArticleType(ArticleStatus.verifiedFail);
+      setBgColor(["", "", "var(--navy-blue)"]);
+      setFtColor(["", "", "var(--white)"]);
     }
   };
   return (
@@ -22,27 +26,30 @@ const Filter = ({ setSelectedArticleType }) => {
       <div className="filter">
         <a
           href="#"
-          onClick={() => onClickFilter(ArticleType.Unreview)}
+          onClick={() => onClickFilter(ArticleStatus.unreview)}
           style={{
             backgroundColor: bgColor[0],
+            color: ftColor[0],
           }}
         >
           未審核
         </a>
         <a
           href="#"
-          onClick={() => onClickFilter(ArticleType.UnderReviewed)}
+          onClick={() => onClickFilter(ArticleStatus.underReview)}
           style={{
             backgroundColor: bgColor[1],
+            color: ftColor[1],
           }}
         >
           審核中
         </a>
         <a
           href="#"
-          onClick={() => onClickFilter(ArticleType.Reviewed)}
+          onClick={() => onClickFilter(ArticleStatus.verifiedFail)}
           style={{
             backgroundColor: bgColor[2],
+            color: ftColor[2],
           }}
         >
           已審核

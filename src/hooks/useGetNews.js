@@ -3,7 +3,7 @@ import {
   getNews,
   getUnderReviewedNews,
   getReviewedNews,
-  ArticleType,
+  ArticleStatus,
 } from "../modules/article";
 const useGetNews = (pageNumber, eveyRequestDataAmount, articleType) => {
   const [loading, setLoading] = useState(true);
@@ -17,44 +17,88 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleType) => {
         setLoading(true);
         setError(false);
         let result;
-        if (articleType == ArticleType.Unreview) {
+        let tmpArticleDatas;
+        let tmpArticleDataAmount;
+        if (articleType == ArticleStatus.unreview) {
           result = await getNews(
             pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
             pageNumber * eveyRequestDataAmount
           );
-        } else if (articleType == ArticleType.UnderReviewed) {
+          const {
+            articleArray,
+            accountArray,
+            memberLikeArticleStatusArray,
+            memberReportedArray,
+            articleAmount,
+          } = result;
+          tmpArticleDataAmount = articleAmount;
+          tmpArticleDatas = articleArray.map((item, index) => ({
+            ...item,
+            account: accountArray[index],
+            isMemberLike: memberLikeArticleStatusArray[index],
+            isMemberReported: memberReportedArray[index],
+          }));
+        } else if (articleType == ArticleStatus.underReview) {
           result = await getUnderReviewedNews(
             pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
             pageNumber * eveyRequestDataAmount
           );
-        } else if (articleType == ArticleType.Reviewed) {
+          const {
+            articleArray,
+            accountArray,
+            reportedAccountArray,
+            evidenceArray,
+            decisionReasonArray,
+            reviewResultArray,
+            memberLikeArticleStatusArray,
+            hasReportedArray,
+            articleAmount,
+          } = result;
+          console.log("result123:", result);
+          console.log("result decisionReasonArray:", decisionReasonArray[0]);
+
+          tmpArticleDataAmount = articleAmount;
+          tmpArticleDatas = articleArray.map((item, index) => ({
+            ...item,
+            account: accountArray[index],
+            reportedtAccount: reportedAccountArray[index],
+            evidence: evidenceArray[index],
+            isMemberLike: memberLikeArticleStatusArray[index],
+            isMemberReported: hasReportedArray[index],
+            decisionReason: decisionReasonArray[index],
+            reviewResult: reviewResultArray[index],
+          }));
+          console.log("getUnderReviewedNews:", result);
+        } else if (articleType == ArticleStatus.verifiedFail) {
           result = await getReviewedNews(
             pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
             pageNumber * eveyRequestDataAmount
           );
+          const [
+            articleDatas,
+            authorAccountArray,
+            tmpIsMemberLikeArray,
+            tmpIsMemberReportedArray,
+            articleDataAmount,
+          ] = result;
+          tmpArticleDataAmount = articleDataAmount;
+          tmpArticleDatas = articleDatas.map((item, index) => ({
+            ...item,
+            account: authorAccountArray[index],
+            isMemberLike: tmpIsMemberLikeArray[index],
+            isMemberReported: tmpIsMemberReportedArray[index],
+          }));
         }
 
-        const [
-          articleDatas,
-          authorAccountArray,
-          tmpIsMemberLikeArray,
-          tmpIsMemberReportedArray,
-          articleDataAmount,
-        ] = result;
-        setHasMoreData(articleDataAmount > newsDatas.length);
+        setHasMoreData(tmpArticleDataAmount > newsDatas.length);
         setLoading(false);
-        articleDatas = articleDatas.map((item, index) => ({
-          ...item,
-          account: authorAccountArray[index],
-          isMemberLike: tmpIsMemberLikeArray[index],
-          isMemberReported: tmpIsMemberReportedArray[index],
-        }));
+
         setNewsDatas((pre) => {
           console.log(
             "setNewsDatas:",
-            result ? [...new Set([...pre, ...articleDatas])] : pre
+            result ? [...new Set([...pre, ...tmpArticleDatas])] : pre
           );
-          return result ? [...new Set([...pre, ...articleDatas])] : pre;
+          return result ? [...new Set([...pre, ...tmpArticleDatas])] : pre;
         });
 
         // setNewsDatas((pre) => {

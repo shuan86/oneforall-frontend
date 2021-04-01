@@ -1,33 +1,33 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Filter from "../../components/NewsCard/Filter";
 import useGetNews from "../../hooks/useGetNews";
-import { ArticleType } from "../../modules/article";
+import { ArticleStatus } from "../../modules/article";
 import ArticleList from "../../components/Article/ArticleList";
 const HomePage = () => {
   const [selectedArticleType, setSelectedArticleType] = useState(
-    ArticleType.Unreview
+    ArticleStatus.unreview
   );
 
   return (
     <div>
       <Filter setSelectedArticleType={setSelectedArticleType} />
-      {selectedArticleType == ArticleType.Unreview && (
+      {selectedArticleType == ArticleStatus.unreview && (
         <ArticleList
-          articleType={ArticleType.Unreview}
+          articleType={ArticleStatus.unreview}
           selectedArticleType={selectedArticleType}
         />
       )}
 
-      {selectedArticleType == ArticleType.UnderReviewed && (
+      {selectedArticleType == ArticleStatus.underReview && (
         <ArticleList
-          articleType={ArticleType.UnderReviewed}
+          articleType={ArticleStatus.underReview}
           selectedArticleType={selectedArticleType}
         />
       )}
 
-      {selectedArticleType == ArticleType.Reviewed && (
+      {selectedArticleType == ArticleStatus.verifiedFail && (
         <ArticleList
-          articleType={ArticleType.Reviewed}
+          articleType={ArticleStatus.verifiedFail}
           selectedArticleType={selectedArticleType}
         />
       )}

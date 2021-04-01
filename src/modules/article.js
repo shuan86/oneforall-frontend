@@ -2,12 +2,22 @@ import * as sendRequest from "./sendRequest";
 import * as localStorage from "../modules/localstorage";
 import * as ws from "../modules/articleWebsocket";
 import { encrypt } from "../modules/encrypt";
-export const ArticleType = { Unreview: 0, UnderReviewed: 1, Reviewed: 2 };
+export const ReviewResult = {
+  nothing: 0,
+  sucessful: 1,
+  fail: 2,
+};
+export const ArticleStatus = {
+  unreview: 0,
+  report: 1,
+  underReview: 2,
+  verifiedFail: 3,
+  verifiedSucessful: 4,
+};
 export const ArticleTagKind = {
   sport: false,
   food: false,
 };
-
 export const getNews = async (startIndex, endIndex) => {
   try {
     const { memberId } = localStorage.getAllData();
@@ -47,7 +57,6 @@ export const getReviewedNews = async (startIndex, endIndex) => {
   } catch (error) {
     console.error("getReviewedNews error:", error);
   }
-
   return null;
 };
 export const getArticle = async (articleId) => {

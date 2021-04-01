@@ -7,7 +7,7 @@ import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
-import { ArticleType } from "../../modules/article";
+import { ArticleStatus } from "../../modules/article";
 import ReportIcon from "@material-ui/icons/Report";
 import { useFirstUpdate } from "../../hooks/useFirstUpdate";
 import * as articleWebsocket from "../../modules/articleWebsocket";
@@ -96,24 +96,34 @@ const NewsCardTop = () => {
     </div>
   );
 };
-const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
-  const {
-    memberId,
-    articleId,
-    title,
-    account,
-    authorName,
-    content,
-    time,
-    tags,
-    images,
-    isMemberReported,
-  } = data;
+const NewsCardContent = ({
+  articleType,
+  isReviewedCard,
+  memberId,
+  articleId,
+  title,
+  account,
+  authorName,
+  content,
+  time,
+  tags,
+  images,
+  isMemberReported,
+  onClickReportBtn,
+  reportedtAccount,
+  evidence,
+  decisionReason,
+  reviewResult,
+}) => {
   const [tagsData, setTagsData] = useState([]);
   const [imageState, setImageState] = useState("");
   const [reportState, setReportState] = useState(false);
-
   const [memberInfoFlag, setMemberInfoFlag] = useState(false);
+  const [readMoreFlag, setReadMoreFlag] = useState(false);
+  const [needReadMoreFlag, setNeedReadMoreFlag] = useState(false);
+  const shortMaxStrLength = 5;
+  let shortContent = "";
+  let longContent = "";
 
   useEffect(() => {
     let imageData;
@@ -131,13 +141,20 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
     setTagsData(tags);
     return () => {}; //
   }, []);
+  useEffect(() => {
+    setNeedReadMoreFlag(content.length > shortMaxStrLength ? true : false);
+    return () => {};
+  }, [content]);
 
+  const onClickReadMore = () => {
+    setReadMoreFlag((pre) => !pre);
+  };
   return (
     <div className="content">
       <div className="postInfo">
         <div
           className="userInfo"
-          onClick={async () => {
+          onClick={() => {
             setMemberInfoFlag((pre) => !pre);
           }}
         >
@@ -152,7 +169,6 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
             <MemberInformation
               memberId={memberId}
               memberInfoFlag={memberInfoFlag}
-              setMemberInfoFlag={setMemberInfoFlag}
             />
           </div>
         </div>
@@ -171,8 +187,50 @@ const NewsCardContent = ({ isReviewedCard, data, onClickReportBtn }) => {
       </div>
       <div className="article">
         <h3>{title}</h3>
-        <p style={{ whiteSpace: "pre-wrap" }}>{content}</p>
-        <a href="#">繼續閱讀</a>
+        {articleType == ArticleStatus.underReview ? (
+          <div>
+            <p> reportedtAccount:{reportedtAccount}</p>
+            <p> evidence:{evidence}</p>
+            <p> decisionReason:{decisionReason}</p>
+            <p> reviewResult :{reviewResult}</p>
+          </div>
+        ) : null}
+
+        <p
+          style={{ whiteSpace: "pre-wrap", display: "inline", padding: "0 0" }}
+        >
+          {content.length > shortMaxStrLength
+            ? content.substring(0, shortMaxStrLength)
+            : content}
+        </p>
+        <p
+          style={{
+            whiteSpace: "pre-wrap",
+            display:
+              needReadMoreFlag && readMoreFlag == false ? "inline" : "none",
+          }}
+        >
+          ...
+        </p>
+        <p
+          style={{
+            display: needReadMoreFlag && readMoreFlag ? "inline" : "none",
+            whiteSpace: "pre-wrap",
+            padding: "0 0",
+          }}
+        >
+          {content.length > shortMaxStrLength
+            ? content.substring(shortMaxStrLength, content.length - 1)
+            : content}
+        </p>
+        <button
+          style={{
+            display: needReadMoreFlag && readMoreFlag == false ? "" : "none",
+          }}
+          onClick={onClickReadMore}
+        >
+          繼續閱讀
+        </button>
         <img src={imageState.length > 0 ? imageState : ""} alt="" />
         <div
           className="report"
@@ -323,7 +381,7 @@ const NewsCardComment = ({
       <div className={openCommentFlag ? "like" : "like border-b-0"}>
         <div>
           <button
-            style={{ color: likeState ? "blue" : "red" }}
+            style={{ color: likeState ? "var(--deep-blue)" : null }}
             onClick={onClickLike}
           >
             {likeAmountState} 人想知道
@@ -334,8 +392,10 @@ const NewsCardComment = ({
             {commentAmountState} 留言
           </button>
         </div>
-        <div className={isReviewedCard == false ? "none" : "vote"}>
+        <div className={isReviewedCard == false ? "none" : "null"}>
           <button>同意</button>
+        </div>
+        <div className={isReviewedCard == false ? "none" : "null"}>
           <button>反對</button>
         </div>
       </div>
@@ -385,39 +445,69 @@ const Comment = React.memo(
 
 const NewsCard = React.memo(
   ({
+    articleType,
     articleData,
     onClickReportBtn,
     refFunc,
     selectArticleId,
     setSelectArticleId,
   }) => {
-    let tmpNewsCard;
-    // console.log("articleData:", articleData);
-    if (articleData.newsType == ArticleType.UnderReviewed) {
-      // // tmpNewsCard = (
-      // //   <NewsCardUnderReview
-      // //     articleData={articleData}
-      // //     onClickReportBtn={onClickReportBtn}
-      // //   />
-      // );
-    } else if (articleData.newsType == ArticleType.Reviewed) {
-      // tmpNewsCard = (
-      //   <NewsCardReviewed
-      //     articleData={value}
-      //     onClickReportBtn={onClickOpenReportDialogBtn}
-      //   />
-      // );
-    } else {
-      tmpNewsCard = (
-        <NewsCardUnreviewed
-          articleData={articleData}
+    // return <div ref={refFunc}> {tmpNewsCard} </div>;
+    const {
+      memberId,
+      articleId,
+      title,
+      account,
+      authorName,
+      content,
+      time,
+      tags,
+      images,
+      isMemberReported,
+      likeAmount,
+      commentAmount,
+      isMemberLike,
+      evidence,
+      reportedtAccount,
+      decisionReason,
+      reviewResult,
+    } = articleData;
+
+    return (
+      <div ref={refFunc} className="card">
+        <NewsCardTop />
+        <NewsCardContent
+          articleType={articleType}
+          memberId={memberId}
+          articleId={articleId}
+          title={title}
+          account={account}
+          authorName={authorName}
+          content={content}
+          time={time}
+          tags={tags}
+          images={images}
+          isMemberReported={isMemberReported}
           onClickReportBtn={onClickReportBtn}
+          isReviewedCard={false}
+          reportedtAccount={reportedtAccount}
+          evidence={evidence}
+          decisionReason={decisionReason}
+          reviewResult={reviewResult}
+        />
+        <NewsCardComment
+          articleId={articleId}
+          likeAmount={likeAmount}
+          commentAmount={commentAmount}
+          isMemberLike={isMemberLike}
           selectArticleId={selectArticleId}
           setSelectArticleId={setSelectArticleId}
+          isReviewedCard={
+            articleType == ArticleStatus.underReview ? true : false
+          }
         />
-      );
-    }
-    return <div ref={refFunc}> {tmpNewsCard} </div>;
+      </div>
+    );
   },
   (pre, next) => {
     if (pre.selectArticleId != next.selectArticleId) return false;

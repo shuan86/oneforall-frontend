@@ -9,6 +9,7 @@ import { getAllData as getLocalStorageData } from "../../modules/localstorage";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
+import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
 import {
   initialMember,
@@ -77,7 +78,9 @@ const NavBar = () => {
     onChangeRouter("/member");
   };
 
-  const onClickMemberListFlag = () => {
+  const onClickMemberListFlag = () => { 
+    var offsetWid = document.documentElement.clientWidth;
+    if(offsetWid < 800) return
     dispatch(setMemberListFlag());
   };
   const onClickPixelGamePage = () => {
@@ -87,20 +90,22 @@ const NavBar = () => {
     <div className={"navBar"}>
       <div className="container">
         <div className="navContent">
-          <div className="linkList">
-            <div>
-              <img
-                className={"logo"}
-                src={Logo}
-                alt="logoImg"
-                width={"158px"}
-                onClick={() => onChangeRouter("/")}
-              />
-            </div>
-            <div>新聞</div>
-            <div>討論</div>
-          </div>
           <div>
+            <img
+              className={"logo"}
+              src={Logo}
+              alt="logoImg"
+              width={"158px"}
+              onClick={() => onChangeRouter("/")}
+            />
+          </div>
+          <div className="hambergurButton"></div>
+          <div className="responsiveNav">
+            <div className="closeNavButton" onClick={()=>console.log('click')}><CloseOutlinedIcon fontSize='large'/></div>
+            <div className="linkList">
+              <div>新聞</div>
+              <div>討論</div>
+            </div>
             <div className={"navFeature"}>
               <div className="searchBarContainer">
                 <button className={"searchBarIcon"}></button>
@@ -124,7 +129,7 @@ const NavBar = () => {
               >
                 登入
               </button>
-              <div className={memberListFlag ? "memberList" : "none"}>
+              <div className={memberListFlag ? "memberList phoneDisplay" : "none phoneDisplay"}>
                 <div
                   className="memberListItem"
                   onClick={() => {

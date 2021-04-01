@@ -28,15 +28,16 @@ const MemberCard = () => {
   );
 };
 
-const MemberInformation = ({ memberInfoFlag, setMemberInfoFlag, memberId }) => {
+const MemberInformation = ({ memberInfoFlag, memberId }) => {
   const [memberInfoState, setmemberInfoState] = useState({
     account: " ",
     publicKey: " ",
     exp: "0",
     createTime: "2021-01-01",
   });
+  const [openFlag, setOpenFlag] = useState(false);
   const onClickCloseMemberInformation = () => {
-    setMemberInfoFlag(false);
+    setOpenFlag(false);
   };
   useEffect(() => {
     const asyncFunc = async () => {
@@ -45,13 +46,15 @@ const MemberInformation = ({ memberInfoFlag, setMemberInfoFlag, memberId }) => {
         result = await getMemberInfo(memberId);
       }
       setmemberInfoState((pre) => (memberInfoFlag && result ? result : pre));
+      setOpenFlag(memberInfoFlag);
     };
     asyncFunc();
+
     return () => {};
   }, [memberInfoFlag]);
 
   return (
-    <div className={memberInfoFlag ? "memberInformation" : "none"}>
+    <div className={openFlag ? "memberInformation" : "none"}>
       <div className="close" onClick={onClickCloseMemberInformation}>
         <CloseOutlinedIcon />
       </div>
@@ -75,7 +78,12 @@ const MemberInformation = ({ memberInfoFlag, setMemberInfoFlag, memberId }) => {
   );
 };
 
-const VistorRight = ({ isPublisher, isReviewer }) => {
+const VistorRight = ({
+  isPublisher,
+  isReviewer,
+  onClickChangeMemberStatus,
+  EnumMemberStatus,
+}) => {
   return (
     <div className="memberRight">
       <div className={"memberTable"}>
@@ -91,7 +99,14 @@ const VistorRight = ({ isPublisher, isReviewer }) => {
           </div>
         </div>
         <div className="missionBtn">
-          <button>我要發文</button>
+          {/* <button>我要發文</button> */}
+          <button
+            onClick={() =>
+              onClickChangeMemberStatus(EnumMemberStatus.publisher)
+            }
+          >
+            我要發文
+          </button>
         </div>
         {!isReviewer ? <ApplyReviewerDialog /> : null}
         {!isPublisher ? <ApplyPublisherDialog /> : null}
@@ -106,7 +121,12 @@ const VistorRight = ({ isPublisher, isReviewer }) => {
   );
 };
 
-const ReviewerRight = ({ isPublisher }) => {
+const ReviewerRight = ({
+  isPublisher,
+  isReviewer,
+  onClickChangeMemberStatus,
+  EnumMemberStatus,
+}) => {
   return (
     <div className="memberRight">
       <div className={"memberTable"}>
@@ -124,8 +144,25 @@ const ReviewerRight = ({ isPublisher }) => {
         <div className={"adviseMission"}>
           <p>審核任務</p>
           <MissionContent />
-          <div className={"missionBtn"}>
-            <button>我要審核去</button>
+          <div className="missionBtn">
+            <button
+              onClick={() =>
+                onClickChangeMemberStatus(EnumMemberStatus.reviewer)
+              }
+            >
+              我要審查
+            </button>
+          </div>
+          <div className="missionBtn">
+            {isReviewer ? (
+              <button
+                onClick={() =>
+                  onClickChangeMemberStatus(EnumMemberStatus.reviewer)
+                }
+              >
+                我要審查文章
+              </button>
+            ) : null}
           </div>
         </div>
         {isPublisher == false ? (
@@ -135,7 +172,7 @@ const ReviewerRight = ({ isPublisher }) => {
                 onClickChangeMemberStatus(EnumMemberStatus.publisher)
               }
             >
-              發文者
+              我要發文
             </button>
           </div>
         ) : null}
@@ -151,7 +188,6 @@ const ReviewerRight = ({ isPublisher }) => {
 };
 
 const AuthorRight = () => {
-  console.log("AuthorRight");
   return (
     <div className="memberRight">
       <div className={"memberTable"}>

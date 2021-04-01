@@ -60,6 +60,7 @@ body::-webkit-scrollbar {
   --black-alpha-50: rgb(0, 0, 0, 0.5);
   --black-alpha-60: rgb(0, 0, 0, 0.6);
   --black-alpha-80: rgb(0, 0, 0, 0.8);
+  --white: #fff;
   --deep-blue: #1467b3;
   --navy-blue: #2b94f5;
   --sky-blue: #389fff;
@@ -93,4 +94,10 @@ body::-webkit-scrollbar {
 ::-ms-input-placeholder {
   /* Microsoft Edge */
   color: var(--black);
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    padding: 0 !important;
+  }
 }

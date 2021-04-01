@@ -4,29 +4,27 @@ import "../../public/css/RankingItem.css";
 import inspector from "../../public/images/inspector.jpg";
 import { MemberInformation } from "../Member/MemberCard";
 
-import Copper10 from '../../public/images/medals/copper30.png'
+import Copper10 from "../../public/images/medals/copper30.png";
 
 const RankingItem = ({
-  memberFlag,
-  setMemberFlag,
-  id,
+  selectedRankingItem,
+  setSelectedRankingItem,
+
   memberName,
   exp,
   rank,
+  memberId,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     setIsOpen((pre) => {
-      if (id != memberFlag.id) return false;
+      if (memberId != selectedRankingItem.memberId) return false;
       return pre;
     });
-  }, [memberFlag]);
+  }, [selectedRankingItem]);
   const onClickSetRankingFlag = () => {
-    setMemberFlag((pre) => {
-      const data = { flag: !pre.flag, id };
-      setIsOpen(data.flag);
-      return data;
-    });
+    setIsOpen((pre) => !pre);
+    setSelectedRankingItem((pre) => ({ ...pre, memberId }));
   };
   return (
     <div className="rankingItem">
@@ -44,7 +42,7 @@ const RankingItem = ({
         </div>
       </a>
       <div className={isOpen ? "rankingItemMemberInformation" : "none"}>
-        <MemberInformation setMemberFlag={setMemberFlag} />
+        <MemberInformation memberId={memberId} memberInfoFlag={isOpen} />
       </div>
     </div>
   );

@@ -70,3 +70,16 @@ export const getMemberInfo = async (getMemberId) => {
 
   return null;
 };
+export const getTopMember = async () => {
+  try {
+    const { memberId, token } = localStorage.getAllData();
+    const result = await sendRequest.getRequest("/topMembers", {});
+    if (result && result.status == 200) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("getTopMember error:", error);
+  }
+
+  return null;
+};
