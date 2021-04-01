@@ -475,7 +475,7 @@
   display: block;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 810px) {
   .card {
     margin-right: 0;
     margin-left: 0;

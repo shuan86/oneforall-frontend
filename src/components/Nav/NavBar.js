@@ -10,6 +10,7 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
+import MenuIcon from '@material-ui/icons/Menu';
 
 import {
   initialMember,
@@ -24,7 +25,12 @@ import { ILocalStorage } from "../../interfaces/IMember";
 const NavBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [offsetWid, setOffsetWid] = useState(0);
+  const [phoneNavFlag, setPhoneNavFlag] = useState(false);
+  
+  // var offsetWid = document.documentElement.clientWidth; //視窗寬度
   const onChangeRouter = (router) => {
+    setPhoneNavFlag(false);
     history.push(router);
   };
   useEffect(() => {
@@ -60,7 +66,13 @@ const NavBar = () => {
     dispatch(updateLoginStatusData);
     dispatch(memberData);
     dispatch(memberStatusData);
-  }, []);
+    setOffsetWid(document.documentElement.clientWidth)
+    window.addEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)});//註冊偵測寬度改變
+    console.log(offsetWid);
+    return(
+      window.removeEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)})//移除偵測寬度改變
+    )
+  }, [offsetWid]);
 
   const loginStatus = useSelector((s) => s.loginStatus);
   const account = useSelector((s) => s.member.account);
@@ -79,10 +91,13 @@ const NavBar = () => {
   };
 
   const onClickMemberListFlag = () => { 
-    var offsetWid = document.documentElement.clientWidth;
-    if(offsetWid < 800) return
+    if(offsetWid < 810) return
     dispatch(setMemberListFlag());
   };
+
+  const onClickPhoneNavFlag = () => {
+    setPhoneNavFlag(!phoneNavFlag)
+  }
   const onClickPixelGamePage = () => {
     history.push("/pixelGame");
   };
@@ -99,9 +114,10 @@ const NavBar = () => {
               onClick={() => onChangeRouter("/")}
             />
           </div>
-          <div className="hambergurButton"></div>
-          <div className="responsiveNav">
-            <div className="closeNavButton" onClick={()=>console.log('click')}><CloseOutlinedIcon fontSize='large'/></div>
+          <div className={offsetWid < 810 ? "hambergurButton" : "none"} onClick={onClickPhoneNavFlag}><MenuIcon /></div>
+          {/* <div className={phoneNavFlag ? "responsiveNav" : "none"}> */}
+          <div className={offsetWid < 810 && !phoneNavFlag? "none" : "responsiveNav"}>
+            <div className="closeNavButton" onClick={onClickPhoneNavFlag}><CloseOutlinedIcon fontSize='large'/></div>
             <div className="linkList">
               <div>新聞</div>
               <div>討論</div>
@@ -161,7 +177,7 @@ const NavBar = () => {
                   <ExitToAppIcon fontSize="small" />
                   <div className="memberListItemTitle">登出</div>
                 </div>
-                <div className="fakeDiv" onClick={onClickMemberListFlag}></div>
+                <div className={offsetWid < 810 ? "none" : "fakeDiv"} onClick={onClickMemberListFlag}></div>
               </div>
               <div
                 className={`${

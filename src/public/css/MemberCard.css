@@ -343,3 +343,13 @@
     background-color: var(--gray);
     border-radius: 5px;
 }
+
+@media screen and (max-width: 810px) {
+    .memberContainer {
+        flex-direction: column;
+    }
+
+    .infoContent>p {
+        font-size: 14px;
+    }
+}

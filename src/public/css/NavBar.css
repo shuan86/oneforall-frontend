@@ -32,6 +32,7 @@
     font-size: 18px;
     margin-left: 30px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .linkList div:not(:first-child) {
@@ -159,7 +160,7 @@
     line-height: 40px;
 }
 
-.navUserInfo:hover .navUserInfoID {
+/* .navUserInfo:hover .navUserInfoID {
     background-color: var(--light-gray);
     border-radius: 5px;
 }
@@ -167,7 +168,7 @@
 .navUserInfo:active .navUserInfoID {
     background-color: var(--gray);
     border-radius: 5px;
-}
+} */
 
 .navUserInfoPhoto {
     width: 40px;
@@ -241,12 +242,13 @@
 }
 
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 810px) {
     .responsiveNav {
         position: absolute;
         background-color: #fff;
         top: 0px;
         left: 0;
+        padding: 10px 0;
         z-index: 1500;
         width: 100vw;
         flex-direction: column-reverse;
@@ -255,11 +257,11 @@
 
     .navContent {
         justify-content: space-between;
-        padding: 5px 0;
+        padding: 5px;
     }
 
     .navFeature {
-        flex-direction: column-reverse;
+        flex-direction: column;
         width: 100%;
     }
 
@@ -269,6 +271,31 @@
         align-items: center;
         padding-left: 15px;
         box-sizing: border-box;
+        display: none;
+    }
+
+    .signupButton,
+    .signinButton {
+        font-size: 18px;
+        width: 100%;
+        text-align: start;
+        padding-left: 15px;
+        height: 60px;
+        margin-left: 0;
+        color: var(--black);
+        background-color: var(--white);
+        transition: none;
+        border-radius: 5px;
+        border: 0;
+    }
+
+    .signinButton {
+        color: var(--deep-blue);
+    }
+
+    .signupButton:hover,
+    .signinButton:hover {
+        background-color: var(--light-gray);
     }
 
     .rankingTable {
@@ -282,6 +309,7 @@
     .navUserInfoID {
         font-size: 1.25rem;
         padding: 0;
+        margin-left: 0;
     }
 
     .searchBarContainer {
@@ -295,7 +323,7 @@
     }
 
     .searchBar {
-        width: 100%;
+        width: 80%;
         border-radius: 5px;
     }
 
@@ -314,16 +342,29 @@
     }
 
     .hambergurButton {
-        width: 50px;
-        height: 50px;
-        background-color: green;
+        width: 30px;
+        height: 30px;
+        padding: 10px;
+        /* background-color: green; */
+    }
+
+    .hambergurButton svg {
+        width: 100%;
+        height: 100%;
+        color: var(--navy-blue);
+    }
+
+    .hambergurButton:active svg {
+        background-color: var(--light-gray);
+        border-radius: 5px;
+        transform: scale(.9, .9);
     }
 
     .closeNavButton {
         display: inline-block;
         position: absolute;
         right: 16px;
-        top: 16px;
+        top: 25px;
         z-index: 10;
         border-radius: 5px;
     }
@@ -331,6 +372,7 @@
     .closeNavButton:active svg {
         background-color: var(--light-gray);
         border-radius: 5px;
+        transform: scale(.8, .8);
     }
 
     .memberList {
@@ -344,6 +386,12 @@
 
     .navFeature .phoneDisplay {
         display: block !important;
+    }
+
+    .memberListItem {
+        padding: 17.5px 0;
+        padding-left: 15px;
+        align-items: center;
     }
 
     .memberListItemTitle {
