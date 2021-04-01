@@ -13,6 +13,7 @@
   padding: 15px;
   padding-bottom: 10px;
   box-shadow: var(--black-alpha-05) 0 0 7px 5px;
+  box-sizing: border-box;
 }
 
 .colorCountDown .circle-picker {

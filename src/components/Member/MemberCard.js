@@ -105,7 +105,7 @@ const VistorRight = ({
               onClickChangeMemberStatus(EnumMemberStatus.publisher)
             }
           >
-            我要發文
+            我要發文討論
           </button>
         </div>
         {!isReviewer ? <ApplyReviewerDialog /> : null}
@@ -197,7 +197,7 @@ const AuthorRight = () => {
           <p>128</p>
         </div>
         <div className={"missionBtn"}>
-          <button>我要上傳文章</button>
+          <button>我要發表新聞</button>
         </div>
       </div>
       <div className={"memberInform"}>
