@@ -258,6 +258,8 @@ const NewsCardComment = ({
   articleId,
   isReviewedCard,
   likeAmount,
+  reportedAgreeAmount,
+  reportedDisagreeAmount,
   commentAmount,
   isMemberLike,
   selectArticleId,
@@ -266,6 +268,9 @@ const NewsCardComment = ({
   const isNotFirstRun = useFirstUpdate();
   const [likeState, setLikeState] = useState(false);
   const [likeAmountState, setLikeAmountState] = useState(0);
+  const [reportedAgreeAmountState, setReportedAgreeAmount] = useState(0);
+  const [reportedDisagreeAmountState, setReportedDisagreeAmount] = useState(0);
+
   const [commentAmountState, setCommentAmountState] = useState(0);
   const [openCommentFlag, setOpenCommentFlag] = useState(false);
   const [inputCommentState, setInputCommentState] = useState("");
@@ -280,6 +285,9 @@ const NewsCardComment = ({
     setCommentAmountState(commentAmount);
     setLikeState(isMemberLike);
     setLikeAmountState(likeAmount);
+    setReportedAgreeAmount(reportedAgreeAmount);
+    setReportedDisagreeAmount(reportedDisagreeAmount);
+    console.log("reportedDisagreeAmount:", reportedDisagreeAmount);
   }, []);
 
   const onClickCommentCollapse = () => {
@@ -393,10 +401,10 @@ const NewsCardComment = ({
           </button>
         </div>
         <div className={isReviewedCard == false ? "none" : "null"}>
-          <button>同意</button>
+          <button>{reportedAgreeAmountState}人同意</button>
         </div>
         <div className={isReviewedCard == false ? "none" : "null"}>
-          <button>反對</button>
+          <button>{reportedDisagreeAmountState}人反對</button>
         </div>
       </div>
       <div className={openCommentFlag ? null : "none"}>
@@ -465,6 +473,8 @@ const NewsCard = React.memo(
       images,
       isMemberReported,
       likeAmount,
+      reportedAgreeAmount,
+      reportedDisagreeAmount,
       commentAmount,
       isMemberLike,
       evidence,
@@ -498,6 +508,8 @@ const NewsCard = React.memo(
         <NewsCardComment
           articleId={articleId}
           likeAmount={likeAmount}
+          reportedAgreeAmount={reportedAgreeAmount}
+          reportedDisagreeAmount={reportedDisagreeAmount}
           commentAmount={commentAmount}
           isMemberLike={isMemberLike}
           selectArticleId={selectArticleId}
