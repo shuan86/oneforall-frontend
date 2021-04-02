@@ -13,6 +13,7 @@ import {
   paidArticleDeposit,
   checkContractIsOpen,
 } from "../../modules/smartcontract";
+import { useHistory } from "react-router-dom";
 
 const PublisherPage = () => {
   const [titleState, setTitleState] = useState("");
@@ -22,37 +23,18 @@ const PublisherPage = () => {
   const [depositState, setDepositState] = useState(0);
 
   const [tagsState, setTags] = useState([]);
+  const [imageUrlState, setImageUrlState] = useState("");
+
   const [imageState, setImageState] = useState("");
   const [imageBlob, setImageBlob] = useState("");
 
   let imgArrayBuffter;
   const tagsNameArray = Object.keys(ArticleTagKind);
-
+  const history = useHistory();
   useEffect(() => {
     return () => {};
   }, []);
-  // const base64ToArrayBuffer = (dataURI) => {
-  //   var BASE64_MARKER = ";base64,";
-  //   var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-  //   var base64 = dataURI.substring(base64Index);
-  //   var raw = window.atob(base64);
-  //   var rawLength = raw.length;
-  //   var array = new Uint8Array(new ArrayBuffer(rawLength));
 
-  //   for (let i = 0; i < rawLength; i++) {
-  //     array[i] = raw.charCodeAt(i);
-  //   }
-  //   return array;
-  // };
-  // function base64ToArrayBuffer(base64) {
-  //   var binary_string = window.atob(base64);
-  //   var len = binary_string.length;
-  //   var bytes = new Uint8Array(len);
-  //   for (var i = 0; i < len; i++) {
-  //     bytes[i] = binary_string.charCodeAt(i);
-  //   }
-  //   return bytes.buffer;
-  // }
   const onClickPostNews = async (e) => {
     e.preventDefault();
     const time = "";
@@ -65,11 +47,13 @@ const PublisherPage = () => {
       time,
       deposit,
       imageBlob,
+      imageUrlState,
       tagsState
     );
     if (data.articleId && checkContractIsOpen()) {
-      paidArticleDeposit(data.articleId);
+      await paidArticleDeposit(data.articleId);
     }
+    // history.push('/Index')
   };
   return (
     <div className="container">
@@ -151,11 +135,25 @@ const PublisherPage = () => {
             輸入欄位中的預設文字內容
           </textarea>
         </div>
+        <div className="formInput">
+          <label htmlFor="">圖片網址</label>
+          <input
+            type="text"
+            name="title"
+            value={imageUrlState}
+            onChange={(event) => {
+              const value = event.target.value;
+              setImageUrlState(value);
+            }}
+          />
+        </div>
+
         <label htmlFor="file" className="formInput formInputUploadPhoto">
           <BackupRoundedIcon size="small" />
           <label htmlFor="file" className="uploadPhoto">
             上傳照片
           </label>
+
           <input
             id="file"
             type="file"
@@ -188,6 +186,8 @@ const PublisherPage = () => {
           />
         </label>
         {imageState.length > 0 ? <img src={`${imageState}`} /> : null}
+        {imageUrlState.length > 10 ? <img src={`${imageUrlState}`} /> : null}
+
         <div className="formTotal">
           <div className="currencyTotal">
             <span>發文押金 共</span>

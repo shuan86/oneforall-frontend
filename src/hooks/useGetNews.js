@@ -31,6 +31,7 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleType) => {
             memberReportedArray,
             articleAmount,
           } = result;
+          console.log("result123:", result);
           tmpArticleDataAmount = articleAmount;
           tmpArticleDatas = articleArray.map((item, index) => ({
             ...item,
@@ -56,8 +57,6 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleType) => {
             reportedDisagreeVoteArray,
             articleAmount,
           } = result;
-          console.log("result123:", result);
-          console.log("result decisionReasonArray:", decisionReasonArray[0]);
 
           tmpArticleDataAmount = articleAmount;
           tmpArticleDatas = articleArray.map((item, index) => ({

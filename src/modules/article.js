@@ -251,6 +251,7 @@ export const postNews = async (
   time,
   deposit,
   imgArray,
+  imgUrl,
   tagArray
 ) => {
   try {
@@ -265,6 +266,7 @@ export const postNews = async (
       content,
       time,
       deposit,
+      imgUrl,
       tagArray,
     };
     console.log("postNews:", data);

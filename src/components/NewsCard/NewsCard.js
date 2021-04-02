@@ -108,6 +108,7 @@ const NewsCardContent = ({
   time,
   tags,
   images,
+  imagesUrl,
   isMemberReported,
   onClickReportBtn,
   reportedtAccount,
@@ -117,6 +118,7 @@ const NewsCardContent = ({
 }) => {
   const [tagsData, setTagsData] = useState([]);
   const [imageState, setImageState] = useState("");
+  const [imageUrtlState, setImageUrlState] = useState("");
   const [reportState, setReportState] = useState(false);
   const [memberInfoFlag, setMemberInfoFlag] = useState(false);
   const [readMoreFlag, setReadMoreFlag] = useState(false);
@@ -128,15 +130,20 @@ const NewsCardContent = ({
   useEffect(() => {
     let imageData;
     let base64String = "";
-    if (images && images.length > 0) {
-      imageData = images[0];
+    if (imagesUrl && imagesUrl.length > 0) {
+      setImageUrlState(imagesUrl[0]);
+    } else {
+      if (images && images.length > 0) {
+        imageData = images[0];
+      }
+      if (imageData) {
+        const arrayBuffer = Uint8Array.from(imageData.data).buffer;
+        base64String =
+          "data:image/png;base64," +
+          btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
+      }
     }
-    if (imageData) {
-      const arrayBuffer = Uint8Array.from(imageData.data).buffer;
-      base64String =
-        "data:image/png;base64," +
-        btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
-    }
+
     setImageState(base64String);
     setTagsData(tags);
     return () => {}; //
@@ -196,42 +203,44 @@ const NewsCardContent = ({
           </div>
         ) : null}
         <div className="articleContent">
-        <p
-          style={{ whiteSpace: "pre-wrap"}}
-        >
-          {content.length > shortMaxStrLength
-            ? content.substring(0, shortMaxStrLength)
-            : content}
-        </p>
-        <p
-          style={{
-            display:
-              needReadMoreFlag && readMoreFlag == false ? "inline" : "none",
-          }}
-        >
-          ...
-        </p>
-        <p
-          style={{
-            display: needReadMoreFlag && readMoreFlag ? "inline" : "none",
-          }}
-        >
-          {content.length > shortMaxStrLength
-            ? content.substring(shortMaxStrLength, content.length - 1)
-            : content}
-        </p>
-        {/* <a href="https://i.imgur.com/Nnhbuhh.png">https://i.imgur.com/Nnhbuhh.png</a> */}
-        {/* <img src="https://i.imgur.com/Nnhbuhh.png" alt=""/> */}
-        <button
-          style={{
-            display: needReadMoreFlag && readMoreFlag == false ? "" : "none",
-          }}
-          onClick={onClickReadMore}
-        >
-          繼續閱讀
-        </button>
+          <p style={{ whiteSpace: "pre-wrap" }}>
+            {content.length > shortMaxStrLength
+              ? content.substring(0, shortMaxStrLength)
+              : content}
+          </p>
+          <p
+            style={{
+              display:
+                needReadMoreFlag && readMoreFlag == false ? "inline" : "none",
+            }}
+          >
+            ...
+          </p>
+          <p
+            style={{
+              display: needReadMoreFlag && readMoreFlag ? "inline" : "none",
+            }}
+          >
+            {content.length > shortMaxStrLength
+              ? content.substring(shortMaxStrLength, content.length - 1)
+              : content}
+          </p>
+          {/* <a href="https://i.imgur.com/Nnhbuhh.png">https://i.imgur.com/Nnhbuhh.png</a> */}
+          {/* <img src="https://i.imgur.com/Nnhbuhh.png" alt=""/> */}
+          <button
+            style={{
+              display: needReadMoreFlag && readMoreFlag == false ? "" : "none",
+            }}
+            onClick={onClickReadMore}
+          >
+            繼續閱讀
+          </button>
         </div>
-        <img src={imageState.length > 0 ? imageState : ""} alt="" />
+        <img src={imageUrtlState ? imageUrtlState : ""} alt="" />
+        <img
+          src={!imagesUrl && imageState.length > 0 ? imageState : ""}
+          alt=""
+        />
         <div
           className="report"
           style={{
@@ -522,6 +531,7 @@ const NewsCard = React.memo(
       time,
       tags,
       images,
+      imagesUrl,
       isMemberReported,
       likeAmount,
       reportedAgreeAmount,
@@ -550,6 +560,7 @@ const NewsCard = React.memo(
           time={time}
           tags={tags}
           images={images}
+          imagesUrl={imagesUrl}
           isMemberReported={isMemberReported}
           onClickReportBtn={onClickReportBtn}
           isReviewedCard={false}
