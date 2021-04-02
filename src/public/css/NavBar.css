@@ -196,7 +196,7 @@
 }
 
 .fakeDiv {
-    position: absolute;
+    position: fixed;
     top: -60px;
     left: -78vw;
     width: 100vw;

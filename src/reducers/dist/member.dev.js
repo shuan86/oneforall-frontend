@@ -56,7 +56,7 @@ var loginStatus = function loginStatus() {
 exports.loginStatus = loginStatus;
 var initialMemberStatus = {
   isVistor: false,
-  isrReviewer: false,
+  isReviewer: false,
   isPublisher: false
 };
 exports.initialMemberStatus = initialMemberStatus;

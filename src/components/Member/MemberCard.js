@@ -102,7 +102,7 @@ const VistorRight = ({
           {/* <button>我要發文</button> */}
           <button
             onClick={() =>
-              onClickChangeMemberStatus(EnumMemberStatus.publisher)
+              {console.log('發文');}
             }
           >
             我要發文討論
@@ -165,17 +165,17 @@ const ReviewerRight = ({
             ) : null}
           </div>
         </div>
-        {isPublisher == false ? (
+        {/* {isPublisher == false ? (
           <div className="missionBtn">
             <button
               onClick={() =>
                 onClickChangeMemberStatus(EnumMemberStatus.publisher)
               }
             >
-              我要發文
+              我要發文討論
             </button>
           </div>
-        ) : null}
+        ) : null} */}
       </div>
       <div className={"memberInform"}>
         <p>通知</p>
@@ -187,7 +187,7 @@ const ReviewerRight = ({
   );
 };
 
-const AuthorRight = () => {
+const AuthorRight = ({onClickChangeMemberStatus,EnumMemberStatus}) => {
   return (
     <div className="memberRight">
       <div className={"memberTable"}>
@@ -196,7 +196,7 @@ const AuthorRight = () => {
           <p>已提交新聞數</p>
           <p>128</p>
         </div>
-        <div className={"missionBtn"}>
+        <div className={"missionBtn"} onClick={()=>onClickChangeMemberStatus(EnumMemberStatus.publisher)}>
           <button>我要發表新聞</button>
         </div>
       </div>

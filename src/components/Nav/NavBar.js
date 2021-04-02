@@ -61,8 +61,9 @@ const NavBar = () => {
       //   Boolean(isReviewer),
       //   Boolean(isPublisher)
       // );
-      memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);
     }
+      memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);
+     console.log('memberStatusData:',memberStatusData);
     dispatch(updateLoginStatusData);
     dispatch(memberData);
     dispatch(memberStatusData);
