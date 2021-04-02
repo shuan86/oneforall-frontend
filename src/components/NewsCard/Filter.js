@@ -16,7 +16,7 @@ const Filter = ({ setSelectedArticleType }) => {
       setBgColor(["", "var(--navy-blue)", ""]);
       setFtColor(["", "var(--white)", ""]);
     } else {
-      setSelectedArticleType(ArticleStatus.verifiedFail);
+      setSelectedArticleType(ArticleStatus.verified);
       setBgColor(["", "", "var(--navy-blue)"]);
       setFtColor(["", "", "var(--white)"]);
     }
@@ -46,7 +46,7 @@ const Filter = ({ setSelectedArticleType }) => {
         </a>
         <a
           href="#"
-          onClick={() => onClickFilter(ArticleStatus.verifiedFail)}
+          onClick={() => onClickFilter(ArticleStatus.verified)}
           style={{
             backgroundColor: bgColor[2],
             color: ftColor[2],

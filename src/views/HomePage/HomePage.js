@@ -25,9 +25,9 @@ const HomePage = () => {
         />
       )}
 
-      {selectedArticleType == ArticleStatus.verifiedFail && (
+      {selectedArticleType == ArticleStatus.verified && (
         <ArticleList
-          articleType={ArticleStatus.verifiedFail}
+          articleType={ArticleStatus.verified}
           selectedArticleType={selectedArticleType}
         />
       )}

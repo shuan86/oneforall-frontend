@@ -52,6 +52,8 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleType) => {
             reviewResultArray,
             memberLikeArticleStatusArray,
             hasReportedArray,
+            reportedAgreeVoteArray,
+            reportedDisagreeVoteArray,
             articleAmount,
           } = result;
           console.log("result123:", result);
@@ -67,9 +69,11 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleType) => {
             isMemberReported: hasReportedArray[index],
             decisionReason: decisionReasonArray[index],
             reviewResult: reviewResultArray[index],
+            reportedAgreeVote: reportedAgreeVoteArray[index],
+            reportedDisagreeVote: reportedDisagreeVoteArray[index],
           }));
           console.log("getUnderReviewedNews:", result);
-        } else if (articleType == ArticleStatus.verifiedFail) {
+        } else if (articleType == ArticleStatus.verified) {
           result = await getReviewedNews(
             pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
             pageNumber * eveyRequestDataAmount

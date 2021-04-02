@@ -264,13 +264,18 @@ const NewsCardComment = ({
   isMemberLike,
   selectArticleId,
   setSelectArticleId,
+  reportedAgreeVote,
+  reportedDisagreeVote,
 }) => {
   const isNotFirstRun = useFirstUpdate();
   const [likeState, setLikeState] = useState(false);
   const [likeAmountState, setLikeAmountState] = useState(0);
+  const [reportedAgreeVoteState, setReportedAgreeVoteState] = useState(false);
+  const [reportedDisagreeVoteState, setReportedDisagreeVoteState] = useState(
+    false
+  );
   const [reportedAgreeAmountState, setReportedAgreeAmount] = useState(0);
   const [reportedDisagreeAmountState, setReportedDisagreeAmount] = useState(0);
-
   const [commentAmountState, setCommentAmountState] = useState(0);
   const [openCommentFlag, setOpenCommentFlag] = useState(false);
   const [inputCommentState, setInputCommentState] = useState("");
@@ -285,6 +290,8 @@ const NewsCardComment = ({
     setCommentAmountState(commentAmount);
     setLikeState(isMemberLike);
     setLikeAmountState(likeAmount);
+    setReportedAgreeVoteState(reportedAgreeVote);
+    setReportedDisagreeVoteState(reportedDisagreeVote);
     setReportedAgreeAmount(reportedAgreeAmount);
     setReportedDisagreeAmount(reportedDisagreeAmount);
     console.log("reportedDisagreeAmount:", reportedDisagreeAmount);
@@ -367,6 +374,36 @@ const NewsCardComment = ({
     );
     setLikeState((pre) => (isNotFirstRun && amount != null ? likeStatus : pre));
   };
+  const onClickAgreeVote = async (isAgree) => {
+    let result;
+
+    if (isAgree) {
+      if (!reportedAgreeVoteState) {
+        result = await article.createReportedVote(articleId, isAgree);
+      } else {
+        result = await article.deleteReportedVote(articleId, isAgree);
+      }
+    } else {
+      if (!reportedDisagreeVoteState) {
+        result = await article.createReportedVote(articleId, isAgree);
+      } else {
+        result = await article.deleteReportedVote(articleId, isAgree);
+      }
+    }
+    const {
+      reportedAgreeAmount,
+      reportedDisagreeAmount,
+      isSucessfulRemoveVote,
+    } = result;
+    console.log("result:", result);
+    setReportedAgreeAmount((pre) => (result ? reportedAgreeAmount : pre));
+    setReportedDisagreeAmount((pre) => (result ? reportedDisagreeAmount : pre));
+    setReportedAgreeVoteState((pre) => (result && isAgree ? !pre : false));
+    setReportedDisagreeVoteState((pre) =>
+      result && isAgree == false ? !pre : false
+    );
+  };
+
   const onInputCommentChange = (e) => {
     const value = e.target.value;
     setInputCommentState(value);
@@ -401,10 +438,24 @@ const NewsCardComment = ({
           </button>
         </div>
         <div className={isReviewedCard == false ? "none" : "null"}>
-          <button>{reportedAgreeAmountState}人同意</button>
+          <button
+            style={{ backgroundColor: reportedAgreeVoteState ? "blue" : "" }}
+            onClick={() => {
+              onClickAgreeVote(true);
+            }}
+          >
+            {reportedAgreeAmountState}人同意
+          </button>
         </div>
         <div className={isReviewedCard == false ? "none" : "null"}>
-          <button>{reportedDisagreeAmountState}人反對</button>
+          <button
+            style={{ backgroundColor: reportedDisagreeVoteState ? "blue" : "" }}
+            onClick={() => {
+              onClickAgreeVote(false);
+            }}
+          >
+            {reportedDisagreeAmountState}人反對
+          </button>
         </div>
       </div>
       <div className={openCommentFlag ? null : "none"}>
@@ -481,6 +532,8 @@ const NewsCard = React.memo(
       reportedtAccount,
       decisionReason,
       reviewResult,
+      reportedAgreeVote,
+      reportedDisagreeVote,
     } = articleData;
 
     return (
@@ -514,6 +567,8 @@ const NewsCard = React.memo(
           isMemberLike={isMemberLike}
           selectArticleId={selectArticleId}
           setSelectArticleId={setSelectArticleId}
+          reportedAgreeVote={reportedAgreeVote}
+          reportedDisagreeVote={reportedDisagreeVote}
           isReviewedCard={
             articleType == ArticleStatus.underReview ? true : false
           }
