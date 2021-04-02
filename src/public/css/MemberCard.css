@@ -3,8 +3,7 @@
 .memberContainer {
     display: flex;
     justify-content: space-between;
-    margin: 0 auto;
-    margin-top: 30px;
+    margin: 30px auto;
     max-width: 880px;
 }
 
@@ -44,6 +43,7 @@
     box-shadow: var(--black-alpha-05) 0 0 7px 5px;
     flex: 1;
     margin-right: 20px;
+    box-sizing: border-box;
 }
 
 .personalPhoto {
@@ -76,6 +76,7 @@
     padding-top: 5px;
     padding-bottom: 15px;
     border-bottom: solid 1px var(--gray-border);
+    word-wrap: break-word;
 }
 
 .infoContent>p:nth-child(odd) {
@@ -377,5 +378,9 @@
 
     .infoContent>p {
         font-size: 14px;
+    }
+
+    .memberRight {
+        margin-top: 20px;
     }
 }

@@ -2,7 +2,9 @@
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px;
     background-color: #fff;
-    position: relative;
+    position: fixed;
+    z-index: 1600;
+    transition: top 0.3s;
 }
 
 .navContent {
@@ -16,6 +18,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: right 1s;
 }
 
 .linkList {
@@ -243,21 +246,25 @@
 
 
 @media screen and (max-width: 810px) {
-    .responsiveNav {
-        position: absolute;
-        background-color: #fff;
-        top: 0px;
-        left: 0;
-        padding: 10px 0;
-        z-index: 1500;
-        width: 100vw;
-        flex-direction: column-reverse;
-        box-shadow: rgb(0 0 0 / 5%) 0 0 7px 5px;
-    }
-
     .navContent {
         justify-content: space-between;
         padding: 5px;
+        position: relative;
+    }
+
+    .responsiveNav {
+        position: fixed;
+        background-color: #fff;
+        top: 0px;
+        right: 0;
+        padding: 10px 0;
+        z-index: 1500;
+        width: 70vw;
+        height: 100vh;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+        box-shadow: rgb(0 0 0 / 5%) 0 0 7px 5px;
+        box-sizing: border-box;
     }
 
     .navFeature {
@@ -323,7 +330,7 @@
     }
 
     .searchBar {
-        width: 80%;
+        width: 100%;
         border-radius: 5px;
     }
 
@@ -361,17 +368,27 @@
     }
 
     .closeNavButton {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: var(--black-alpha-80);
+        transition: opacity 1s;
+    }
+
+    .closeNavButton svg {
         display: inline-block;
         position: absolute;
-        right: 16px;
+        left: 16px;
         top: 25px;
-        z-index: 10;
         border-radius: 5px;
+        z-index: 10;
+        color: var(--white);
     }
 
     .closeNavButton:active svg {
-        background-color: var(--light-gray);
-        border-radius: 5px;
         transform: scale(.8, .8);
     }
 
