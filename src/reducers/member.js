@@ -30,7 +30,7 @@ export const loginStatus = (state = initalLoginData, action) => {
 };
 export const initialMemberStatus = {
   isVistor: false,
-  isrReviewer: false,
+  isReviewer: false,
   isPublisher: false,
 };
 export const memberStatus = (state = initialMemberStatus, action) => {

@@ -6,6 +6,7 @@ import {
   ReviewerRight,
   AuthorRight,
 } from "../../components/Member/MemberCard";
+import Filter from "../../components/Member/MemberFilter"
 import { EnumMemberStatus } from "../../interfaces/IMember";
 import { useHistory } from "react-router-dom";
 
@@ -13,11 +14,16 @@ const MemberPage = () => {
   const history = useHistory();
   const [memberStatus, setMemberStatus] = useState(EnumMemberStatus.vistor);
 
+  const isVistor = useSelector((state) => state.memberStatus.isVistor);
   const isReviewer = useSelector((state) => state.memberStatus.isReviewer);
   const isPublisher = useSelector((state) => state.memberStatus.isPublisher);
-  const isVistor = useSelector((state) => state.memberStatus.isVistor);
   // const [isReviewer, setIsReviewer] = useState(useSelector((state) => state.memberStatus.isReviewer))
   // const [isPublisher, setIsPublisher] = useState(useSelector((state) => state.memberStatus.isPublisher))
+  // const [filter, setFliter] = useState({vistor:true,publisher:false,reviewer:false})
+  const [memberFilter, setMemberFliter] = useState([true,false,false])
+  console.log(memberFilter);
+
+  
 
   useEffect(() => {
     return () => {};
@@ -39,6 +45,7 @@ const MemberPage = () => {
 
   return (
     <div className="container">
+      <Filter setMemberFliter={setMemberFliter} />
       {/* {isReviewer ? (
         <button
           onClick={() => onClickChangeMemberStatus(EnumMemberStatus.reviewer)}
@@ -73,19 +80,19 @@ const MemberPage = () => {
         {memberStatus == EnumMemberStatus.publisher ? (
           <AuthorRight isPublisher={isPublisher} />
         ) : null} */}
-        {isVistor && !isReviewer && !isPublisher ?  <VistorRight 
+        {memberFilter[0] ?  <VistorRight 
             isReviewer={isReviewer}
             isPublisher={isPublisher}
             onClickChangeMemberStatus={onClickChangeMemberStatus}
             EnumMemberStatus={EnumMemberStatus}
         />:null }
-        {isVistor && isReviewer && !isPublisher ?  <ReviewerRight 
+        {memberFilter[1] ?  <ReviewerRight 
             isPublisher={isPublisher} 
             onClickChangeMemberStatus={onClickChangeMemberStatus}
             EnumMemberStatus={EnumMemberStatus}
         />:null }
-        {isVistor && !isReviewer && isPublisher ? 
-        <AuthorRight isPublisher={isPublisher} /> 
+        {memberFilter[2] ? 
+        <AuthorRight isPublisher={isPublisher} onClickChangeMemberStatus={onClickChangeMemberStatus} EnumMemberStatus={EnumMemberStatus}/> 
         :null }
         
            

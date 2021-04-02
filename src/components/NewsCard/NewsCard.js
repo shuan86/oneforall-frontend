@@ -195,9 +195,9 @@ const NewsCardContent = ({
             <p> reviewResult :{reviewResult}</p>
           </div>
         ) : null}
-
+        <div className="articleContent">
         <p
-          style={{ whiteSpace: "pre-wrap", display: "inline", padding: "0 0" }}
+          style={{ whiteSpace: "pre-wrap"}}
         >
           {content.length > shortMaxStrLength
             ? content.substring(0, shortMaxStrLength)
@@ -205,7 +205,6 @@ const NewsCardContent = ({
         </p>
         <p
           style={{
-            whiteSpace: "pre-wrap",
             display:
               needReadMoreFlag && readMoreFlag == false ? "inline" : "none",
           }}
@@ -215,14 +214,14 @@ const NewsCardContent = ({
         <p
           style={{
             display: needReadMoreFlag && readMoreFlag ? "inline" : "none",
-            whiteSpace: "pre-wrap",
-            padding: "0 0",
           }}
         >
           {content.length > shortMaxStrLength
             ? content.substring(shortMaxStrLength, content.length - 1)
             : content}
         </p>
+        {/* <a href="https://i.imgur.com/Nnhbuhh.png">https://i.imgur.com/Nnhbuhh.png</a> */}
+        {/* <img src="https://i.imgur.com/Nnhbuhh.png" alt=""/> */}
         <button
           style={{
             display: needReadMoreFlag && readMoreFlag == false ? "" : "none",
@@ -231,6 +230,7 @@ const NewsCardContent = ({
         >
           繼續閱讀
         </button>
+        </div>
         <img src={imageState.length > 0 ? imageState : ""} alt="" />
         <div
           className="report"

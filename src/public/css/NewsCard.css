@@ -43,15 +43,17 @@
 .NewsCard {
   width: 100%;
   padding-top: 15px;
+  margin-right: 50px;
 }
 
 .card {
   display: block;
   position: relative;
-  width: 90%;
+  width: 100%;
   max-width: 1200px;
   border: 1px solid var(--gray-border);
   border-radius: 10px;
+  margin: 0;
   margin: 50px 0;
   margin-bottom: 70px;
   background-color: #fff;
@@ -193,6 +195,14 @@
   background-color: var(--deep-blue);
 }
 
+.article {
+  width: 100%;
+}
+
+.articleContent {
+  padding: 0 15px;
+}
+
 .article h3 {
   font-size: 1.5rem;
   margin-bottom: 20px;
@@ -200,26 +210,39 @@
 }
 
 .article p {
+  display: inline;
   line-height: 2rem;
   font-size: 1rem;
   letter-spacing: 0.02rem;
   margin-bottom: 20px;
-  padding: 0 15px;
+  word-break: break-word;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
+
+/* .article>p:nth-child(2) {
+}
+
+.article>p:nth-child(4) {
+} */
 
 .article img {
   width: 100%;
 }
 
-.article a {
+.article button {
   display: inline-block;
   padding: 15px;
   color: var(--black-alpha-60);
   font-size: 1rem;
   font-weight: 700;
+  border: none;
+  background-color: var(--white);
+  cursor: pointer;
+  word-wrap: break-word;
 }
 
-.article a:hover {
+.article button:hover {
   text-decoration: underline;
 }
 
@@ -476,6 +499,10 @@
 }
 
 @media screen and (max-width: 810px) {
+  .NewsCard {
+    margin-right: 0;
+  }
+
   .card {
     margin-right: 0;
     margin-left: 0;
