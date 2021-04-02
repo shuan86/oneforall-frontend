@@ -26,6 +26,8 @@ const NavBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [offsetWid, setOffsetWid] = useState(0);
+  const [navFlag, setNavFlag] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [phoneNavFlag, setPhoneNavFlag] = useState(false);
   
   // var offsetWid = document.documentElement.clientWidth; //視窗寬度
@@ -69,15 +71,27 @@ const NavBar = () => {
     dispatch(memberStatusData);
     setOffsetWid(document.documentElement.clientWidth)
     window.addEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)});//註冊偵測寬度改變
-    console.log(offsetWid);
     return(
       window.removeEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)})//移除偵測寬度改變
     )
   }, [offsetWid]);
+  useEffect(() => {
+    let f
+    window.addEventListener('scroll',scrollHiddenNav)
+    return () => {
+      window.removeEventListener('scroll',scrollHiddenNav)
+    }
+  }, [window.scrollY]);
 
   const loginStatus = useSelector((s) => s.loginStatus);
   const account = useSelector((s) => s.member.account);
   const memberListFlag = useSelector((s) => s.flag);
+  const scrollHiddenNav = () => {
+    let f
+    window.scrollY > lastScrollY ? f = false : f = true
+    setLastScrollY(window.scrollY)
+    setNavFlag(f);
+  }
   const onClickLogout = async () => {
     let memberData = wontUpdateMember();
     memberData = initialMember();
@@ -103,7 +117,7 @@ const NavBar = () => {
     history.push("/pixelGame");
   };
   return (
-    <div className={"navBar"}>
+    <div className={"navBar"} style={navFlag ? {top:'0px'} : {top:'-65px'}}>
       <div className="container">
         <div className="navContent">
           <div>
@@ -117,8 +131,8 @@ const NavBar = () => {
           </div>
           <div className={offsetWid < 810 ? "hambergurButton" : "none"} onClick={onClickPhoneNavFlag}><MenuIcon /></div>
           {/* <div className={phoneNavFlag ? "responsiveNav" : "none"}> */}
-          <div className={offsetWid < 810 && !phoneNavFlag? "none" : "responsiveNav"}>
-            <div className="closeNavButton" onClick={onClickPhoneNavFlag}><CloseOutlinedIcon fontSize='large'/></div>
+          <div className={"closeNavButton"} style={offsetWid < 810 && phoneNavFlag ? {opacity: 1,visibility:'visible'} : {opacity: 0,visibility:'hidden'}}onClick={onClickPhoneNavFlag}><CloseOutlinedIcon fontSize='large'/></div>
+          <div className={ "responsiveNav"} style={offsetWid < 810 && !phoneNavFlag ? {right:'-800px'} : {right:"0"}}>
             <div className="linkList">
               <div>新聞</div>
               <div>討論</div>
