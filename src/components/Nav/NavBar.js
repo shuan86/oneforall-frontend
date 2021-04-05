@@ -11,7 +11,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import MenuIcon from '@material-ui/icons/Menu';
-
+import { getPrivateMemberInfo } from "../../modules/member";
 import {
   initialMember,
   wontUpdateMember,
@@ -29,13 +29,26 @@ const NavBar = () => {
   const [navFlag, setNavFlag] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [phoneNavFlag, setPhoneNavFlag] = useState(false);
-  
+
   // var offsetWid = document.documentElement.clientWidth; //視窗寬度
   const onChangeRouter = (router) => {
     setPhoneNavFlag(false);
     history.push(router);
   };
   useEffect(() => {
+    const asyncFunc = async () => {
+      const result = await getPrivateMemberInfo()
+      console.log('getPrivateMemberInfo:', result);
+      if (result) {
+
+      }
+      else {
+        console.log('login xxxxxxxxxx:');
+        onChangeRouter('/login')
+      }
+    }
+    asyncFunc();
+
     let memberData = initialMember();
     let updateLoginStatusData = updateLoginStatus(false);
     let memberStatusData = initialMemberStatus();
@@ -49,6 +62,7 @@ const NavBar = () => {
       isReviewer,
       isPublisher,
     } = getLocalStorageData(localStorage);
+
     if (localStorage.getItem(ILocalStorage.getMemberId) != null) {
       memberData = updateMember({
         id,
@@ -64,22 +78,22 @@ const NavBar = () => {
       //   Boolean(isPublisher)
       // );
     }
-      memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);
-     console.log('memberStatusData:',memberStatusData);
+    memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);
+    console.log('memberStatusData:', memberStatusData);
     dispatch(updateLoginStatusData);
     dispatch(memberData);
     dispatch(memberStatusData);
     setOffsetWid(document.documentElement.clientWidth)
-    window.addEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)});//註冊偵測寬度改變
-    return(
-      window.removeEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)})//移除偵測寬度改變
+    window.addEventListener('resize', e => { setOffsetWid(document.documentElement.clientWidth) });//註冊偵測寬度改變
+    return (
+      window.removeEventListener('resize', e => { setOffsetWid(document.documentElement.clientWidth) })//移除偵測寬度改變
     )
   }, [offsetWid]);
   useEffect(() => {
     let f
-    window.addEventListener('scroll',scrollHiddenNav)
+    window.addEventListener('scroll', scrollHiddenNav)
     return () => {
-      window.removeEventListener('scroll',scrollHiddenNav)
+      window.removeEventListener('scroll', scrollHiddenNav)
     }
   }, [window.scrollY]);
 
@@ -105,8 +119,8 @@ const NavBar = () => {
     onChangeRouter("/member");
   };
 
-  const onClickMemberListFlag = () => { 
-    if(offsetWid < 810) return
+  const onClickMemberListFlag = () => {
+    if (offsetWid < 810) return
     dispatch(setMemberListFlag());
   };
 
@@ -117,7 +131,7 @@ const NavBar = () => {
     history.push("/pixelGame");
   };
   return (
-    <div className={"navBar"} style={navFlag ? {top:'0px'} : {top:'-65px'}}>
+    <div className={"navBar"} style={navFlag ? { top: '0px' } : { top: '-65px' }}>
       <div className="container">
         <div className="navContent">
           <div>
@@ -131,8 +145,8 @@ const NavBar = () => {
           </div>
           <div className={offsetWid < 810 ? "hambergurButton" : "none"} onClick={onClickPhoneNavFlag}><MenuIcon /></div>
           {/* <div className={phoneNavFlag ? "responsiveNav" : "none"}> */}
-          <div className={"closeNavButton"} style={offsetWid < 810 && phoneNavFlag ? {opacity: 1,visibility:'visible'} : {opacity: 0,visibility:'hidden'}}onClick={onClickPhoneNavFlag}><CloseOutlinedIcon fontSize='large'/></div>
-          <div className={ "responsiveNav"} style={offsetWid < 810 && !phoneNavFlag ? {right:'-800px'} : {right:"0"}}>
+          <div className={"closeNavButton"} style={offsetWid < 810 && phoneNavFlag ? { opacity: 1, visibility: 'visible' } : { opacity: 0, visibility: 'hidden' }} onClick={onClickPhoneNavFlag}><CloseOutlinedIcon fontSize='large' /></div>
+          <div className={"responsiveNav"} style={offsetWid < 810 && !phoneNavFlag ? { right: '-800px' } : { right: "0" }}>
             <div className="linkList">
               <div>新聞</div>
               <div>討論</div>
@@ -153,9 +167,8 @@ const NavBar = () => {
                 註冊
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${
-                  loginStatus && "navDisplayNone"
-                }`}
+                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayNone"
+                  }`}
                 onClick={() => onChangeRouter("/login")}
               >
                 登入
@@ -195,9 +208,8 @@ const NavBar = () => {
                 <div className={offsetWid < 810 ? "none" : "fakeDiv"} onClick={onClickMemberListFlag}></div>
               </div>
               <div
-                className={`${
-                  loginStatus && "navDisplayBlock" && "navUserInfo"
-                } ${!loginStatus && "navDisplayNone"}`}
+                className={`${loginStatus && "navDisplayBlock" && "navUserInfo"
+                  } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickMemberListFlag}
               >
                 <div className="navUserInfoID">{account}</div>

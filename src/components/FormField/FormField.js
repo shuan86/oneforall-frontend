@@ -42,6 +42,18 @@ export const EnrollLoginFiled = ({
           ...errorMessage,
           userName: validateLenMsg,
         });
+      case "department":
+        validateLenMsg = validateLen(value, 1, 20);
+        setErrorMessage({
+          ...errorMessage,
+          department: validateLenMsg,
+        });
+      case "profession":
+        validateLenMsg = validateLen(value, 1, 20);
+        setErrorMessage({
+          ...errorMessage,
+          profession: validateLenMsg,
+        });
       case "email":
         const emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
         errorMessage.email = emailValid ? "" : " is invalid";
@@ -74,3 +86,48 @@ export const EnrollLoginFiled = ({
     </div>
   );
 };
+export const EnrollRadio = ({
+  selectedValue, labelContent, groupName, labelArray, idArray, valueArray, onRadioChange }) => {
+  return (
+    <div className="enrollData">
+      <label>{labelContent} </label>
+      {
+        idArray.map((v, i) => {
+          if (i == 0)
+            return (
+              <div key={i}>
+                <input type="radio" id={v} name={groupName} value={valueArray[i]} checked={selectedValue == valueArray[i]} onChange={onRadioChange} />
+                <label htmlFor={v} >{labelArray[i]}</label>
+              </div>
+            )
+          else {
+            return (
+              <div key={i}>
+                <input type="radio" id={v} name={groupName} value={valueArray[i]} checked={selectedValue == valueArray[i]} onChange={onRadioChange} />
+                <label htmlFor={v} >{labelArray[i]}</label>
+              </div>
+            )
+          }
+        })
+
+      }
+    </div>
+  );
+}
+export const EnrollSelect = ({ selectedValue, labelContent, onSelectChange, labelArray, valueArray }) => {
+  return (
+    <div className="enrollData">
+      <label>
+        {labelContent}
+        <select value={selectedValue} onChange={onSelectChange}>
+          {
+            valueArray.map((v, i) => {
+              return <option key={i} value={v}>{labelArray[i]}</option>
+            })
+          }
+
+        </select>
+      </label>
+    </div>
+  )
+}

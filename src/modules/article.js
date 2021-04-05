@@ -12,8 +12,10 @@ export const ArticleStatus = {
   report: 1,
   underReview: 2,
   verified: 3,
-  verifiedSucessful: 4,
 };
+export const VotedResultStatus = {
+  noResultYet: 0, realNews: 1, fakeNews: 2, reportedAgain: 3
+}
 export const ArticleTagKind = {
   sport: false,
   food: false,

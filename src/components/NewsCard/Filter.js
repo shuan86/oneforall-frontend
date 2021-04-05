@@ -2,21 +2,21 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../../public/css/NewsCard.css";
 import { ArticleStatus } from "../../modules/article";
-const Filter = ({ setSelectedArticleType }) => {
+const Filter = ({ setSelectedArticleStatus }) => {
   const [bgColor, setBgColor] = useState(["var(--navy-blue)", "", ""]);
   const [ftColor, setFtColor] = useState(["var(--white)", "", ""]);
 
   const onClickFilter = (articleType) => {
     if (articleType == ArticleStatus.unreview) {
-      setSelectedArticleType(ArticleStatus.unreview);
+      setSelectedArticleStatus(ArticleStatus.unreview);
       setBgColor(["var(--navy-blue)", "", ""]);
       setFtColor(["var(--white)", "", ""]);
     } else if (articleType == ArticleStatus.underReview) {
-      setSelectedArticleType(ArticleStatus.underReview);
+      setSelectedArticleStatus(ArticleStatus.underReview);
       setBgColor(["", "var(--navy-blue)", ""]);
       setFtColor(["", "var(--white)", ""]);
     } else {
-      setSelectedArticleType(ArticleStatus.verified);
+      setSelectedArticleStatus(ArticleStatus.verified);
       setBgColor(["", "", "var(--navy-blue)"]);
       setFtColor(["", "", "var(--white)"]);
     }

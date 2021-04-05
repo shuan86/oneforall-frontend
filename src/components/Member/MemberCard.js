@@ -9,7 +9,7 @@ import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
 import Copper10 from "../../public/images/medals/copper10.png";
-import { getMemberInfo } from "../../modules/member";
+import { getMemberInfo, expMappingBadge } from "../../modules/member";
 const MemberCard = () => {
   return (
     <div className={"personalInfo"}>
@@ -50,7 +50,7 @@ const MemberInformation = ({ memberInfoFlag, memberId }) => {
     };
     asyncFunc();
 
-    return () => {};
+    return () => { };
   }, [memberInfoFlag]);
 
   return (
@@ -63,7 +63,7 @@ const MemberInformation = ({ memberInfoFlag, memberId }) => {
         <div className={"userAccount"}>
           <div className="userAccountID">
             <p>{memberInfoState.account}</p>
-            <img src={Copper10} alt="medals" className="medals" />
+            <img src={expMappingBadge(memberInfoState.exp)} alt="medals" className="medals" />
           </div>
           <p>{memberInfoState.exp}分</p>
           <p>註冊日期：{memberInfoState.createTime}</p>
@@ -101,8 +101,7 @@ const VistorRight = ({
         <div className="missionBtn">
           {/* <button>我要發文</button> */}
           <button
-            onClick={() =>
-              {console.log('發文');}
+            onClick={() => { console.log('發文'); }
             }
           >
             我要發文討論
@@ -187,7 +186,7 @@ const ReviewerRight = ({
   );
 };
 
-const AuthorRight = ({onClickChangeMemberStatus,EnumMemberStatus}) => {
+const AuthorRight = ({ onClickChangeMemberStatus, EnumMemberStatus }) => {
   return (
     <div className="memberRight">
       <div className={"memberTable"}>
@@ -196,7 +195,7 @@ const AuthorRight = ({onClickChangeMemberStatus,EnumMemberStatus}) => {
           <p>已提交新聞數</p>
           <p>128</p>
         </div>
-        <div className={"missionBtn"} onClick={()=>onClickChangeMemberStatus(EnumMemberStatus.publisher)}>
+        <div className={"missionBtn"} onClick={() => onClickChangeMemberStatus(EnumMemberStatus.publisher)}>
           <button>我要發表新聞</button>
         </div>
       </div>

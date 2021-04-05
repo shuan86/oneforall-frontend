@@ -7,7 +7,7 @@ import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
-import { ArticleStatus } from "../../modules/article";
+import { ArticleStatus, VotedResultStatus } from "../../modules/article";
 import ReportIcon from "@material-ui/icons/Report";
 import { useFirstUpdate } from "../../hooks/useFirstUpdate";
 import * as articleWebsocket from "../../modules/articleWebsocket";
@@ -81,10 +81,38 @@ const NewsCardReviewed = ({ likeAmount, commentAmount, isMemberLike }) => {
   );
 };
 
-const NewsCardTop = () => {
+const NewsCardTop = ({ articleStatus, voteResult }) => {
+  const [status, setStatus] = useState('未審核')
+  useEffect(() => {
+    let s = status
+    if (articleStatus == ArticleStatus.unreview) {
+      s = '未審核'
+    }
+    else if (articleStatus == ArticleStatus.underReview) {
+      s = '審核中'
+    }
+    else if (articleStatus == ArticleStatus.verified) {
+      if (voteResult == VotedResultStatus.realNews) {
+        s = '真新聞'
+      }
+      else if (voteResult == VotedResultStatus.fakeNews) {
+        s = '假新聞'
+      }
+      else if (voteResult == VotedResultStatus.reportedAgain) {
+        s = '重新審核'
+      }
+    }
+    console.log('articleStatus xxx:', articleStatus);
+
+    console.log('voteResult xxx:', voteResult);
+    setStatus(s)
+    return () => {
+
+    }
+  }, [articleStatus, voteResult])
   return (
     <div className="cardTop">
-      <div className="status">未審核</div>
+      <div className="status">{status}</div>
       <div className="scrollingText">
         <div className="userComment">
           <span>
@@ -97,7 +125,7 @@ const NewsCardTop = () => {
   );
 };
 const NewsCardContent = ({
-  articleType,
+  articleStatus,
   isReviewedCard,
   memberId,
   articleId,
@@ -146,11 +174,11 @@ const NewsCardContent = ({
 
     setImageState(base64String);
     setTagsData(tags);
-    return () => {}; //
+    return () => { }; //
   }, []);
   useEffect(() => {
     setNeedReadMoreFlag(content.length > shortMaxStrLength ? true : false);
-    return () => {};
+    return () => { };
   }, [content]);
 
   const onClickReadMore = () => {
@@ -194,7 +222,7 @@ const NewsCardContent = ({
       </div>
       <div className="article">
         <h3>{title}</h3>
-        {articleType == ArticleStatus.underReview ? (
+        {articleStatus == ArticleStatus.underReview || articleStatus == ArticleStatus.verified ? (
           <div>
             <p> reportedtAccount:{reportedtAccount}</p>
             <p> evidence:{evidence}</p>
@@ -336,7 +364,7 @@ const NewsCardComment = ({
     setOpenCommentFlag((pre) => {
       return selectArticleId != articleId ? false : true;
     });
-    return () => {};
+    return () => { };
   }, [selectArticleId]);
   useEffect(() => {
     if (openCommentFlag) {
@@ -357,7 +385,7 @@ const NewsCardComment = ({
       const result = openCommentFlag ? articleId : pre;
       return result;
     });
-    return () => {};
+    return () => { };
   }, [openCommentFlag]);
 
   const onClickLike = async () => {
@@ -448,7 +476,7 @@ const NewsCardComment = ({
         </div>
         <div className={isReviewedCard == false ? "none" : "null"}>
           <button
-            style={{ backgroundColor: reportedAgreeVoteState ? "blue" : "" }}
+            style={{ backgroundColor: reportedAgreeVoteState ? "var(--deep-blue)" : null }}
             onClick={() => {
               onClickAgreeVote(true);
             }}
@@ -458,7 +486,7 @@ const NewsCardComment = ({
         </div>
         <div className={isReviewedCard == false ? "none" : "null"}>
           <button
-            style={{ backgroundColor: reportedDisagreeVoteState ? "blue" : "" }}
+            style={{ backgroundColor: reportedDisagreeVoteState ? "var(--deep-blue)" : null }}
             onClick={() => {
               onClickAgreeVote(false);
             }}
@@ -513,7 +541,7 @@ const Comment = React.memo(
 
 const NewsCard = React.memo(
   ({
-    articleType,
+    articleStatus,
     articleData,
     onClickReportBtn,
     refFunc,
@@ -544,13 +572,13 @@ const NewsCard = React.memo(
       reviewResult,
       reportedAgreeVote,
       reportedDisagreeVote,
+      voteResult,
     } = articleData;
-
     return (
       <div ref={refFunc} className="card">
-        <NewsCardTop />
+        <NewsCardTop articleStatus={articleStatus} voteResult={voteResult} />
         <NewsCardContent
-          articleType={articleType}
+          articleStatus={articleStatus}
           memberId={memberId}
           articleId={articleId}
           title={title}
@@ -581,7 +609,7 @@ const NewsCard = React.memo(
           reportedAgreeVote={reportedAgreeVote}
           reportedDisagreeVote={reportedDisagreeVote}
           isReviewedCard={
-            articleType == ArticleStatus.underReview ? true : false
+            articleStatus == ArticleStatus.underReview ? true : false
           }
         />
       </div>
