@@ -69,12 +69,7 @@ const NavBar = () => {
     dispatch(updateLoginStatusData);
     dispatch(memberData);
     dispatch(memberStatusData);
-    setOffsetWid(document.documentElement.clientWidth)
-    window.addEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)});//註冊偵測寬度改變
-    return(
-      window.removeEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)})//移除偵測寬度改變
-    )
-  }, [offsetWid]);
+  }, []);
   useEffect(() => {
     let f
     window.addEventListener('scroll',scrollHiddenNav)
@@ -82,6 +77,15 @@ const NavBar = () => {
       window.removeEventListener('scroll',scrollHiddenNav)
     }
   }, [window.scrollY]);
+
+  useEffect(() => {
+    setOffsetWid(document.documentElement.clientWidth)
+    window.addEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)});//註冊偵測寬度改變
+    console.log(offsetWid);
+    return(
+      window.removeEventListener('resize', e => {setOffsetWid(document.documentElement.clientWidth)})//移除偵測寬度改變
+    )
+  }, [offsetWid]);
 
   const loginStatus = useSelector((s) => s.loginStatus);
   const account = useSelector((s) => s.member.account);
