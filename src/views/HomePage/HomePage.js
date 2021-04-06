@@ -4,31 +4,31 @@ import useGetNews from "../../hooks/useGetNews";
 import { ArticleStatus } from "../../modules/article";
 import ArticleList from "../../components/Article/ArticleList";
 const HomePage = () => {
-  const [selectedArticleType, setSelectedArticleType] = useState(
+  const [selectedArticleStatus, setSelectedArticleStatus] = useState(
     ArticleStatus.unreview
   );
 
   return (
     <div>
-      <Filter setSelectedArticleType={setSelectedArticleType} />
-      {selectedArticleType == ArticleStatus.unreview && (
+      <Filter setSelectedArticleStatus={setSelectedArticleStatus} />
+      {selectedArticleStatus == ArticleStatus.unreview && (
         <ArticleList
-          articleType={ArticleStatus.unreview}
-          selectedArticleType={selectedArticleType}
+          articleStatus={ArticleStatus.unreview}
+          selectedArticleStatus={selectedArticleStatus}
         />
       )}
 
-      {selectedArticleType == ArticleStatus.underReview && (
+      {selectedArticleStatus == ArticleStatus.underReview && (
         <ArticleList
-          articleType={ArticleStatus.underReview}
-          selectedArticleType={selectedArticleType}
+          articleStatus={ArticleStatus.underReview}
+          selectedArticleStatus={selectedArticleStatus}
         />
       )}
 
-      {selectedArticleType == ArticleStatus.verifiedFail && (
+      {selectedArticleStatus == ArticleStatus.verified && (
         <ArticleList
-          articleType={ArticleStatus.verifiedFail}
-          selectedArticleType={selectedArticleType}
+          articleStatus={ArticleStatus.verified}
+          selectedArticleStatus={selectedArticleStatus}
         />
       )}
     </div>

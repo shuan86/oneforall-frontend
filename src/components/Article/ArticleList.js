@@ -13,7 +13,7 @@ import ReportDialog from "../Report/ReportDialog";
 import * as contract from "../../modules/smartcontract";
 import useGetNews from "../../hooks/useGetNews";
 import { ArticleStatus } from "../../modules/article";
-const ArticleList = ({ articleType, selectedArticleType }) => {
+const ArticleList = ({ articleStatus, selectedArticleStatus }) => {
   const eveyRequestDataAmount = 2;
   const [pageNaumber, setPageNumber] = useState(1);
   const [contractNewsDatas, setContractNewsData] = useState([]);
@@ -22,11 +22,11 @@ const ArticleList = ({ articleType, selectedArticleType }) => {
   const { loading, newsDatas, hasMoreData, error } = useGetNews(
     pageNaumber,
     eveyRequestDataAmount,
-    selectedArticleType
+    selectedArticleStatus
   );
 
   useEffect(() => {
-    return () => {};
+    return () => { };
   }, []);
 
   const observer = useRef();
@@ -112,7 +112,7 @@ const ArticleList = ({ articleType, selectedArticleType }) => {
                     refFunc={lastElementRef}
                     selectArticleId={selectArticleId}
                     setSelectArticleId={setSelectArticleId}
-                    articleType={articleType}
+                    articleStatus={articleStatus}
                   />
                 );
               } else {
@@ -124,7 +124,7 @@ const ArticleList = ({ articleType, selectedArticleType }) => {
                     refFunc={null}
                     selectArticleId={selectArticleId}
                     setSelectArticleId={setSelectArticleId}
-                    articleType={articleType}
+                    articleStatus={articleStatus}
                   />
                 );
               }

@@ -11,9 +11,11 @@ export const ArticleStatus = {
   unreview: 0,
   report: 1,
   underReview: 2,
-  verifiedFail: 3,
-  verifiedSucessful: 4,
+  verified: 3,
 };
+export const VotedResultStatus = {
+  noResultYet: 0, realNews: 1, fakeNews: 2, reportedAgain: 3
+}
 export const ArticleTagKind = {
   sport: false,
   food: false,
@@ -35,7 +37,8 @@ export const getNews = async (startIndex, endIndex) => {
 export const getUnderReviewedNews = async (startIndex, endIndex) => {
   try {
     const { memberId } = localStorage.getAllData();
-    const data = { startIndex, endIndex, memberId };
+    const articleStatus = ArticleStatus.underReview;
+    const data = { startIndex, endIndex, memberId, articleStatus };
     const result = await sendRequest.getRequest("/underReviewedNewses", data);
     if (result && result.status == 200) {
       return result.data;
@@ -49,7 +52,8 @@ export const getUnderReviewedNews = async (startIndex, endIndex) => {
 export const getReviewedNews = async (startIndex, endIndex) => {
   try {
     const { memberId } = localStorage.getAllData();
-    const data = { startIndex, endIndex, memberId };
+    const articleStatus = ArticleStatus.verified;
+    const data = { startIndex, endIndex, memberId, articleStatus };
     const result = await sendRequest.getRequest("/reviewedNewses", data);
     if (result && result.status == 200) {
       return result.data;
@@ -57,6 +61,7 @@ export const getReviewedNews = async (startIndex, endIndex) => {
   } catch (error) {
     console.error("getReviewedNews error:", error);
   }
+
   return null;
 };
 export const getArticle = async (articleId) => {
@@ -152,6 +157,47 @@ export const createLike = async (articleId) => {
   }
   return null;
 };
+export const createReportedVote = async (articleId, isAgree) => {
+  try {
+    const { token, memberId } = localStorage.getAllData();
+    const result = await sendRequest.rsaTokenPostRequest(
+      token,
+      memberId,
+      "/reportedVote",
+      {
+        memberId,
+        articleId,
+        isAgree,
+      }
+    );
+    if ((result.status = 200)) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("createReportedVote error:", error);
+  }
+  return null;
+};
+
+export const deleteReportedVote = async (articleId, isAgree) => {
+  try {
+    const { token, memberId } = localStorage.getAllData();
+    console.log("deleteReportedVote memberId:", memberId, "token:", token);
+
+    const result = await sendRequest.rsaTokenDeleteRequest(
+      token,
+      memberId,
+      "/reportedVote",
+      { articleId, isAgree }
+    );
+    if ((result.status = 200)) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("deleteReportedVote error:", error);
+  }
+  return null;
+};
 export const deleteLike = async (articleId) => {
   try {
     const { token, memberId } = localStorage.getAllData();
@@ -207,6 +253,7 @@ export const postNews = async (
   time,
   deposit,
   imgArray,
+  imgUrl,
   tagArray
 ) => {
   try {
@@ -221,6 +268,7 @@ export const postNews = async (
       content,
       time,
       deposit,
+      imgUrl,
       tagArray,
     };
     console.log("postNews:", data);

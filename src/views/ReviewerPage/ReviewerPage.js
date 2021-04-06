@@ -93,7 +93,7 @@ const ReviewerPage = () => {
   //   if (isDbDataLoadedFlag) excuteContract();
   // }, [isDbDataLoadedFlag]);
   return (
-    <div>
+    <div style={{ marginTop: '65px' }}>
       <RootDataTable
         columns={columns}
         rows={reportNewsState}

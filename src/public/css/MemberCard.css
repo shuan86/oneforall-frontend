@@ -275,6 +275,7 @@
 
 .memberInformationPersonal {
     display: flex;
+    align-items: center;
 }
 
 .memberInformationPersonal .userPhoto {
@@ -317,13 +318,13 @@
 
 .memberInformation .userAccount p {
     display: inline-block;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
 }
 
 .memberInformationPersonal .medals {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     margin-left: 5px;
     vertical-align: top;
 }
@@ -331,8 +332,9 @@
 .memberInformation .userAccount p:nth-child(2),
 .memberInformation .userAccount p:nth-child(3) {
     display: block;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 400;
+    padding: 5px 0;
 }
 
 .memberInformation a {

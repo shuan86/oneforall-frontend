@@ -21,7 +21,7 @@ const RankingTable = () => {
       console.log("RankingTable:", result);
     };
     asyncFunc();
-    return () => {};
+    return () => { };
   }, []);
   return (
     <div className={"rankingTable"}>
@@ -39,7 +39,7 @@ const RankingTable = () => {
             memberName={val.account}
             exp={val.exp}
             memberId={val.id}
-            rank={index}
+            rank={index + 1}
             key={index}
           />
         );

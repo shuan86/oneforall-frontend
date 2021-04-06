@@ -1,6 +1,10 @@
+.Ranking {
+    /* flex: 1; */
+}
+
 .rankingTable {
     display: inline-block;
-    width: 300px;
+    width: 370px;
     color: var(--navy-blue);
     margin: 30px auto;
     padding: 16px;
@@ -14,7 +18,7 @@
     padding-bottom: 16px;
 }
 
-@media screen and (max-width: 810px) {
+@media screen and (max-width: 1000px) {
     .rankingTable {
         display: none;
     }
@@ -34,7 +38,7 @@
 } */
 
 .rankingName {
-    padding-right: 142px;
+    padding-right: 200px;
 }
 
 .rankingScore {

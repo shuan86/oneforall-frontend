@@ -25,58 +25,77 @@ const FormDialog = ({
     const asyncFunc = async () => {
       if (isOpen) {
         const result = await getArticle(selectedData.articleId);
-        if (result.images.length) {
-          result.images[0] = await getBase64Str(result.images[0]);
+        if (result) {
+          console.log('result:', result);
+          if (result.imagesUrl) {
+            console.log('imagesUrl:');
+
+          }
+          else {
+            console.log('images:');
+
+            result.images[0] = await getBase64Str(result.images[0]);
+          }
         }
         setArticleData((pre) => (result ? result : pre));
-        if (result.images.length > 0) {
-          // console.log("result.images[0]:", result.images[0]);
-          // console.log("report dialog:", await getBase64Str(result.images[0]));
-        }
+
       }
     };
     asyncFunc();
-    return () => {};
+    return () => { };
   }, [selectedData]);
 
   return (
-    <div className={"missionBtn"} style={{ height: "500px", weidth: "400px" }}>
+
+    <div  >
       <div>
         <Dialog
           open={isOpen}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
-          fullWidth={true}
+          maxWidth={"1000px"}
+          style={{ height: "100%", weidth: "600px", marginTop: '50px' }}
         >
           <DialogTitle id="form-dialog-title">假新聞簽核表格</DialogTitle>
 
           <DialogContent>
             <DialogContentText style={{ whiteSpace: "pre-wrap" }}>
-              'title'{articleData.title}
+              標題:{articleData.title}
             </DialogContentText>
             <DialogContentText style={{ whiteSpace: "pre-wrap" }}>
-              '內容:'{articleData.content}
+              內容:{articleData.content}
             </DialogContentText>
-            {/* <Card>
-              <CardMedia image="articleData.images[0]" title="Paella dish" />
-            </Card> */}
+
+            <img
+
+              src={
+                articleData.imagesUrl
+                  ? articleData.imagesUrl[0].data
+                  : ""
+              }
+              alt=""
+            />
             <img
               src={
-                articleData.images && articleData.images[0].length > 0
+                articleData.images
                   ? articleData.images[0]
                   : ""
               }
               alt=""
             />
-            <TextareaAutosize
-              rowsMax={4}
-              aria-label="maximum height"
-              placeholder="請輸入原因(限100字)"
-              defaultValue=""
-              style={{ width: 400 }}
-              onChange={onReasonChange}
-            />
+            <DialogContentText >
+              <TextareaAutosize
+                rows={4}
+                rowsMax={4}
+                aria-label="maximum height"
+                placeholder="請輸入原因(限100字)"
+                defaultValue=""
+                style={{ width: '100%' }}
+                onChange={onReasonChange}
+              />
+            </DialogContentText>
           </DialogContent>
+
           <DialogActions>
             <Button
               onClick={() => {

@@ -26,33 +26,33 @@ const FormDialog = ({ isOpen, setOpen, onSelectArticleId }) => {
   };
   //missionBtn
   return (
+
     <div>
-      <div>
-        <Dialog
-          open={isOpen}
-          onClose={handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">檢舉表單</DialogTitle>
-          <DialogContent>
-            <TextareaAutosize
-              rowsMin={5}
-              rowsMax={10}
-              aria-label="maximum height"
-              placeholder="請輸入原因(限300字)"
-              defaultValue=""
-              style={{ width: 500 }}
-              onChange={onReasonChange}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => onClickSendReport()} color="primary">
-              Send
+      <Dialog
+        open={isOpen}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">檢舉表單</DialogTitle>
+        <DialogContent>
+          <TextareaAutosize
+            rowsMin={5}
+            rowsMax={10}
+            aria-label="maximum height"
+            placeholder="請輸入原因(限300字)"
+            defaultValue=""
+            style={{ width: 500 }}
+            onChange={onReasonChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => onClickSendReport()} color="primary">
+            Send
             </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+        </DialogActions>
+      </Dialog>
     </div>
+
   );
 };
 export default FormDialog;

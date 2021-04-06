@@ -4,6 +4,9 @@ const intitialMember = {
   userName: "",
   email: "",
   publicKey: "",
+  exp: "",
+  voteRecord: [],
+  followerAmount: 0
 };
 export const member = (state = intitialMember, action) => {
   switch (action.type) {
