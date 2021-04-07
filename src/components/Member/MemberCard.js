@@ -10,7 +10,6 @@ import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
 import Copper10 from "../../public/images/medals/copper10.png";
 import { getMemberInfo, expMappingBadge } from "../../modules/member";
-import { useHistory } from "react-router-dom";
 
 const MemberCard = () => {
   return (
@@ -90,6 +89,7 @@ const VistorRight = ({
   exp,
   fllowerAmount,
   reportedVoteArticleArray,
+  onClickArticle,
 }) => {
   return (
     <div className="memberRight">
@@ -121,12 +121,18 @@ const VistorRight = ({
       <div className={"memberInform"}>
         <p>投票紀錄</p>
 
-        {reportedVoteArticleArray.length == 0 && <p>尚未有票紀錄</p>}
+        {reportedVoteArticleArray.length == 0 && (
+          <p style={{ fontSize: "35px" }}>尚未有票紀錄</p>
+        )}
 
         {reportedVoteArticleArray.map((value, index) => {
           const { articleId, title, time } = value;
           return (
-            <div className={"informContainer"}>
+            <div
+              key={articleId}
+              className={"informContainer"}
+              onClick={() => onClickArticle(articleId)}
+            >
               <p>{title}</p>
               <p>{time}</p>
             </div>
@@ -137,8 +143,14 @@ const VistorRight = ({
   );
 };
 
-const ReviewerRight = ({ exp, fansAmount, reviewerCanReviewArticleArray }) => {
-  const history = useHistory();
+const ReviewerRight = ({
+  exp,
+  fansAmount,
+  reviewerCanReviewArticleArray,
+  reviewerVerifiedArticleArray,
+  onClickReviewerPage,
+  onClickArticle,
+}) => {
   return (
     <div className="memberRight">
       <div className={"memberTable"}>
@@ -154,12 +166,18 @@ const ReviewerRight = ({ exp, fansAmount, reviewerCanReviewArticleArray }) => {
           </div>
         </div>
         <div className={"adviseMission"}>
-          <p>審核任務</p>
-          {reviewerCanReviewArticleArray.length == 0 && <p>尚未有審查任務</p>}
+          <p>可審核任務</p>
+          {reviewerCanReviewArticleArray.length == 0 && (
+            <p style={{ fontSize: "35px" }}>尚未有審查任務</p>
+          )}
           {reviewerCanReviewArticleArray.map((value, index) => {
             const { articleId, title, time } = value;
             return (
-              <div key={articleId} className={"informContainer"}>
+              <div
+                key={articleId}
+                className={"informContainer"}
+                onClick={onClickReviewerPage}
+              >
                 <p>{title}</p>
               </div>
             );
@@ -167,7 +185,7 @@ const ReviewerRight = ({ exp, fansAmount, reviewerCanReviewArticleArray }) => {
           <div className="missionBtn">
             <button
               onClick={() => {
-                history.push("/reviewer");
+                onClickReviewerPage();
               }}
             >
               我要審查
@@ -176,7 +194,7 @@ const ReviewerRight = ({ exp, fansAmount, reviewerCanReviewArticleArray }) => {
           <div className="missionBtn">
             <button
               onClick={() => {
-                history.push("/reviewer");
+                onClickReviewerPage();
               }}
             >
               我要審查文章
@@ -186,30 +204,51 @@ const ReviewerRight = ({ exp, fansAmount, reviewerCanReviewArticleArray }) => {
       </div>
       <div className={"memberInform"}>
         <p>通知</p>
+        {reviewerVerifiedArticleArray.length == 0 && (
+          <p style={{ fontSize: "35px" }}>尚未有審核成功紀錄</p>
+        )}
+        {reviewerVerifiedArticleArray.map((value, index) => {
+          const { articleId, title, time } = value;
+          return (
+            <div
+              key={articleId}
+              className={"informContainer"}
+              onClick={() => onClickArticle(articleId)}
+            >
+              <p>
+                因為成功證實「{title}」獲得了0.0001
+                ETH，謝謝你為了真實消息的付出
+              </p>
+              <p>{time}</p>
+            </div>
+          );
+        })}
+        {/* <InformContent />
         <InformContent />
-        <InformContent />
-        <InformContent />
+        <InformContent /> */}
       </div>
     </div>
   );
 };
 
-const AuthorRight = ({ onClickChangeMemberStatus, EnumMemberStatus }) => {
-  const history = useHistory();
-
+const PublisherRight = ({
+  publishArticleArray,
+  onClickPublisherPage,
+  onClickArticle,
+}) => {
   return (
     <div className="memberRight">
       <div className={"memberTable"}>
         <p>發文者</p>
         <div className={"memberPost"}>
           <p>已提交新聞數</p>
-          <p>128</p>
+          <p>{publishArticleArray.length}</p>
         </div>
         <div
           className={"missionBtn"}
           onClick={() => {
             // onClickChangeMemberStatus(EnumMemberStatus.publisher);
-            history.push("/publisher");
+            onClickPublisherPage();
           }}
         >
           <button>我要發表新聞</button>
@@ -217,9 +256,24 @@ const AuthorRight = ({ onClickChangeMemberStatus, EnumMemberStatus }) => {
       </div>
       <div className={"memberInform"}>
         <p>發文紀錄</p>
-        <PublishedContent />
-        <PublishedContent />
-        <PublishedContent />
+        {publishArticleArray.length == 0 && (
+          <p style={{ fontSize: "35px" }}>尚未有發文紀錄</p>
+        )}
+        {publishArticleArray.map((value, index) => {
+          const { articleId, title, time } = value;
+          return (
+            <div
+              key={articleId}
+              className={"informContainer"}
+              onClick={() => onClickArticle(articleId)}
+            >
+              <p>
+                您於 {time}
+                發佈了「{title}」
+              </p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -229,7 +283,7 @@ const InformContent = () => {
   return (
     <div className={"informContainer"}>
       <p>
-        因為成功證實「因原物料做口罩，衛生紙將成為下一波缺貨物資」獲得了0.1
+        因為成功證實「因原物料做口罩，衛生紙將成為下一波缺貨物資」獲得了0.0001
         ETH，謝謝你為了真實消息的付出
       </p>
       <p>12-15 21:30</p>
@@ -271,6 +325,6 @@ export {
   MemberCard,
   ReviewerRight,
   VistorRight,
-  AuthorRight,
+  PublisherRight,
   MemberInformation,
 };

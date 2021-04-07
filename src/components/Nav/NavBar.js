@@ -97,13 +97,15 @@ const NavBar = () => {
       <div className="container">
         <div className="navContent">
           <div>
-            <img
-              className={"logo"}
-              src={Logo}
-              alt="logoImg"
-              width={"158px"}
-              onClick={() => onChangeRouter("/")}
-            />
+            <a href="/">
+              <img
+                className={"logo"}
+                src={Logo}
+                alt="logoImg"
+                width={"158px"}
+                onClick={() => onChangeRouter("/")}
+              />
+            </a>
           </div>
           <div
             className={offsetWid < 810 ? "hambergurButton" : "none"}

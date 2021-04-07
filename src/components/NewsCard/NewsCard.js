@@ -81,7 +81,7 @@ const NewsCardReviewed = ({ likeAmount, commentAmount, isMemberLike }) => {
   );
 };
 
-const NewsCardTop = ({ articleStatus, voteResult }) => {
+export const NewsCardTop = ({ articleStatus, voteResult }) => {
   const [status, setStatus] = useState("未審核");
   useEffect(() => {
     let s = status;
@@ -116,7 +116,7 @@ const NewsCardTop = ({ articleStatus, voteResult }) => {
     </div>
   );
 };
-const NewsCardContent = ({
+export const NewsCardContent = ({
   articleStatus,
   isReviewedCard,
   memberId,
@@ -217,13 +217,37 @@ const NewsCardContent = ({
         {articleStatus == ArticleStatus.underReview ||
         articleStatus == ArticleStatus.verified ? (
           <div>
-            <p> reportedtAccount:{reportedtAccount}</p>
-            <p> evidence:{evidence}</p>
-            <p> decisionReason:{decisionReason}</p>
-            <p> reviewResult :{reviewResult}</p>
+            {reviewResult == 2 ? (
+              <h2
+                className="reviewResult"
+                style={{ color: "var(--navy-blue)" }}
+              >
+                審查者認為本消息是真的
+              </h2>
+            ) : (
+              <h2 className="reviewResult" style={{ color: "var(--brown)" }}>
+                審查者認為本消息是假的
+              </h2>
+            )}
+            {/* <h2 className="reviewResult">審查者認為本消息是真實的</h2> */}
+            <div className="articleContent">
+              {/*<p> reportedtAccount:{reportedtAccount}</p>
+              <p> evidence:{evidence}</p>{/*檢舉者給的內容*/}
+              {/*<p> decisionReason:{decisionReason}</p>{/*審查者給的內容*/}
+              {/*<p> reviewResult :{reviewResult}</p>{/*2是同意3是不同意*/}
+              <p>{decisionReason}</p>
+              {/*審查者給的內容*/}
+            </div>
           </div>
         ) : null}
-        <div className="articleContent">
+        <div
+          className={
+            articleStatus == ArticleStatus.underReview ||
+            articleStatus == ArticleStatus.verified
+              ? "articleContent underReview"
+              : "articleContent"
+          }
+        >
           <p style={{ whiteSpace: "pre-wrap" }}>
             {content.length > shortMaxStrLength
               ? content.substring(0, shortMaxStrLength)
@@ -455,7 +479,7 @@ const NewsCardComment = ({
       <div className={openCommentFlag ? "like" : "like border-b-0"}>
         <div>
           <button
-            style={{ color: likeState ? "var(--deep-blue)" : null }}
+            style={{ color: likeState ? "var(--sky-blue)" : null }}
             onClick={onClickLike}
           >
             {likeAmountState} 人想知道
@@ -466,13 +490,9 @@ const NewsCardComment = ({
             {commentAmountState} 留言
           </button>
         </div>
-        <div className={isReviewedCard == false ? "none" : "null"}>
+        <div className={isReviewedCard == false ? "none" : null}>
           <button
-            style={{
-              backgroundColor: reportedAgreeVoteState
-                ? "var(--deep-blue)"
-                : null,
-            }}
+            style={{ color: reportedAgreeVoteState ? "var(--sky-blue)" : null }}
             onClick={() => {
               onClickAgreeVote(true);
             }}
@@ -480,13 +500,9 @@ const NewsCardComment = ({
             {reportedAgreeAmountState}人同意
           </button>
         </div>
-        <div className={isReviewedCard == false ? "none" : "null"}>
+        <div className={isReviewedCard == false ? "none" : null}>
           <button
-            style={{
-              backgroundColor: reportedDisagreeVoteState
-                ? "var(--deep-blue)"
-                : null,
-            }}
+            style={{ color: reportedDisagreeVoteState ? "var(--brown)" : null }}
             onClick={() => {
               onClickAgreeVote(false);
             }}

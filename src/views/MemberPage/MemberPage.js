@@ -4,14 +4,17 @@ import {
   MemberCard,
   VistorRight,
   ReviewerRight,
-  AuthorRight,
+  PublisherRight,
 } from "../../components/Member/MemberCard";
 import Filter from "../../components/Member/MemberFilter";
 import { EnumMemberStatus } from "../../interfaces/IMember";
 import { getArticleTitles } from "../../modules/article";
 import { useFirstUpdate } from "../../hooks/useFirstUpdate";
+import { useHistory } from "react-router-dom";
+
 const MemberPage = () => {
   const isNotFirst = useFirstUpdate();
+  const history = useHistory();
   const [
     reportedVoteArticleArrayState,
     setReportedVoteArticleArrayState,
@@ -20,59 +23,71 @@ const MemberPage = () => {
     reviewerCanReviewArticleArrayState,
     setReviewerCanReviewArticleArrayState,
   ] = useState([]);
-  const [memberStatus, setMemberStatus] = useState(EnumMemberStatus.vistor);
+  const [
+    reviewerVerifiedArticleArrayState,
+    setReviewerVerifiedArticleArrayState,
+  ] = useState([]);
+  const [publishArticleArrayState, setPublishArticleArray] = useState([]);
   const isReviewer = useSelector((state) => state.memberStatus.isReviewer);
   const isPublisher = useSelector((state) => state.memberStatus.isPublisher);
-  // const [isReviewer, setIsReviewer] = useState(useSelector((state) => state.memberStatus.isReviewer))
-  // const [isPublisher, setIsPublisher] = useState(useSelector((state) => state.memberStatus.isPublisher))
-  // const [filter, setFliter] = useState({vistor:true,publisher:false,reviewer:false})
+
   const [memberFilter, setMemberFliter] = useState([true, false, false]);
   const member = useSelector((state) => state.member);
-
-  // const exp = useSelector((state) => state.member.exp);
-  // const fllowerAmount = useSelector((state) => state.member.fllowerAmount);
-  // const reportedVoteArticleIdArray = useSelector(
-  //   (state) => state.member.reportedVoteArticleIdArray
-  // );
   useEffect(() => {
+    console.log("useEffectxxx");
     return () => {};
-  }, [memberStatus]);
+  }, []);
   useEffect(() => {
     const asyncFunc = async () => {
+      let reportedVoteArticleIdArray = member.reportedVoteArticleIdArray;
+      let reviewerCanReviewArticleIdArray =
+        member.reviewerCanReviewArticleIdArray;
+      let reviewerVerifiedArticleIdArray =
+        member.reviewerVerifiedArticleIdArray;
+      let publishArticleIdArray = member.publishArticleIdArray;
       let reportedVoteArticleArray;
       let reviewerCanReviewArticleArray;
+      let reviewerVerifiedArticleArray;
+      let publishArticleArray;
       console.log(
         "reportedVoteArticleIdArray:",
         member.reportedVoteArticleIdArray
       );
       if (memberFilter[0]) {
         if (
-          member.reportedVoteArticleIdArray &&
-          member.reportedVoteArticleIdArray.length > 0
+          reportedVoteArticleIdArray &&
+          reportedVoteArticleIdArray.length > 0
         ) {
           reportedVoteArticleArray = await getArticleTitles(
-            member.reportedVoteArticleIdArray
+            reportedVoteArticleIdArray
           );
           console.log("reportedVoteArticles:", reportedVoteArticleArray);
         }
       } else if (memberFilter[1]) {
         console.log(
-          " member.reviewerCanReviewArticleArray:",
-          member.reviewerCanReviewArticleArray
+          " reviewerCanReviewArticleIdArray:",
+          reviewerCanReviewArticleIdArray
         );
         if (
-          member.reviewerCanReviewArticleArray &&
-          member.reviewerCanReviewArticleArray.length > 0
+          reviewerCanReviewArticleIdArray &&
+          reviewerCanReviewArticleIdArray.length > 0
         ) {
           reviewerCanReviewArticleArray = await getArticleTitles(
-            member.reviewerCanReviewArticleArray
+            reviewerCanReviewArticleIdArray
           );
-          console.log(
-            "reviewerCanReviewArticleArray:",
-            reviewerCanReviewArticleArray
+        }
+        if (
+          reviewerVerifiedArticleIdArray &&
+          reviewerVerifiedArticleIdArray.length > 0
+        ) {
+          reviewerVerifiedArticleArray = await getArticleTitles(
+            reviewerVerifiedArticleIdArray
           );
         }
       } else if (memberFilter[2]) {
+        if (publishArticleIdArray && publishArticleIdArray.length > 0) {
+          publishArticleArray = await getArticleTitles(publishArticleIdArray);
+        }
       }
       setReportedVoteArticleArrayState((pre) =>
         reportedVoteArticleArray ? reportedVoteArticleArray : pre
@@ -80,10 +95,26 @@ const MemberPage = () => {
       setReviewerCanReviewArticleArrayState((pre) =>
         reviewerCanReviewArticleArray ? reviewerCanReviewArticleArray : pre
       );
+      setReviewerVerifiedArticleArrayState((pre) =>
+        reviewerVerifiedArticleArray ? reviewerVerifiedArticleArray : pre
+      );
+      setPublishArticleArray((pre) =>
+        publishArticleArray ? publishArticleArray : pre
+      );
     };
-    isNotFirst && asyncFunc();
+    asyncFunc();
     return () => {};
   }, [member, memberFilter]);
+
+  const onClickArticle = (articleId) => {
+    history.push("/articlePage/" + articleId);
+  };
+  const onClickReviewerPage = () => {
+    history.push("/reviewer");
+  };
+  const onClickPublisherPage = () => {
+    history.push("/publisher");
+  };
   return (
     <div className="container">
       <Filter setMemberFliter={setMemberFliter} />
@@ -96,6 +127,7 @@ const MemberPage = () => {
             exp={member.exp}
             fllowerAmount={member.fllowerAmount}
             reportedVoteArticleArray={reportedVoteArticleArrayState}
+            onClickArticle={onClickArticle}
           />
         ) : null}
         {memberFilter[1] ? (
@@ -103,9 +135,18 @@ const MemberPage = () => {
             exp={member.exp}
             fansAmount={member.fansAmount}
             reviewerCanReviewArticleArray={reviewerCanReviewArticleArrayState}
+            reviewerVerifiedArticleArray={reviewerVerifiedArticleArrayState}
+            onClickReviewerPage={onClickReviewerPage}
+            onClickArticle={onClickArticle}
           />
         ) : null}
-        {memberFilter[2] ? <AuthorRight /> : null}
+        {memberFilter[2] ? (
+          <PublisherRight
+            publishArticleArray={publishArticleArrayState}
+            onClickPublisherPage={onClickPublisherPage}
+            onClickArticle={onClickArticle}
+          />
+        ) : null}
       </div>
     </div>
   );

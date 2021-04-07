@@ -20,6 +20,7 @@ import LoginPage from "./views/LoginPage/LoginPage";
 import SmartContractPage from "./views/RootPage/SmartContactPage";
 import RootPublisherPage from "./views/RootPage/RootPublisherPage";
 import RootReviewerPage from "./views/RootPage/RootReviewerPage";
+import ArticlePage from "./views/ArticlePage/ArticlePage";
 
 const App = () => (
   <Provider store={store}>
@@ -27,6 +28,8 @@ const App = () => (
       <div>
         <Navbar />
         <Switch>
+          <Route path="/articlePage/:articleId" component={ArticlePage} />
+
           <Route path="/pixelGame" component={PixelGamePage} />
           <Route path="/publisher" component={PublisherPage} />
           <Route path="/reviewer" component={ReviewerPage} />
