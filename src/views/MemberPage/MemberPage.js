@@ -6,97 +6,106 @@ import {
   ReviewerRight,
   AuthorRight,
 } from "../../components/Member/MemberCard";
-import Filter from "../../components/Member/MemberFilter"
+import Filter from "../../components/Member/MemberFilter";
 import { EnumMemberStatus } from "../../interfaces/IMember";
-import { useHistory } from "react-router-dom";
-
+import { getArticleTitles } from "../../modules/article";
+import { useFirstUpdate } from "../../hooks/useFirstUpdate";
 const MemberPage = () => {
-  const history = useHistory();
+  const isNotFirst = useFirstUpdate();
+  const [
+    reportedVoteArticleArrayState,
+    setReportedVoteArticleArrayState,
+  ] = useState([]);
+  const [
+    reviewerCanReviewArticleArrayState,
+    setReviewerCanReviewArticleArrayState,
+  ] = useState([]);
   const [memberStatus, setMemberStatus] = useState(EnumMemberStatus.vistor);
-
-  const isVistor = useSelector((state) => state.memberStatus.isVistor);
   const isReviewer = useSelector((state) => state.memberStatus.isReviewer);
   const isPublisher = useSelector((state) => state.memberStatus.isPublisher);
   // const [isReviewer, setIsReviewer] = useState(useSelector((state) => state.memberStatus.isReviewer))
   // const [isPublisher, setIsPublisher] = useState(useSelector((state) => state.memberStatus.isPublisher))
   // const [filter, setFliter] = useState({vistor:true,publisher:false,reviewer:false})
-  const [memberFilter, setMemberFliter] = useState([true,false,false])
-  console.log(memberFilter);
+  const [memberFilter, setMemberFliter] = useState([true, false, false]);
+  const member = useSelector((state) => state.member);
 
-  
-
+  // const exp = useSelector((state) => state.member.exp);
+  // const fllowerAmount = useSelector((state) => state.member.fllowerAmount);
+  // const reportedVoteArticleIdArray = useSelector(
+  //   (state) => state.member.reportedVoteArticleIdArray
+  // );
   useEffect(() => {
-    return () => {};
-  }, []);
-  useEffect(() => {
-    // if (memberStatus == EnumMemberStatus.vistor) {
-    // } else if (memberStatus == EnumMemberStatus.reviewer) {
-    // } else if (memberStatus == EnumMemberStatus.publisher) {
-    // }
     return () => {};
   }, [memberStatus]);
-  const onClickChangeMemberStatus = (status) => {
-    if (status == EnumMemberStatus.publisher) {
-      history.push("/publisher");
-    } else if (status == EnumMemberStatus.reviewer) {
-      history.push("/reviewer");
-    }
-  };
-
+  useEffect(() => {
+    const asyncFunc = async () => {
+      let reportedVoteArticleArray;
+      let reviewerCanReviewArticleArray;
+      console.log(
+        "reportedVoteArticleIdArray:",
+        member.reportedVoteArticleIdArray
+      );
+      if (memberFilter[0]) {
+        if (
+          member.reportedVoteArticleIdArray &&
+          member.reportedVoteArticleIdArray.length > 0
+        ) {
+          reportedVoteArticleArray = await getArticleTitles(
+            member.reportedVoteArticleIdArray
+          );
+          console.log("reportedVoteArticles:", reportedVoteArticleArray);
+        }
+      } else if (memberFilter[1]) {
+        console.log(
+          " member.reviewerCanReviewArticleArray:",
+          member.reviewerCanReviewArticleArray
+        );
+        if (
+          member.reviewerCanReviewArticleArray &&
+          member.reviewerCanReviewArticleArray.length > 0
+        ) {
+          reviewerCanReviewArticleArray = await getArticleTitles(
+            member.reviewerCanReviewArticleArray
+          );
+          console.log(
+            "reviewerCanReviewArticleArray:",
+            reviewerCanReviewArticleArray
+          );
+        }
+      } else if (memberFilter[2]) {
+      }
+      setReportedVoteArticleArrayState((pre) =>
+        reportedVoteArticleArray ? reportedVoteArticleArray : pre
+      );
+      setReviewerCanReviewArticleArrayState((pre) =>
+        reviewerCanReviewArticleArray ? reviewerCanReviewArticleArray : pre
+      );
+    };
+    isNotFirst && asyncFunc();
+    return () => {};
+  }, [member, memberFilter]);
   return (
     <div className="container">
       <Filter setMemberFliter={setMemberFliter} />
-      {/* {isReviewer ? (
-        <button
-          onClick={() => onClickChangeMemberStatus(EnumMemberStatus.reviewer)}
-        >
-          審查者
-        </button>
-      ) : null}
-      {isPublisher ? (
-        <button
-          onClick={() => onClickChangeMemberStatus(EnumMemberStatus.publisher)}
-        >
-          發文者
-        </button>
-      ) : null} */}
-
       <div className="memberContainer">
         <MemberCard />
-        {/* {memberStatus == EnumMemberStatus.vistor ? (
-          <VistorRight 
+        {memberFilter[0] ? (
+          <VistorRight
             isReviewer={isReviewer}
             isPublisher={isPublisher}
-            onClickChangeMemberStatus={onClickChangeMemberStatus}
-            EnumMemberStatus={EnumMemberStatus}
+            exp={member.exp}
+            fllowerAmount={member.fllowerAmount}
+            reportedVoteArticleArray={reportedVoteArticleArrayState}
           />
         ) : null}
-        {memberStatus == EnumMemberStatus.reviewer ? (
-          <ReviewerRight 
-            isPublisher={isPublisher} 
-            onClickChangeMemberStatus={onClickChangeMemberStatus}
-            EnumMemberStatus={EnumMemberStatus}/>
+        {memberFilter[1] ? (
+          <ReviewerRight
+            exp={member.exp}
+            fansAmount={member.fansAmount}
+            reviewerCanReviewArticleArray={reviewerCanReviewArticleArrayState}
+          />
         ) : null}
-        {memberStatus == EnumMemberStatus.publisher ? (
-          <AuthorRight isPublisher={isPublisher} />
-        ) : null} */}
-        {memberFilter[0] ?  <VistorRight 
-            isReviewer={isReviewer}
-            isPublisher={isPublisher}
-            onClickChangeMemberStatus={onClickChangeMemberStatus}
-            EnumMemberStatus={EnumMemberStatus}
-        />:null }
-        {memberFilter[1] ?  <ReviewerRight 
-            isPublisher={isPublisher} 
-            onClickChangeMemberStatus={onClickChangeMemberStatus}
-            EnumMemberStatus={EnumMemberStatus}
-        />:null }
-        {memberFilter[2] ? 
-        <AuthorRight isPublisher={isPublisher} onClickChangeMemberStatus={onClickChangeMemberStatus} EnumMemberStatus={EnumMemberStatus}/> 
-        :null }
-        
-           
-            
+        {memberFilter[2] ? <AuthorRight /> : null}
       </div>
     </div>
   );

@@ -31,7 +31,6 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleStatus) => {
             memberReportedArray,
             articleAmount,
           } = result;
-          console.log("result123:", result);
           tmpArticleDataAmount = articleAmount;
           tmpArticleDatas = articleArray.map((item, index) => ({
             ...item,
@@ -39,14 +38,16 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleStatus) => {
             isMemberLike: memberLikeArticleStatusArray[index],
             isMemberReported: memberReportedArray[index],
           }));
-        } else if (articleStatus == ArticleStatus.underReview || articleStatus == ArticleStatus.verified) {
+        } else if (
+          articleStatus == ArticleStatus.underReview ||
+          articleStatus == ArticleStatus.verified
+        ) {
           if (articleStatus == ArticleStatus.underReview) {
             result = await getUnderReviewedNews(
               pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
               pageNumber * eveyRequestDataAmount
             );
-          }
-          else if (articleStatus == ArticleStatus.verified) {
+          } else if (articleStatus == ArticleStatus.verified) {
             result = await getReviewedNews(
               pageNumber * eveyRequestDataAmount - eveyRequestDataAmount,
               pageNumber * eveyRequestDataAmount
@@ -101,7 +102,6 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleStatus) => {
           //   articleAmount,
           //   articleVoteResultArray,
           // } = result;
-
           // tmpArticleDataAmount = articleAmount;
           // tmpArticleDatas = articleArray.map((item, index) => ({
           //   ...item,
@@ -115,7 +115,6 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleStatus) => {
           //   reportedAgreeVote: reportedAgreeVoteArray[index],
           //   reportedDisagreeVote: reportedDisagreeVoteArray[index],
           //   VoteResult: articleVoteResultArray[index],
-
           // }));
           // console.log("getReviewedNews:", result);
         }
@@ -140,7 +139,7 @@ const useGetNews = (pageNumber, eveyRequestDataAmount, articleStatus) => {
       }
     };
     loadData();
-    return () => { };
+    return () => {};
   }, [pageNumber, articleStatus]);
 
   return { loading, newsDatas, hasMoreData, error };

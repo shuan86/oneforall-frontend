@@ -5,13 +5,16 @@ const intitialMember = {
   email: "",
   publicKey: "",
   exp: "",
-  voteRecord: [],
-  followerAmount: 0
+  createTime: "",
+  reportedVoteArticleIdArray: [],
+  revieweArticleIdArray: [],
+  publishArticleIdArray: [],
+  followerAmount: 0,
 };
 export const member = (state = intitialMember, action) => {
   switch (action.type) {
     case "updateMember":
-      return { ...action.payload };
+      return { ...state, ...action.payload };
     case "initialMember":
       return { ...intitialMember };
 

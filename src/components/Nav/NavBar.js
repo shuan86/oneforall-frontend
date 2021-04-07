@@ -10,18 +10,15 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import MenuIcon from '@material-ui/icons/Menu';
-import { getPrivateMemberInfo } from "../../modules/member";
+import MenuIcon from "@material-ui/icons/Menu";
 import {
   initialMember,
   wontUpdateMember,
-  updateMember,
   updateLoginStatus,
-  initialMemberStatus,
-  updateMemberStatus,
   setMemberListFlag,
 } from "../../actions/actions";
-import { ILocalStorage } from "../../interfaces/IMember";
+import { useFirstTimeLoadData } from "../../hooks/useLoadData";
+
 const NavBar = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -29,83 +26,45 @@ const NavBar = () => {
   const [navFlag, setNavFlag] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [phoneNavFlag, setPhoneNavFlag] = useState(false);
+  const [isSucessfulLogin, setIsSucessfulLogin] = useState(false);
 
   // var offsetWid = document.documentElement.clientWidth; //視窗寬度
+
+  useEffect(() => {
+    setOffsetWid(document.documentElement.clientWidth);
+    window.addEventListener("resize", (e) => {
+      setOffsetWid(document.documentElement.clientWidth);
+    }); //註冊偵測寬度改變
+    return window.removeEventListener("resize", (e) => {
+      setOffsetWid(document.documentElement.clientWidth);
+    }); //移除偵測寬度改變
+  }, [offsetWid]);
+  useEffect(() => {
+    let f;
+    window.addEventListener("scroll", scrollHiddenNav);
+    return () => {
+      window.removeEventListener("scroll", scrollHiddenNav);
+    };
+  }, [window.scrollY]);
+  const isSucessfulGetData = useFirstTimeLoadData();
+  // const isSucessfulGetData = useLoadData(useSelector((s) => s.loginStatus));
+
+  useEffect(() => {
+    return () => {};
+  }, [isSucessfulGetData]);
+  let loginStatus = useSelector((s) => s.loginStatus);
+  let account = useSelector((s) => s.member.account);
+  let memberListFlag = useSelector((s) => s.flag);
+  const scrollHiddenNav = () => {
+    let f;
+    window.scrollY > lastScrollY ? (f = false) : (f = true);
+    setLastScrollY(window.scrollY);
+    setNavFlag(f);
+  };
   const onChangeRouter = (router) => {
     setPhoneNavFlag(false);
     history.push(router);
   };
-  useEffect(() => {
-    const asyncFunc = async () => {
-      const result = await getPrivateMemberInfo()
-      console.log('getPrivateMemberInfo:', result);
-      if (result) {
-
-      }
-      else {
-        console.log('login xxxxxxxxxx:');
-        onChangeRouter('/login')
-      }
-    }
-    asyncFunc();
-
-    let memberData = initialMember();
-    let updateLoginStatusData = updateLoginStatus(false);
-    let memberStatusData = initialMemberStatus();
-    const {
-      id,
-      account,
-      userName,
-      email,
-      publicKey,
-      isMember,
-      isReviewer,
-      isPublisher,
-    } = getLocalStorageData(localStorage);
-
-    if (localStorage.getItem(ILocalStorage.getMemberId) != null) {
-      memberData = updateMember({
-        id,
-        account,
-        userName,
-        email,
-        publicKey,
-      });
-      updateLoginStatusData = updateLoginStatus(true);
-      // memberStatusData = updateMemberStatus(
-      //   Boolean(isMember),
-      //   Boolean(isReviewer),
-      //   Boolean(isPublisher)
-      // );
-    }
-    memberStatusData = updateMemberStatus(isMember, isReviewer, isPublisher);
-    console.log('memberStatusData:', memberStatusData);
-    dispatch(updateLoginStatusData);
-    dispatch(memberData);
-    dispatch(memberStatusData);
-    setOffsetWid(document.documentElement.clientWidth)
-    window.addEventListener('resize', e => { setOffsetWid(document.documentElement.clientWidth) });//註冊偵測寬度改變
-    return (
-      window.removeEventListener('resize', e => { setOffsetWid(document.documentElement.clientWidth) })//移除偵測寬度改變
-    )
-  }, [offsetWid]);
-  useEffect(() => {
-    let f
-    window.addEventListener('scroll', scrollHiddenNav)
-    return () => {
-      window.removeEventListener('scroll', scrollHiddenNav)
-    }
-  }, [window.scrollY]);
-
-  const loginStatus = useSelector((s) => s.loginStatus);
-  const account = useSelector((s) => s.member.account);
-  const memberListFlag = useSelector((s) => s.flag);
-  const scrollHiddenNav = () => {
-    let f
-    window.scrollY > lastScrollY ? f = false : f = true
-    setLastScrollY(window.scrollY)
-    setNavFlag(f);
-  }
   const onClickLogout = async () => {
     let memberData = wontUpdateMember();
     memberData = initialMember();
@@ -120,18 +79,21 @@ const NavBar = () => {
   };
 
   const onClickMemberListFlag = () => {
-    if (offsetWid < 810) return
+    if (offsetWid < 810) return;
     dispatch(setMemberListFlag());
   };
 
   const onClickPhoneNavFlag = () => {
-    setPhoneNavFlag(!phoneNavFlag)
-  }
+    setPhoneNavFlag(!phoneNavFlag);
+  };
   const onClickPixelGamePage = () => {
     history.push("/pixelGame");
   };
   return (
-    <div className={"navBar"} style={navFlag ? { top: '0px' } : { top: '-65px' }}>
+    <div
+      className={"navBar"}
+      style={navFlag ? { top: "0px" } : { top: "-65px" }}
+    >
       <div className="container">
         <div className="navContent">
           <div>
@@ -143,10 +105,32 @@ const NavBar = () => {
               onClick={() => onChangeRouter("/")}
             />
           </div>
-          <div className={offsetWid < 810 ? "hambergurButton" : "none"} onClick={onClickPhoneNavFlag}><MenuIcon /></div>
+          <div
+            className={offsetWid < 810 ? "hambergurButton" : "none"}
+            onClick={onClickPhoneNavFlag}
+          >
+            <MenuIcon />
+          </div>
           {/* <div className={phoneNavFlag ? "responsiveNav" : "none"}> */}
-          <div className={"closeNavButton"} style={offsetWid < 810 && phoneNavFlag ? { opacity: 1, visibility: 'visible' } : { opacity: 0, visibility: 'hidden' }} onClick={onClickPhoneNavFlag}><CloseOutlinedIcon fontSize='large' /></div>
-          <div className={"responsiveNav"} style={offsetWid < 810 && !phoneNavFlag ? { right: '-800px' } : { right: "0" }}>
+          <div
+            className={"closeNavButton"}
+            style={
+              offsetWid < 810 && phoneNavFlag
+                ? { opacity: 1, visibility: "visible" }
+                : { opacity: 0, visibility: "hidden" }
+            }
+            onClick={onClickPhoneNavFlag}
+          >
+            <CloseOutlinedIcon fontSize="large" />
+          </div>
+          <div
+            className={"responsiveNav"}
+            style={
+              offsetWid < 810 && !phoneNavFlag
+                ? { right: "-800px" }
+                : { right: "0" }
+            }
+          >
             <div className="linkList">
               <div>新聞</div>
               <div>討論</div>
@@ -167,13 +151,20 @@ const NavBar = () => {
                 註冊
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayNone"
-                  }`}
+                className={`${!loginStatus && "signinButton"} ${
+                  loginStatus && "navDisplayNone"
+                }`}
                 onClick={() => onChangeRouter("/login")}
               >
                 登入
               </button>
-              <div className={memberListFlag ? "memberList phoneDisplay" : "none phoneDisplay"}>
+              <div
+                className={
+                  memberListFlag
+                    ? "memberList phoneDisplay"
+                    : "none phoneDisplay"
+                }
+              >
                 <div
                   className="memberListItem"
                   onClick={() => {
@@ -205,11 +196,15 @@ const NavBar = () => {
                   <ExitToAppIcon fontSize="small" />
                   <div className="memberListItemTitle">登出</div>
                 </div>
-                <div className={offsetWid < 810 ? "none" : "fakeDiv"} onClick={onClickMemberListFlag}></div>
+                <div
+                  className={offsetWid < 810 ? "none" : "fakeDiv"}
+                  onClick={onClickMemberListFlag}
+                ></div>
               </div>
               <div
-                className={`${loginStatus && "navDisplayBlock" && "navUserInfo"
-                  } ${!loginStatus && "navDisplayNone"}`}
+                className={`${
+                  loginStatus && "navDisplayBlock" && "navUserInfo"
+                } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickMemberListFlag}
               >
                 <div className="navUserInfoID">{account}</div>

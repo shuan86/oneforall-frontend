@@ -1,17 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { EnrollLoginFiled as Field } from "../FormField/FormField";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import * as memberMoudel from "../../modules/member";
 import * as localStorage from "../../modules/localstorage";
-
-import {
-  initialMember,
-  updateMember,
-  updateLoginStatus,
-  updateMemberStatus,
-  initialMemberStatus,
-} from "../../actions/actions";
+import { useAfterLoginLoadData } from "../../hooks/useLoadData";
+import { useHistory } from "react-router-dom";
 
 const LoginForm = () => {
   const [account, setAccountId] = useState("c");
@@ -20,41 +12,26 @@ const LoginForm = () => {
     account: "",
     password: "",
   });
+  const [isSucessfulLogin, setIsSucessfulLogin] = useState(false);
   const history = useHistory();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  // const isNotFirst = useFirstUpdate();
   const onClickSubmit = async () => {
-    let loginData = initialMember();
-    let loginStatusData = updateLoginStatus(false);
-    let memberStatusData = initialMemberStatus();
     const memberData = await memberMoudel.login(account, password);
     console.log("memberData:", memberData);
-    if (memberData) {
-      localStorage.saveAllData(
-        memberData.memberId,
-        memberData.token,
-        memberData.account,
-        memberData.userName,
-        memberData.email,
-        memberData.publicKey,
-        memberData.isMember,
-        memberData.isReviewer,
-        memberData.isPublisher
-      );
-      loginData = updateMember(memberData);
-      loginStatusData = updateLoginStatus(true);
-      memberStatusData = updateMemberStatus(
-        memberData.isMember,
-        memberData.isReviewer,
-        memberData.isPublisher
-      );
-      history.push("/index");
-    } else {
+
+    if (!memberData) {
       alert("login fail");
+    } else {
     }
-    dispatch(loginStatusData);
-    dispatch(loginData);
-    dispatch(memberStatusData);
+
+    setIsSucessfulLogin(memberData ? true : false);
   };
+  const isSucessfulGetData = useAfterLoginLoadData(isSucessfulLogin);
+  useEffect(() => {
+    if (isSucessfulGetData) history.push("/index");
+    return () => {};
+  }, [isSucessfulGetData]);
   return (
     <div className="enrollInfo">
       <div className="enrollContent">

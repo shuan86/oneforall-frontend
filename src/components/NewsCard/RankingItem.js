@@ -30,7 +30,6 @@ const RankingItem = ({
     <div className="rankingItem">
       <a href="#" className={"rankingPosition"} onClick={onClickSetRankingFlag}>
         <div className={"rankAccount"}>
-          {console.log('expMappingBadge:', expMappingBadge(exp))}
           <span>{memberName}</span>
           <img src={expMappingBadge(exp)} alt="medals" className="medals" />
         </div>

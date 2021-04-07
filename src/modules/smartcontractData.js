@@ -1,4 +1,4 @@
-export const developContractAddr = "0xDBC108C2dD665F8D8dace9ddef8A72aD400aDC56";
+export const developContractAddr = "0xF6B9BFD74272E0b6cd2Fc6c6d1bB0d8B237672BB";
 export const productionContractAddr =
   "0x4db118D49E4E1c4B4f959af3CF7F17b3d3A26fAF";
 

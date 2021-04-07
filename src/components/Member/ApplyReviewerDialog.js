@@ -35,14 +35,11 @@ const FormDialog = () => {
 
   const [tagKind, setTagKind] = React.useState([]);
   let tmpTagArray = [];
-  console.log(`applyContent:${applyContent},email:${email},tag:${tag}`);
   useEffect(() => {
     for (const t of Object.keys(ArticleTagKind)) {
       tmpTagArray.push(t);
-      console.log("data:", t);
     }
     setTagKind(tmpTagArray);
-    console.log("tmpTagArray:", tmpTagArray);
   }, []);
 
   const handleClickOpen = () => {

@@ -10,6 +10,8 @@ import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
 import Copper10 from "../../public/images/medals/copper10.png";
 import { getMemberInfo, expMappingBadge } from "../../modules/member";
+import { useHistory } from "react-router-dom";
+
 const MemberCard = () => {
   return (
     <div className={"personalInfo"}>
@@ -50,7 +52,7 @@ const MemberInformation = ({ memberInfoFlag, memberId }) => {
     };
     asyncFunc();
 
-    return () => { };
+    return () => {};
   }, [memberInfoFlag]);
 
   return (
@@ -63,7 +65,11 @@ const MemberInformation = ({ memberInfoFlag, memberId }) => {
         <div className={"userAccount"}>
           <div className="userAccountID">
             <p>{memberInfoState.account}</p>
-            <img src={expMappingBadge(memberInfoState.exp)} alt="medals" className="medals" />
+            <img
+              src={expMappingBadge(memberInfoState.exp)}
+              alt="medals"
+              className="medals"
+            />
           </div>
           <p>{memberInfoState.exp}分</p>
           <p>註冊日期：{memberInfoState.createTime}</p>
@@ -81,8 +87,9 @@ const MemberInformation = ({ memberInfoFlag, memberId }) => {
 const VistorRight = ({
   isPublisher,
   isReviewer,
-  onClickChangeMemberStatus,
-  EnumMemberStatus,
+  exp,
+  fllowerAmount,
+  reportedVoteArticleArray,
 }) => {
   return (
     <div className="memberRight">
@@ -91,18 +98,19 @@ const VistorRight = ({
         <div className={"tablePosition"}>
           <div className={"memberScore"}>
             <p>積分</p>
-            <p>1283</p>
+            <p>{exp}</p>
           </div>
           <div className={"memberFollower"}>
             <p>已追蹤</p>
-            <p>83</p>
+            <p>{fllowerAmount}</p>
           </div>
         </div>
         <div className="missionBtn">
           {/* <button>我要發文</button> */}
           <button
-            onClick={() => { console.log('發文'); }
-            }
+            onClick={() => {
+              console.log("發文");
+            }}
           >
             我要發文討論
           </button>
@@ -112,20 +120,25 @@ const VistorRight = ({
       </div>
       <div className={"memberInform"}>
         <p>投票紀錄</p>
-        <VoteContent />
-        <VoteContent />
-        <VoteContent />
+
+        {reportedVoteArticleArray.length == 0 && <p>尚未有票紀錄</p>}
+
+        {reportedVoteArticleArray.map((value, index) => {
+          const { articleId, title, time } = value;
+          return (
+            <div className={"informContainer"}>
+              <p>{title}</p>
+              <p>{time}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 };
 
-const ReviewerRight = ({
-  isPublisher,
-  isReviewer,
-  onClickChangeMemberStatus,
-  EnumMemberStatus,
-}) => {
+const ReviewerRight = ({ exp, fansAmount, reviewerCanReviewArticleArray }) => {
+  const history = useHistory();
   return (
     <div className="memberRight">
       <div className={"memberTable"}>
@@ -133,48 +146,43 @@ const ReviewerRight = ({
         <div className={"tablePosition"}>
           <div className={"memberScore"}>
             <p>積分</p>
-            <p>1283</p>
+            <p>{exp}</p>
           </div>
           <div className={"memberFollower"}>
             <p>追蹤</p>
-            <p>83</p>
+            <p>{fansAmount}</p>
           </div>
         </div>
         <div className={"adviseMission"}>
           <p>審核任務</p>
-          <MissionContent />
+          {reviewerCanReviewArticleArray.length == 0 && <p>尚未有審查任務</p>}
+          {reviewerCanReviewArticleArray.map((value, index) => {
+            const { articleId, title, time } = value;
+            return (
+              <div key={articleId} className={"informContainer"}>
+                <p>{title}</p>
+              </div>
+            );
+          })}
           <div className="missionBtn">
             <button
-              onClick={() =>
-                onClickChangeMemberStatus(EnumMemberStatus.reviewer)
-              }
+              onClick={() => {
+                history.push("/reviewer");
+              }}
             >
               我要審查
             </button>
           </div>
           <div className="missionBtn">
-            {isReviewer ? (
-              <button
-                onClick={() =>
-                  onClickChangeMemberStatus(EnumMemberStatus.reviewer)
-                }
-              >
-                我要審查文章
-              </button>
-            ) : null}
-          </div>
-        </div>
-        {/* {isPublisher == false ? (
-          <div className="missionBtn">
             <button
-              onClick={() =>
-                onClickChangeMemberStatus(EnumMemberStatus.publisher)
-              }
+              onClick={() => {
+                history.push("/reviewer");
+              }}
             >
-              我要發文討論
+              我要審查文章
             </button>
           </div>
-        ) : null} */}
+        </div>
       </div>
       <div className={"memberInform"}>
         <p>通知</p>
@@ -187,6 +195,8 @@ const ReviewerRight = ({
 };
 
 const AuthorRight = ({ onClickChangeMemberStatus, EnumMemberStatus }) => {
+  const history = useHistory();
+
   return (
     <div className="memberRight">
       <div className={"memberTable"}>
@@ -195,7 +205,13 @@ const AuthorRight = ({ onClickChangeMemberStatus, EnumMemberStatus }) => {
           <p>已提交新聞數</p>
           <p>128</p>
         </div>
-        <div className={"missionBtn"} onClick={() => onClickChangeMemberStatus(EnumMemberStatus.publisher)}>
+        <div
+          className={"missionBtn"}
+          onClick={() => {
+            // onClickChangeMemberStatus(EnumMemberStatus.publisher);
+            history.push("/publisher");
+          }}
+        >
           <button>我要發表新聞</button>
         </div>
       </div>

@@ -82,34 +82,26 @@ const NewsCardReviewed = ({ likeAmount, commentAmount, isMemberLike }) => {
 };
 
 const NewsCardTop = ({ articleStatus, voteResult }) => {
-  const [status, setStatus] = useState('未審核')
+  const [status, setStatus] = useState("未審核");
   useEffect(() => {
-    let s = status
+    let s = status;
     if (articleStatus == ArticleStatus.unreview) {
-      s = '未審核'
-    }
-    else if (articleStatus == ArticleStatus.underReview) {
-      s = '審核中'
-    }
-    else if (articleStatus == ArticleStatus.verified) {
+      s = "未審核";
+    } else if (articleStatus == ArticleStatus.underReview) {
+      s = "審核中";
+    } else if (articleStatus == ArticleStatus.verified) {
       if (voteResult == VotedResultStatus.realNews) {
-        s = '真新聞'
-      }
-      else if (voteResult == VotedResultStatus.fakeNews) {
-        s = '假新聞'
-      }
-      else if (voteResult == VotedResultStatus.reportedAgain) {
-        s = '重新審核'
+        s = "真新聞";
+      } else if (voteResult == VotedResultStatus.fakeNews) {
+        s = "假新聞";
+      } else if (voteResult == VotedResultStatus.reportedAgain) {
+        s = "重新審核";
       }
     }
-    console.log('articleStatus xxx:', articleStatus);
 
-    console.log('voteResult xxx:', voteResult);
-    setStatus(s)
-    return () => {
-
-    }
-  }, [articleStatus, voteResult])
+    setStatus(s);
+    return () => {};
+  }, [articleStatus, voteResult]);
   return (
     <div className="cardTop">
       <div className="status">{status}</div>
@@ -174,11 +166,11 @@ const NewsCardContent = ({
 
     setImageState(base64String);
     setTagsData(tags);
-    return () => { }; //
+    return () => {}; //
   }, []);
   useEffect(() => {
     setNeedReadMoreFlag(content.length > shortMaxStrLength ? true : false);
-    return () => { };
+    return () => {};
   }, [content]);
 
   const onClickReadMore = () => {
@@ -222,7 +214,8 @@ const NewsCardContent = ({
       </div>
       <div className="article">
         <h3>{title}</h3>
-        {articleStatus == ArticleStatus.underReview || articleStatus == ArticleStatus.verified ? (
+        {articleStatus == ArticleStatus.underReview ||
+        articleStatus == ArticleStatus.verified ? (
           <div>
             <p> reportedtAccount:{reportedtAccount}</p>
             <p> evidence:{evidence}</p>
@@ -331,7 +324,6 @@ const NewsCardComment = ({
     setReportedDisagreeVoteState(reportedDisagreeVote);
     setReportedAgreeAmount(reportedAgreeAmount);
     setReportedDisagreeAmount(reportedDisagreeAmount);
-    console.log("reportedDisagreeAmount:", reportedDisagreeAmount);
   }, []);
 
   const onClickCommentCollapse = () => {
@@ -364,7 +356,7 @@ const NewsCardComment = ({
     setOpenCommentFlag((pre) => {
       return selectArticleId != articleId ? false : true;
     });
-    return () => { };
+    return () => {};
   }, [selectArticleId]);
   useEffect(() => {
     if (openCommentFlag) {
@@ -385,7 +377,7 @@ const NewsCardComment = ({
       const result = openCommentFlag ? articleId : pre;
       return result;
     });
-    return () => { };
+    return () => {};
   }, [openCommentFlag]);
 
   const onClickLike = async () => {
@@ -476,7 +468,11 @@ const NewsCardComment = ({
         </div>
         <div className={isReviewedCard == false ? "none" : "null"}>
           <button
-            style={{ backgroundColor: reportedAgreeVoteState ? "var(--deep-blue)" : null }}
+            style={{
+              backgroundColor: reportedAgreeVoteState
+                ? "var(--deep-blue)"
+                : null,
+            }}
             onClick={() => {
               onClickAgreeVote(true);
             }}
@@ -486,7 +482,11 @@ const NewsCardComment = ({
         </div>
         <div className={isReviewedCard == false ? "none" : "null"}>
           <button
-            style={{ backgroundColor: reportedDisagreeVoteState ? "var(--deep-blue)" : null }}
+            style={{
+              backgroundColor: reportedDisagreeVoteState
+                ? "var(--deep-blue)"
+                : null,
+            }}
             onClick={() => {
               onClickAgreeVote(false);
             }}

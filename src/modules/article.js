@@ -14,8 +14,11 @@ export const ArticleStatus = {
   verified: 3,
 };
 export const VotedResultStatus = {
-  noResultYet: 0, realNews: 1, fakeNews: 2, reportedAgain: 3
-}
+  noResultYet: 0,
+  realNews: 1,
+  fakeNews: 2,
+  reportedAgain: 3,
+};
 export const ArticleTagKind = {
   sport: false,
   food: false,
@@ -30,6 +33,20 @@ export const getNews = async (startIndex, endIndex) => {
     }
   } catch (error) {
     console.error("getNews error:", error);
+  }
+
+  return null;
+};
+export const getArticleTitles = async (articleIdArray) => {
+  try {
+    console.log("getArticleTitles:", articleIdArray);
+    const data = { articleIdArray };
+    const result = await sendRequest.getRequest("/articleTitles", data);
+    if (result && result.status == 200) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("getArticleTitles error:", error);
   }
 
   return null;

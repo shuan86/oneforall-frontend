@@ -9,16 +9,26 @@ import Gold200 from "../public/images/medals/gold200.png";
 import Gold500 from "../public/images/medals/gold500.png";
 
 export const Gender = {
-  female: 0, male: 1
-}
+  female: 0,
+  male: 1,
+};
 export const Education = {
-  kindergarten: 0, elementarySchool: 1, juniorHighSchool: 2, seniorHighSchool: 3, university: 4, graduateSchool: 5, doctoralProgram: 6, other: 7
-}
+  kindergarten: 0,
+  elementarySchool: 1,
+  juniorHighSchool: 2,
+  seniorHighSchool: 3,
+  university: 4,
+  graduateSchool: 5,
+  doctoralProgram: 6,
+  other: 7,
+};
 export const login = async (account, password) => {
   try {
     const data = { account: account, password: password };
     const result = await sendRequest.rsaPostRequest("/login", data);
     if (result.status == 200) {
+      localStorage.saveMemberId(result.data.memberId);
+      localStorage.saveToken(result.data.token);
       return result.data;
     }
     return null;
@@ -27,6 +37,29 @@ export const login = async (account, password) => {
   }
   return null;
 };
+export const loadMemberInfo = async () => {
+  const privateMemberInfo = await getPrivateMemberInfo();
+  if (privateMemberInfo) {
+    localStorage.savePrivateInfo(
+      privateMemberInfo.account,
+      privateMemberInfo.userName,
+      privateMemberInfo.email,
+      privateMemberInfo.publicKey,
+      privateMemberInfo.fllowerAmount,
+      privateMemberInfo.exp,
+      privateMemberInfo.createTime,
+      privateMemberInfo.reportedVoteArticleIdArray,
+      privateMemberInfo.revieweArticleIdArray,
+      privateMemberInfo.publishArticleIdArray,
+      privateMemberInfo.isMember,
+      privateMemberInfo.isReviewer,
+      privateMemberInfo.isPublisher
+    );
+    return privateMemberInfo;
+  }
+  return null;
+};
+
 // export const loginBodyData = {
 //   account: "",
 //   password: "",
@@ -46,7 +79,18 @@ export const logout = async () => {
 
   return result;
 };
-export const enroll = async (account, password, userName, profession, age, gender, education, department, email, publicKey) => {
+export const enroll = async (
+  account,
+  password,
+  userName,
+  profession,
+  age,
+  gender,
+  education,
+  department,
+  email,
+  publicKey
+) => {
   try {
     const data = {
       account,
@@ -119,24 +163,19 @@ export const getTopMember = async () => {
 };
 export const expMappingBadge = (exp) => {
   // const levelArray = [10, 20, 30, 40, 50, 60]
-  const levelArray = [1, 2, 3, 4, 5, 6]
+  const levelArray = [1, 2, 3, 4, 5, 6];
 
   if (exp <= levelArray[0]) {
     return Copper10;
-  }
-  else if (levelArray[0] > exp && exp <= levelArray[1]) {
+  } else if (levelArray[0] > exp && exp <= levelArray[1]) {
     return Copper30;
-  }
-  else if (levelArray[1] > exp && exp <= levelArray[2]) {
+  } else if (levelArray[1] > exp && exp <= levelArray[2]) {
     return Silver70;
-  }
-  else if (levelArray[2] > exp && exp <= levelArray[3]) {
+  } else if (levelArray[2] > exp && exp <= levelArray[3]) {
     return Silver120;
-  }
-  else if (levelArray[3] > exp && exp <= levelArray[4]) {
+  } else if (levelArray[3] > exp && exp <= levelArray[4]) {
     return Gold200;
-  }
-  else {
+  } else {
     return Gold500;
   }
-}
+};

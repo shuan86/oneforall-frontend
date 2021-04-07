@@ -22,7 +22,13 @@ class LocalStorage {
     this.token = "token";
     this.email = "email";
     this.publicKey = "publicKey";
-    this.isVistor = "isVistor";
+    this.fllowerAmount = "fllowerAmount";
+    this.exp = "exp";
+    this.createTime = "createTime";
+    this.reportedVoteArticleIdArray = "reportedVoteArticleIdArray";
+    this.revieweArticleIdArray = "revieweArticleIdArray";
+    this.publishArticleIdArray = "publishArticleIdArray";
+    this.isMember = "isMember";
     this.isReviewer = "isReviewer";
     this.isPublisher = "isPublisher";
   }
@@ -44,8 +50,26 @@ class LocalStorage {
   get getPublicKey() {
     return this.publicKey;
   }
-  get getIsVistor() {
-    return this.isVistor;
+  get getFllowerAmount() {
+    return this.fllowerAmount;
+  }
+  get getExp() {
+    return this.isPublisher;
+  }
+  get getCreateTime() {
+    return this.createTime;
+  }
+  get getReportedVoteArticleIdArray() {
+    return this.reportedVoteArticleIdArray;
+  }
+  get getRevieweArticleIdArray() {
+    return this.revieweArticleIdArray;
+  }
+  get getPublishArticleIdArray() {
+    return this.publishArticleIdArray;
+  }
+  get getIsMember() {
+    return this.isMember;
   }
   get getIsReviewer() {
     return this.isReviewer;

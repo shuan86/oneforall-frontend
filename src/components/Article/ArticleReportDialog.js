@@ -18,43 +18,53 @@ const FormDialog = ({
   selectedData,
 }) => {
   const [articleData, setArticleData] = useState({});
+  const [imageState, setImageState] = useState("");
+  const [imageUrtlState, setImageUrlState] = useState("");
   const handleClose = () => {
     setOpen(false);
   };
   useEffect(() => {
+    let articleData;
+    let base64String = "";
+    let tmpImgUrlData = "";
     const asyncFunc = async () => {
       if (isOpen) {
         const result = await getArticle(selectedData.articleId);
         if (result) {
-          console.log('result:', result);
+          articleData = result;
           if (result.imagesUrl) {
-            console.log('imagesUrl:');
-
-          }
-          else {
-            console.log('images:');
+            console.log("imagesUrl:");
+          } else {
+            console.log("images:");
 
             result.images[0] = await getBase64Str(result.images[0]);
+            base64String = result.images[0];
           }
         }
-        setArticleData((pre) => (result ? result : pre));
 
+        if (result.imagesUrl.length > 0) {
+          const { data: imgUrlData } = result.imagesUrl[0];
+
+          tmpImgUrlData = imgUrlData;
+        }
       }
+      setArticleData((pre) => (articleData ? articleData : pre));
+      setImageState(base64String);
+      setImageUrlState(isOpen && tmpImgUrlData ? tmpImgUrlData : "");
     };
     asyncFunc();
-    return () => { };
+    return () => {};
   }, [selectedData]);
 
   return (
-
-    <div  >
+    <div>
       <div>
         <Dialog
           open={isOpen}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
           maxWidth={"1000px"}
-          style={{ height: "100%", weidth: "600px", marginTop: '50px' }}
+          style={{ height: "100%", weidth: "600px", marginTop: "50px" }}
         >
           <DialogTitle id="form-dialog-title">假新聞簽核表格</DialogTitle>
 
@@ -66,31 +76,16 @@ const FormDialog = ({
               內容:{articleData.content}
             </DialogContentText>
 
-            <img
-
-              src={
-                articleData.imagesUrl
-                  ? articleData.imagesUrl[0].data
-                  : ""
-              }
-              alt=""
-            />
-            <img
-              src={
-                articleData.images
-                  ? articleData.images[0]
-                  : ""
-              }
-              alt=""
-            />
-            <DialogContentText >
+            <img src={imageUrtlState ? imageUrtlState : ""} alt="" />
+            <img src={imageState ? imageState : ""} alt="" />
+            <DialogContentText>
               <TextareaAutosize
                 rows={4}
                 rowsMax={4}
                 aria-label="maximum height"
                 placeholder="請輸入原因(限100字)"
                 defaultValue=""
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
                 onChange={onReasonChange}
               />
             </DialogContentText>
