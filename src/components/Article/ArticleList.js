@@ -26,7 +26,7 @@ const ArticleList = ({ articleStatus, selectedArticleStatus }) => {
   );
 
   useEffect(() => {
-    return () => { };
+    return () => {};
   }, []);
 
   const observer = useRef();
@@ -65,8 +65,9 @@ const ArticleList = ({ articleStatus, selectedArticleStatus }) => {
         setContractNewsData((pre) => [...pre, ...tmpArray]);
       }
     };
-    if (contract.checkContractIsOpen() && loading == false)
-      excuteContract(pageNaumber * eveyRequestDataAmount);
+    // if (contract.checkContractIsOpen() && loading == false) {
+    //   excuteContract(pageNaumber * eveyRequestDataAmount);
+    // }
   }, [loading]);
   const lastElementRef = (node) => {
     if (loading) return;

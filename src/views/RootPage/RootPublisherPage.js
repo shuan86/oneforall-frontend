@@ -97,7 +97,9 @@ const PublisherPage = () => {
       }
       setApplyPublisherState((pre) => [...pre, ...publisherList]);
     };
-    if (isDbDataLoadedFlag && contract.checkContractIsOpen()) excuteContract();
+    // if (isDbDataLoadedFlag && contract.checkContractIsOpen()) {
+    //   excuteContract();
+    // }
   }, [isDbDataLoadedFlag]);
   return (
     <div>

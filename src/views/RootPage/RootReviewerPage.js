@@ -99,7 +99,9 @@ const ReviewerPage = () => {
       }
       setApplyReviewerState((pre) => [...pre, ...reviewerList]);
     };
-    if (isDbDataLoadedFlag && contract.checkContractIsOpen()) excuteContract();
+    // if (isDbDataLoadedFlag && contract.checkContractIsOpen()) {
+    //   excuteContract();
+    // }
   }, [isDbDataLoadedFlag]);
   return (
     <div>
