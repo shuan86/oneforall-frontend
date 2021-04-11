@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/shuan86/oneforall-frontend/static/css/main.f7362413.chunk.css",
+    "main.js": "/shuan86/oneforall-frontend/static/js/main.ada66e5b.chunk.js",
+    "main.js.map": "/shuan86/oneforall-frontend/static/js/main.ada66e5b.chunk.js.map",
+    "runtime-main.js": "/shuan86/oneforall-frontend/static/js/runtime-main.fae56aae.js",
+    "runtime-main.js.map": "/shuan86/oneforall-frontend/static/js/runtime-main.fae56aae.js.map",
+    "static/js/2.c01d47b8.chunk.js": "/shuan86/oneforall-frontend/static/js/2.c01d47b8.chunk.js",
+    "static/js/2.c01d47b8.chunk.js.map": "/shuan86/oneforall-frontend/static/js/2.c01d47b8.chunk.js.map",
+    "index.html": "/shuan86/oneforall-frontend/index.html",
+    "static/css/main.f7362413.chunk.css.map": "/shuan86/oneforall-frontend/static/css/main.f7362413.chunk.css.map",
+    "static/js/2.c01d47b8.chunk.js.LICENSE.txt": "/shuan86/oneforall-frontend/static/js/2.c01d47b8.chunk.js.LICENSE.txt",
+    "static/media/HistoryIcon.bb254112.svg": "/shuan86/oneforall-frontend/static/media/HistoryIcon.bb254112.svg",
+    "static/media/Logo.edb30503.svg": "/shuan86/oneforall-frontend/static/media/Logo.edb30503.svg",
+    "static/media/NavBar.css": "/shuan86/oneforall-frontend/static/media/SearchIcon.22902d45.svg",
+    "static/media/articleImg.ca62684c.jpg": "/shuan86/oneforall-frontend/static/media/articleImg.ca62684c.jpg",
+    "static/media/audience.ec2f7505.jpg": "/shuan86/oneforall-frontend/static/media/audience.ec2f7505.jpg",
+    "static/media/author.b6d1d04b.jpg": "/shuan86/oneforall-frontend/static/media/author.b6d1d04b.jpg",
+    "static/media/copper10.43f12b3a.png": "/shuan86/oneforall-frontend/static/media/copper10.43f12b3a.png",
+    "static/media/copper30.d790059e.png": "/shuan86/oneforall-frontend/static/media/copper30.d790059e.png",
+    "static/media/gold200.7665b3de.png": "/shuan86/oneforall-frontend/static/media/gold200.7665b3de.png",
+    "static/media/gold500.dca01657.png": "/shuan86/oneforall-frontend/static/media/gold500.dca01657.png",
+    "static/media/inspector.e320bae0.jpg": "/shuan86/oneforall-frontend/static/media/inspector.e320bae0.jpg",
+    "static/media/silver120.d990c342.png": "/shuan86/oneforall-frontend/static/media/silver120.d990c342.png",
+    "static/media/silver70.626e581f.png": "/shuan86/oneforall-frontend/static/media/silver70.626e581f.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fae56aae.js",
+    "static/js/2.c01d47b8.chunk.js",
+    "static/css/main.f7362413.chunk.css",
+    "static/js/main.ada66e5b.chunk.js"
+  ]
+}
