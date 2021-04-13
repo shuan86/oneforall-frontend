@@ -11,6 +11,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import MenuIcon from "@material-ui/icons/Menu";
+import authorImg from "../../public/images/author.jpg";
+
 import {
   initialMember,
   wontUpdateMember,
@@ -50,7 +52,7 @@ const NavBar = () => {
   // const isSucessfulGetData = useLoadData(useSelector((s) => s.loginStatus));
 
   useEffect(() => {
-    return () => {};
+    return () => { };
   }, [isSucessfulGetData]);
   let loginStatus = useSelector((s) => s.loginStatus);
   let account = useSelector((s) => s.member.account);
@@ -155,7 +157,7 @@ const NavBar = () => {
               <button
                 className={`${!loginStatus && "signinButton"} ${
                   loginStatus && "navDisplayNone"
-                }`}
+                  }`}
                 onClick={() => onChangeRouter("/login")}
               >
                 登入
@@ -206,12 +208,12 @@ const NavBar = () => {
               <div
                 className={`${
                   loginStatus && "navDisplayBlock" && "navUserInfo"
-                } ${!loginStatus && "navDisplayNone"}`}
+                  } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickMemberListFlag}
               >
                 <div className="navUserInfoID">{account}</div>
                 <img
-                  src="static/media/author.7613283f.jpg"
+                  src={authorImg}
                   alt="Background"
                   className="navUserInfoPhoto"
                 ></img>

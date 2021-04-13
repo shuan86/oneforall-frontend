@@ -1,9 +1,10 @@
 {
-  "SERVER_URL": "http://127.0.0.1:3000/api",
+  "SERVER_URL": "http://oneforall-env-1.eba-p2pspuwy.us-east-2.elasticbeanstalk.com",
+  "SERVER_URL1": "http://localhost:8080",
   "PUBLIC_KEY": "-----BEGIN PUBLIC KEY----- MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDPYoHcZNV1bR/O6Km+z04SzPtG smQhjZRutLpbhLIhZWL7gQI+Q2AisFekXKa6fJDZC9/h++l8J3MOz6PEH/gBpd/h 0rgobiY1pQvpbQp8e8kcFNEuSUTsi5YPvZAkjHJTHSo1PVoXUEaPjXbJnWJLUb+p r0KuJ6OAFGkfgmuqFQIDAQAB -----END PUBLIC KEY-----",
   "THEME_COLORS": {
     "PRIMARY": "#007bff",
     "SECONDARY": "#fc3"
   },
-  "NODE_ENV": "development"
+  "NODE_ENV": "development1"
 }

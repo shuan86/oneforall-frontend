@@ -515,7 +515,7 @@
   display: block;
 }
 
-@media screen and (max-width: 810px) {
+@media screen and (max-width: 1000px) {
   .NewsCard {
     margin-right: 0;
   }

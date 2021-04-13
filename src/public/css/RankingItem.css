@@ -25,7 +25,7 @@
 }
 
 .rankingPosition:active {
-    background-color: var(--gray);
+    background-color: var(--black-alpha-15);
 }
 
 .rankingItemListTitle {

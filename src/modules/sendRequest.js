@@ -18,7 +18,7 @@ export const rsaTokenPostRequest = async (
   };
 
   const result = await axios.post(
-    configData.SERVER_URL + rout,
+    configData.SERVER_URL + "/api" + rout,
     bodyParameters,
     config
   );
@@ -37,7 +37,7 @@ export const tokenFilePostRequest = async (JWTtoken, rout, formData) => {
   };
 
   const result = await axios.post(
-    configData.SERVER_URL + rout,
+    configData.SERVER_URL + "/api" + rout,
     formData,
     config
   );
@@ -62,7 +62,7 @@ export const rsaTokenPutRequest = async (
     rsaData: encryptStr,
   };
   const result = await axios.put(
-    configData.SERVER_URL + rout,
+    configData.SERVER_URL + "/api" + rout,
     bodyParameters,
     config
   );
@@ -73,7 +73,7 @@ export const rsaTokenPutRequest = async (
 };
 export const getRequest = async (rout, dataObject) => {
   try {
-    const result = await axios.get(configData.SERVER_URL + rout, {
+    const result = await axios.get(configData.SERVER_URL + "/api" + rout, {
       params: { ...dataObject },
     });
     return result;
@@ -97,7 +97,7 @@ export const rsaTokenGetRequest = async (
     const bodyParameters = {
       rsaData: encryptStr,
     };
-    const result = await axios.get(configData.SERVER_URL + rout, {
+    const result = await axios.get(configData.SERVER_URL + "/api" + rout, {
       headers: { Authorization: ` ${JWTtoken}` },
       params: { ...bodyParameters },
     });
@@ -114,7 +114,10 @@ export const rsaPostRequest = async (rout, dataObject) => {
   const bodyParameters = {
     rsaData,
   };
-  const result = await axios.post(configData.SERVER_URL + rout, bodyParameters);
+  const result = await axios.post(
+    configData.SERVER_URL + "/api" + rout,
+    bodyParameters
+  );
   if (result.status == 200) {
     console.log("sendPostRequest sucessful");
   }
@@ -135,7 +138,7 @@ export const rsaTokenDeleteRequest = async (
     rsaData: encryptStr,
   };
   const result = await axios.delete(
-    configData.SERVER_URL + rout,
+    configData.SERVER_URL + "/api" + rout,
     {
       ...config,
       data: { ...bodyParameters },

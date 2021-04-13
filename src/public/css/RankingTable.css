@@ -1,7 +1,3 @@
-.Ranking {
-    /* flex: 1; */
-}
-
 .rankingTable {
     display: inline-block;
     width: 370px;
@@ -16,12 +12,6 @@
 .rankingTable h2 {
     font-size: 1.5rem;
     padding-bottom: 16px;
-}
-
-@media screen and (max-width: 1000px) {
-    .rankingTable {
-        display: none;
-    }
 }
 
 .rankingName,

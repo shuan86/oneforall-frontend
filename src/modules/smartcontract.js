@@ -7,7 +7,7 @@ let contractAddr = developContractAddr;
 
 const contractABI = ABI;
 
-const Web3 = require("Web3");
+const Web3 = require("web3");
 // import { contractABI, contractAddr } from "./mockdata";
 import config from "../config.json";
 const Tx = require("ethereumjs-tx").Transaction;

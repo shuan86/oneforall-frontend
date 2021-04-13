@@ -1,0 +1,211 @@
+.lotteryTable {
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    /* background-color: black; */
+}
+
+.lotteryTable h2 {
+    font-size: 1.5rem;
+    padding-bottom: 16px;
+    color: var(--navy-blue);
+}
+
+.lotteryStartButton {
+    display: block;
+    width: 100%;
+    padding: 20px 0;
+    padding-left: 5px;
+    border-radius: 5px;
+    font-size: 20px;
+    text-align: start;
+    border: none;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.lotteryStartButton:hover {
+    background-color: var(--black-alpha-05);
+}
+
+.lotteryStartButton:active {
+    background-color: var(--black-alpha-15);
+}
+
+.lotteryTable .dialog {
+    position: fixed;
+    /* top: -1500px; */
+}
+
+.lotteryTable .dialog .front {
+    width: auto;
+    transform: translate(-50%, -50%);
+    margin: 50px auto 0 auto;
+    /* background-color: rgba(0, 0, 0, 0); */
+    background: none;
+}
+
+.gameArea {
+    position: absolute;
+    bottom: 260px;
+    left: -245px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    border: 3px dashed var(--white);
+    box-sizing: border-box;
+}
+
+.shuffleCard {
+    transform: translateX(0) !important;
+    transition: transform .8s ease-in-out;
+}
+
+.gameArea .lotteryCard:nth-child(1) {
+    color: red;
+    transform: translateX(120%);
+    transition: transform .8s ease-in-out;
+}
+
+.gameArea .lotteryCard:nth-child(2) {
+    color: green;
+}
+
+.gameArea .lotteryCard:nth-child(3) {
+    color: yellow;
+    transform: translateX(-120%);
+    transition: transform .8s ease-in-out;
+}
+
+@keyframes shuffle-card {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(120%);
+    }
+}
+
+.gameRequest {
+    margin-top: 60px;
+    padding: 0 30px;
+}
+
+.gameChance {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0;
+    width: auto;
+}
+
+.gameChanceDepiction {
+    font-size: 18px;
+    color: var(--white);
+}
+
+.gameChanceButton {
+    width: auto;
+    padding: 5px 80px;
+    border: 0;
+    background-color: var(--navy-blue);
+    color: var(--white);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.gameChanceButton:hover {
+    background-color: var(--deep-blue);
+}
+
+.gameChanceButton:active {
+    background-color: var(--deep-blue);
+    transform: scale(.9, .9);
+}
+
+.gameChanceButton:disabled {
+    background-color: var(--deep-blue);
+    opacity: .3;
+}
+
+.lotteryCard {
+    margin: 0 30px;
+    width: 200px;
+    height: 300px;
+    perspective: 1000px;
+}
+
+.lotteryCardInner {
+    width: 100%;
+    height: 100%;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    position: relative;
+}
+
+.lotteryCardFace {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0px 3px 18px 3px rgba(0, 0, 0, 0.2);
+}
+
+.lotteryCard .cardFront {
+    background-color: var(--white);
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardFront img {
+    width: 85%;
+    text-align: center;
+}
+
+.lotteryCardDescription {
+    font-size: 16px;
+    color: var(--black);
+    margin-bottom: 10px;
+}
+
+.lotteryCardButton {
+    width: 100%;
+    height: 100%;
+    padding: 3px 10px;
+    border: 0;
+    border-top: 1px solid var(--gray-border);
+    background-color: var(--white);
+    cursor: pointer;
+}
+
+.lotteryCardButton:hover {
+    background-color: var(--black-alpha-05);
+}
+
+.lotteryCardButton:active {
+    background-color: var(--black-alpha-15);
+}
+
+.lotteryCard .cardBack {
+    background-image: linear-gradient(to bottom right, var(--navy-blue), var(--deep-blue));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+}
+
+.lotteryCard .cardBack:hover {
+    background-image: linear-gradient(to bottom right, var(--deep-blue), var(--deep-blue));
+}
+
+.flipped {
+    transform: rotateY(180deg);
+}

@@ -10,10 +10,15 @@ export const pixelGameEvent = {
 
 export const connectPixelGameServer = () => {
   //開啟
+
   if (config.NODE_ENV == "development") {
-    ws = webSocket(`http://127.0.0.1:${port}`);
+    // ws = webSocket(`http://127.0.0.1:${port}`);
+    ws = webSocket(`http://127.0.0.1:8080`);
+    console.log("development url:http://127.0.0.1:8080");
   } else {
-    ws = webSocket(`http://localhost:${port}`);
+    const url = "oneforall-env-1.eba-p2pspuwy.us-east-2.elasticbeanstalk.com";
+    ws = webSocket(url);
+    console.log("production url:", url);
   }
 };
 export const startPixelGameWebSocket = (

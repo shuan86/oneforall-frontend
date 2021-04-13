@@ -9,6 +9,7 @@ import {
   NewsCard,
 } from "../NewsCard/NewsCard";
 import RankingTable from "../NewsCard/RankingTable";
+import {LotteryDrawCardGame as LotteryTable} from "../Lottery/LotteryGames";
 import ReportDialog from "../Report/ReportDialog";
 import * as contract from "../../modules/smartcontract";
 import useGetNews from "../../hooks/useGetNews";
@@ -131,8 +132,9 @@ const ArticleList = ({ articleStatus, selectedArticleStatus }) => {
               }
             })}
           </div>
-          <div className="Ranking">
+          <div className="secondaryElement">
             <RankingTable />
+            <LotteryTable />
           </div>
         </div>
       </div>
