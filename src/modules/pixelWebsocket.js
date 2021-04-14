@@ -1,5 +1,6 @@
 import webSocket from "socket.io-client";
 import config from "../config.json";
+
 const port = 3001;
 let ws = null;
 export const pixelGameEvent = {
@@ -13,12 +14,11 @@ export const connectPixelGameServer = () => {
 
   if (config.NODE_ENV == "development") {
     // ws = webSocket(`http://127.0.0.1:${port}`);
-    ws = webSocket(`http://127.0.0.1:8080`);
-    console.log("development url:http://127.0.0.1:8080");
+    ws = webSocket(config.SERVER_URL);
   } else {
-    const url = "oneforall-env-1.eba-p2pspuwy.us-east-2.elasticbeanstalk.com";
-    ws = webSocket(url);
-    console.log("production url:", url);
+
+    ws = webSocket(config.SERVER_URL);
+    console.log("production url:", config.SERVER_URL);
   }
 };
 export const startPixelGameWebSocket = (

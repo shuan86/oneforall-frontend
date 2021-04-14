@@ -1,5 +1,6 @@
 {
   "SERVER_URL": "https://oneforall.link",
+  "WEBSOCKET_URL:": "http://oneforall.link",
   "SERVER_URL1": "http://localhost:8080",
   "PUBLIC_KEY": "-----BEGIN PUBLIC KEY----- MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDPYoHcZNV1bR/O6Km+z04SzPtG smQhjZRutLpbhLIhZWL7gQI+Q2AisFekXKa6fJDZC9/h++l8J3MOz6PEH/gBpd/h 0rgobiY1pQvpbQp8e8kcFNEuSUTsi5YPvZAkjHJTHSo1PVoXUEaPjXbJnWJLUb+p r0KuJ6OAFGkfgmuqFQIDAQAB -----END PUBLIC KEY-----",
   "THEME_COLORS": {
