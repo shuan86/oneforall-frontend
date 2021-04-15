@@ -1,10 +1,15 @@
 @import "common.css";
 
 .memberContainer {
+    margin: auto;
+    padding-top: 30px;
+    max-width: 880px;
+}
+
+.memberCard {
     display: flex;
     justify-content: space-between;
-    margin: 30px auto;
-    max-width: 880px;
+    padding-top: 30px;
 }
 
 .filter button {
@@ -56,6 +61,7 @@
     border-radius: 75px;
     width: 150px;
     height: 150px;
+    border: 1px solid var(--gray-border);
 }
 
 .infoContent {
@@ -189,6 +195,11 @@
     /* margin: 15px 0 10px 20px; */
     margin-top: 10px;
     padding-left: 16px;
+}
+
+.memberInform .noInform {
+    color: var(--black);
+    font-size: 16px;
 }
 
 .adviseMission>p,
@@ -374,7 +385,7 @@
 }
 
 @media screen and (max-width: 810px) {
-    .memberContainer {
+    .memberCard {
         flex-direction: column;
     }
 

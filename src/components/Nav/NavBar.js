@@ -59,7 +59,8 @@ const NavBar = () => {
   let memberListFlag = useSelector((s) => s.flag);
   const scrollHiddenNav = () => {
     let f;
-    window.scrollY > lastScrollY ? (f = false) : (f = true);
+    window.scrollY  > lastScrollY ? (f = false) : (f = true);
+    lastScrollY === 0 ? f = true : null;
     setLastScrollY(window.scrollY);
     setNavFlag(f);
   };

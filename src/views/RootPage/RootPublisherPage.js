@@ -102,7 +102,7 @@ const PublisherPage = () => {
     // }
   }, [isDbDataLoadedFlag]);
   return (
-    <div>
+    <div className='navBarFixed'>
       <RootPublisherDataTable
         columns={columns}
         rows={applyPublisherState}

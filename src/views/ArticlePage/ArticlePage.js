@@ -40,8 +40,12 @@ const ArticlePage = () => {
     return () => {};
   }, []);
 
+  console.log(`articleDataState:${articleDataState}`);
+  console.log(`imageUrtlState:${imageUrtlState}`);
+  console.log(`imageState:${imageState}`);
+
   return (
-    <div className="container" style={{ margin: "65px" }}>
+    <div className="container navBarFixed">
       <h1> 標題:{articleDataState.title}</h1>
       <p> 內容:{articleDataState.content}</p>
       <img src={imageUrtlState ? imageUrtlState : ""} alt="" />
