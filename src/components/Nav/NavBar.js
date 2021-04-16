@@ -136,8 +136,8 @@ const NavBar = () => {
             }
           >
             <div className="linkList">
-              <div>新聞</div>
-              <div>討論</div>
+              <div onClick={() => onChangeRouter("/index")}>新聞</div>
+              <div onClick={() => onChangeRouter("/login")}>討論</div>
             </div>
             <div className={"navFeature"}>
               <div className="searchBarContainer">

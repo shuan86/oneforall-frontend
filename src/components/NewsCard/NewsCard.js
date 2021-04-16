@@ -100,7 +100,7 @@ export const NewsCardTop = ({ articleStatus, voteResult }) => {
     }
 
     setStatus(s);
-    return () => {};
+    return () => { };
   }, [articleStatus, voteResult]);
   return (
     <div className="cardTop">
@@ -166,11 +166,11 @@ export const NewsCardContent = ({
 
     setImageState(base64String);
     setTagsData(tags);
-    return () => {}; //
+    return () => { }; //
   }, []);
   useEffect(() => {
     setNeedReadMoreFlag(content.length > shortMaxStrLength ? true : false);
-    return () => {};
+    return () => { };
   }, [content]);
 
   const onClickReadMore = () => {
@@ -215,35 +215,35 @@ export const NewsCardContent = ({
       <div className="article">
         <h3>{title}</h3>
         {articleStatus == ArticleStatus.underReview ||
-        articleStatus == ArticleStatus.verified ? (
-          <div>
-            {reviewResult == 2 ? (
-              <h2
-                className="reviewResult"
-                style={{ color: "var(--navy-blue)" }}
-              >
-                審查者認為本消息是真的
+          articleStatus == ArticleStatus.verified ? (
+            <div>
+              {reviewResult == 2 ? (
+                <h2
+                  className="reviewResult"
+                  style={{ color: "var(--navy-blue)" }}
+                >
+                  審查者認為本消息是真的
               </h2>
-            ) : (
-              <h2 className="reviewResult" style={{ color: "var(--brown)" }}>
-                審查者認為本消息是假的
+              ) : (
+                  <h2 className="reviewResult" style={{ color: "var(--brown)" }}>
+                    審查者認為本消息是假的
               </h2>
-            )}
-            {/* <h2 className="reviewResult">審查者認為本消息是真實的</h2> */}
-            <div className="articleContent">
-              {/*<p> reportedtAccount:{reportedtAccount}</p>
+                )}
+              {/* <h2 className="reviewResult">審查者認為本消息是真實的</h2> */}
+              <div className="articleContent">
+                {/*<p> reportedtAccount:{reportedtAccount}</p>
               <p> evidence:{evidence}</p>{/*檢舉者給的內容*/}
-              {/*<p> decisionReason:{decisionReason}</p>{/*審查者給的內容*/}
-              {/*<p> reviewResult :{reviewResult}</p>{/*2是同意3是不同意*/}
-              <p>{decisionReason}</p>
-              {/*審查者給的內容*/}
+                {/*<p> decisionReason:{decisionReason}</p>{/*審查者給的內容*/}
+                {/*<p> reviewResult :{reviewResult}</p>{/*2是同意3是不同意*/}
+                <p>{decisionReason}</p>
+                {/*審查者給的內容*/}
+              </div>
             </div>
-          </div>
-        ) : null}
+          ) : null}
         <div
           className={
             articleStatus == ArticleStatus.underReview ||
-            articleStatus == ArticleStatus.verified
+              articleStatus == ArticleStatus.verified
               ? "articleContent underReview"
               : "articleContent"
           }
@@ -380,7 +380,7 @@ const NewsCardComment = ({
     setOpenCommentFlag((pre) => {
       return selectArticleId != articleId ? false : true;
     });
-    return () => {};
+    return () => { };
   }, [selectArticleId]);
   useEffect(() => {
     if (openCommentFlag) {
@@ -401,7 +401,7 @@ const NewsCardComment = ({
       const result = openCommentFlag ? articleId : pre;
       return result;
     });
-    return () => {};
+    return () => { };
   }, [openCommentFlag]);
 
   const onClickLike = async () => {
@@ -636,8 +636,6 @@ const NewsCard = React.memo(
     if (pre && pre.articleData.id === next.articleData.id) {
       return true;
     }
-    // if(pre.selectArticleId!=next.selectArticleId)     selectArticleId={selectArticleId}
-    // setSelectArticleId={setSelectArticleId}
     return false;
   }
 );

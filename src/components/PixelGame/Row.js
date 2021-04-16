@@ -7,15 +7,11 @@ export const Row = ({
   selectedPos,
   setSelectedPos,
   loadPixelData,
-  canClickPixelFlag,
-}) => {
-  const [rowIndex, setRowIndex] = useState(-1);
-  const pixelArray = [];
-  useEffect(() => {
-    setRowIndex(height);
-    return () => {};
-  }, []);
+  clickPixelCount,
+  setClickPixelCount,
 
+}) => {
+  const pixelArray = [];
   for (let i = 0; i < width; i++) {
     pixelArray.push(
       <Pixel
@@ -24,8 +20,9 @@ export const Row = ({
         selectedColor={selectedColor}
         setSelectedPos={setSelectedPos}
         loadPixelData={loadPixelData}
-        canClickPixelFlag={canClickPixelFlag}
         selectedPos={selectedPos}
+        clickPixelCount={clickPixelCount}
+        setClickPixelCount={setClickPixelCount}
       />
     );
   }

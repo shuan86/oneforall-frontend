@@ -12,11 +12,11 @@ export const connectArticleServer = () => {
   //開啟
   if (config.NODE_ENV == "development") {
     // ws = webSocket(`http://127.0.0.1:${port}`);
-    ws = webSocket(config.SERVER_URL);
-    console.log("development url:", config.SERVER_URL);
+    ws = webSocket(config.DEVELOPMENT_SERVER_URL);
+    console.log("development url:", config.DEVELOPMENT_SERVER_URL);
   } else {
-    ws = webSocket(config.SERVER_URL);
-    console.log("production url:", config.SERVER_URL);
+    ws = webSocket(config.PRODUCTION_SERVER_URL);
+    console.log("production url:", config.PRODUCTION_SERVER_URL);
   }
 };
 export const startArticleWebsocket = (getCommentsRangeFunc, newCommentFunc) => {

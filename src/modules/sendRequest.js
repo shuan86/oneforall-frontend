@@ -18,7 +18,7 @@ export const rsaTokenPostRequest = async (
   };
 
   const result = await axios.post(
-    configData.SERVER_URL + "/api" + rout,
+    getServerUrl(rout),
     bodyParameters,
     config
   );
@@ -35,9 +35,8 @@ export const tokenFilePostRequest = async (JWTtoken, rout, formData) => {
       "Content-Type": "multipart/form-data",
     },
   };
-
   const result = await axios.post(
-    configData.SERVER_URL + "/api" + rout,
+    getServerUrl(rout),
     formData,
     config
   );
@@ -62,7 +61,7 @@ export const rsaTokenPutRequest = async (
     rsaData: encryptStr,
   };
   const result = await axios.put(
-    configData.SERVER_URL + "/api" + rout,
+    getServerUrl(rout),
     bodyParameters,
     config
   );
@@ -73,7 +72,8 @@ export const rsaTokenPutRequest = async (
 };
 export const getRequest = async (rout, dataObject) => {
   try {
-    const result = await axios.get(configData.SERVER_URL + "/api" + rout, {
+
+    const result = await axios.get(getServerUrl(rout), {
       params: { ...dataObject },
     });
     return result;
@@ -97,7 +97,7 @@ export const rsaTokenGetRequest = async (
     const bodyParameters = {
       rsaData: encryptStr,
     };
-    const result = await axios.get(configData.SERVER_URL + "/api" + rout, {
+    const result = await axios.get(getServerUrl(rout), {
       headers: { Authorization: ` ${JWTtoken}` },
       params: { ...bodyParameters },
     });
@@ -114,8 +114,10 @@ export const rsaPostRequest = async (rout, dataObject) => {
   const bodyParameters = {
     rsaData,
   };
+
+
   const result = await axios.post(
-    configData.SERVER_URL + "/api" + rout,
+    getServerUrl(rout),
     bodyParameters
   );
   if (result.status == 200) {
@@ -138,7 +140,7 @@ export const rsaTokenDeleteRequest = async (
     rsaData: encryptStr,
   };
   const result = await axios.delete(
-    configData.SERVER_URL + "/api" + rout,
+    getServerUrl(rout),
     {
       ...config,
       data: { ...bodyParameters },
@@ -151,3 +153,7 @@ export const rsaTokenDeleteRequest = async (
 
   return result;
 };
+const getServerUrl = (rout) => {
+  const serverUrl = configData.NODE_ENV == 'development' ? configData.DEVELOPMENT_SERVER_URL + "/api" + rout : configData.PRODUCTION_SERVER_URL + "/api" + rout
+  return serverUrl;
+}

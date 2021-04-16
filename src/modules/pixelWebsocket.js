@@ -9,24 +9,21 @@ export const pixelGameEvent = {
   pixelGame: "pixelGame",
 };
 
-export const connectPixelGameServer = () => {
-  //開啟
 
-  if (config.NODE_ENV == "development") {
-    // ws = webSocket(`http://127.0.0.1:${port}`);
-    ws = webSocket(config.SERVER_URL);
-  } else {
-
-    ws = webSocket(config.SERVER_URL);
-    console.log("production url:", config.SERVER_URL);
-  }
-};
 export const startPixelGameWebSocket = (
+  token,
+  memberId,
   joinPixelGameFunc,
   initMemberFunc,
   pixelGameFunc
 ) => {
+  if (config.NODE_ENV == "development") {
+    ws = webSocket(config.DEVELOPMENT_SERVER_URL);
+  } else {
+    ws = webSocket(config.PRODUCTION_SERVER_URL);
+  }
   if (ws) {
+    sendData(pixelGameEvent.joinPixelGame, { token, memberId });
     console.log("websocket success connect!");
     ws.on(pixelGameEvent.joinPixelGame, (msg) => {
       joinPixelGameFunc(msg);

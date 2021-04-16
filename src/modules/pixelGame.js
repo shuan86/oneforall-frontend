@@ -8,18 +8,20 @@ export const initPixelGame = async (
   pixelGameFunc
 ) => {
   try {
-    ws.connectPixelGameServer();
+    const { token, memberId } = localStorage.getAllData();
     ws.startPixelGameWebSocket(
+      token,
+      memberId,
       joinPixelGameFunc,
       initMemberFunc,
       pixelGameFunc
     );
-    joinPixelGame();
+    // joinPixelGame();
   } catch (error) {
     console.error("initPixelGame error:", error);
   }
 };
-export const joinPixelGame = async (data) => {
+export const joinPixelGame = (data) => {
   try {
     const { token, memberId } = localStorage.getAllData();
     console.log("pixelDataArray:", data);
@@ -34,7 +36,7 @@ export const putPixelData = async (pos, color) => {
     const { token, memberId } = localStorage.getAllData();
     ws.sendData(ws.pixelGameEvent.pixelGame, { token, memberId, pos, color });
   } catch (error) {
-    console.error("joinPixelGame error:", error);
+    console.error("putPixelData error:", error);
   }
   return null;
 };

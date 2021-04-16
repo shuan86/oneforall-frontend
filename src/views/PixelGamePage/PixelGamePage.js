@@ -5,6 +5,7 @@ import { CirclePicker } from "react-color";
 import { Row } from "../../components/PixelGame/Row";
 import { putPixelDataArray, putPixelData } from "../../modules/pixelGame";
 import * as pixelGame from "../../modules/pixelGame";
+import { useFirstUpdate } from "../../hooks/useFirstUpdate";
 const PlaceGamePage = () => {
   const height = 40;
   const width = 40;
@@ -19,8 +20,10 @@ const PlaceGamePage = () => {
   ]);
   const [clickPixelCount, setClickPixelCount] = useState(10);
   const [canClickPixelFlag, setCanClickPixelFlag] = useState(true);
-
+  const isNotFirst = useFirstUpdate()
   const joinPixelGameFunc = (data) => {
+    console.log('joinPixelGameFunc:', data);
+
     setLoadPixelFlag((pre) => {
       if (data) {
         setLoadPixelFlag(true);
@@ -40,14 +43,16 @@ const PlaceGamePage = () => {
   };
   useEffect(() => {
     pixelGame.initPixelGame(joinPixelGameFunc, initMemberFunc, pixelGameFunc);
-    return () => {};
+    return () => { };
   }, []);
   useEffect(() => {
-    if (clickPixelCount > 0) putPixelData(selectedPos, selectedColor);
-    setClickPixelCount((pre) => (clickPixelCount > 0 ? pre - 1 : pre));
+    // if (isNotFirst && clickPixelCount > 0) putPixelData(selectedPos, selectedColor);
     setCanClickPixelFlag((pre) => (clickPixelCount > 0 ? true : false));
-    return () => {};
-  }, [selectedPos]);
+    // console.log('selectedPos, selectedColor:', selectedPos, selectedColor);
+    if (isNotFirst && clickPixelCount > 0) putPixelData(selectedPos, selectedColor);
+
+    return () => { };
+  }, [clickPixelCount]);
   const changeColor = (color) => {
     setSelectedColor(color.hex);
   };
@@ -59,11 +64,12 @@ const PlaceGamePage = () => {
         height={i}
         width={width}
         selectedColor={selectedColor}
-        setSelectedPos={setSelectedPos}
         selectedPos={selectedPos}
+        setSelectedPos={setSelectedPos}
         setSelectedDataArray={setSelectedDataArray}
         loadPixelData={loadPixelData}
-        canClickPixelFlag={canClickPixelFlag}
+        clickPixelCount={clickPixelCount}
+        setClickPixelCount={setClickPixelCount}
       />
     );
   }
