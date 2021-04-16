@@ -1,4 +1,8 @@
 .homePageContainer {
+    padding-top: 30px;
+}
+
+.homePageNewsCard {
     overflow: auto;
 }
 

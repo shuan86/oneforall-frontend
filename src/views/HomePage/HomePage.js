@@ -9,7 +9,7 @@ const HomePage = () => {
   );
 
   return (
-    <div>
+    <div className='homePageContainer navBarFixed'>
       <Filter setSelectedArticleStatus={setSelectedArticleStatus} />
       {selectedArticleStatus == ArticleStatus.unreview && (
         <ArticleList

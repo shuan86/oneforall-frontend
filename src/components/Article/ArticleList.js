@@ -90,7 +90,7 @@ const ArticleList = ({ articleStatus, selectedArticleStatus }) => {
     setSelectArticleId(articleId);
   });
   return (
-    <div className="homePageContainer">
+    <div className="homePageNewsCard">
       <ReportDialog
         isOpen={reportDialogSwitch}
         setOpen={setReportDialogSwitch}

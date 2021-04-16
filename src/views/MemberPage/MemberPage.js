@@ -117,36 +117,38 @@ const MemberPage = () => {
   };
   return (
     <div className="container">
-      <Filter setMemberFliter={setMemberFliter} />
-      <div className="memberContainer">
-        <MemberCard />
-        {memberFilter[0] ? (
-          <VistorRight
-            isReviewer={isReviewer}
-            isPublisher={isPublisher}
-            exp={member.exp}
-            fllowerAmount={member.fllowerAmount}
-            reportedVoteArticleArray={reportedVoteArticleArrayState}
-            onClickArticle={onClickArticle}
-          />
-        ) : null}
-        {memberFilter[1] ? (
-          <ReviewerRight
-            exp={member.exp}
-            fansAmount={member.fansAmount}
-            reviewerCanReviewArticleArray={reviewerCanReviewArticleArrayState}
-            reviewerVerifiedArticleArray={reviewerVerifiedArticleArrayState}
-            onClickReviewerPage={onClickReviewerPage}
-            onClickArticle={onClickArticle}
-          />
-        ) : null}
-        {memberFilter[2] ? (
-          <PublisherRight
-            publishArticleArray={publishArticleArrayState}
-            onClickPublisherPage={onClickPublisherPage}
-            onClickArticle={onClickArticle}
-          />
-        ) : null}
+      <div className="memberContainer navBarFixed">
+        <Filter setMemberFliter={setMemberFliter} />
+        <div className="memberCard">
+          <MemberCard />
+          {memberFilter[0] ? (
+            <VistorRight
+              isReviewer={isReviewer}
+              isPublisher={isPublisher}
+              exp={member.exp}
+              fllowerAmount={member.fllowerAmount}
+              reportedVoteArticleArray={reportedVoteArticleArrayState}
+              onClickArticle={onClickArticle}
+            />
+          ) : null}
+          {memberFilter[1] ? (
+            <ReviewerRight
+              exp={member.exp}
+              fansAmount={member.fansAmount}
+              reviewerCanReviewArticleArray={reviewerCanReviewArticleArrayState}
+              reviewerVerifiedArticleArray={reviewerVerifiedArticleArrayState}
+              onClickReviewerPage={onClickReviewerPage}
+              onClickArticle={onClickArticle}
+            />
+          ) : null}
+          {memberFilter[2] ? (
+            <PublisherRight
+              publishArticleArray={publishArticleArrayState}
+              onClickPublisherPage={onClickPublisherPage}
+              onClickArticle={onClickArticle}
+            />
+          ) : null}
+        </div>
       </div>
     </div>
   );

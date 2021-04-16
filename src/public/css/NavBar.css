@@ -7,6 +7,10 @@
     transition: top 0.3s;
 }
 
+.navBarFixed {
+    margin-top: 60px !important;
+}
+
 .navContent {
     display: flex;
     align-items: center;

@@ -104,7 +104,7 @@ const ReviewerPage = () => {
     // }
   }, [isDbDataLoadedFlag]);
   return (
-    <div>
+    <div className='navBarFixed'>
       <DataTable
         columns={columns}
         rows={applyReviewerState}

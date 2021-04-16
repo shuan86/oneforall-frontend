@@ -9,13 +9,14 @@ import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 
 import Copper10 from "../../public/images/medals/copper10.png";
+import Author from "../../public/images/author.jpg";
 import { getMemberInfo, expMappingBadge } from "../../modules/member";
 
 const MemberCard = () => {
   return (
     <div className={"personalInfo"}>
       <div className={"personalPhoto"}>
-        <img src="favicon.ico" alt="" />
+        <img src={Author} alt="author" />
       </div>
       <div className={"infoContent"}>
         <p>使用者名稱</p>
@@ -122,7 +123,7 @@ const VistorRight = ({
         <p>投票紀錄</p>
 
         {reportedVoteArticleArray.length == 0 && (
-          <p style={{ fontSize: "35px" }}>尚未有票紀錄</p>
+          <p className='noInform'>尚未有票紀錄</p>
         )}
 
         {reportedVoteArticleArray.map((value, index) => {
@@ -168,7 +169,7 @@ const ReviewerRight = ({
         <div className={"adviseMission"}>
           <p>可審核任務</p>
           {reviewerCanReviewArticleArray.length == 0 && (
-            <p style={{ fontSize: "35px" }}>尚未有審查任務</p>
+            <p className='noInform'>尚未有審查任務</p>
           )}
           {reviewerCanReviewArticleArray.map((value, index) => {
             const { articleId, title, time } = value;
@@ -205,7 +206,7 @@ const ReviewerRight = ({
       <div className={"memberInform"}>
         <p>通知</p>
         {reviewerVerifiedArticleArray.length == 0 && (
-          <p style={{ fontSize: "35px" }}>尚未有審核成功紀錄</p>
+          <p className='noInform'>尚未有審核成功紀錄</p>
         )}
         {reviewerVerifiedArticleArray.map((value, index) => {
           const { articleId, title, time } = value;
