@@ -100,19 +100,19 @@ export const NewsCardTop = ({ articleStatus, voteResult }) => {
     }
 
     setStatus(s);
-    return () => { };
+    return () => {};
   }, [articleStatus, voteResult]);
   return (
     <div className="cardTop">
       <div className="status">{status}</div>
-      <div className="scrollingText">
+      {/* <div className="scrollingText">
         <div className="userComment">
           <span>
             <div className="account color-red">abc12345678</div>
             <p>大問號？！！！</p>
           </span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -166,11 +166,11 @@ export const NewsCardContent = ({
 
     setImageState(base64String);
     setTagsData(tags);
-    return () => { }; //
+    return () => {}; //
   }, []);
   useEffect(() => {
     setNeedReadMoreFlag(content.length > shortMaxStrLength ? true : false);
-    return () => { };
+    return () => {};
   }, [content]);
 
   const onClickReadMore = () => {
@@ -204,46 +204,47 @@ export const NewsCardContent = ({
         </a>
       </div>
       <div className="hashtag">
-        {tagsData.map((val, index) => {
-          return (
-            <a href="" key={index}>
-              # {val}
-            </a>
-          );
-        })}
+        {tagsData &&
+          tagsData.map((val, index) => {
+            return (
+              <a href="" key={index}>
+                # {val}
+              </a>
+            );
+          })}
       </div>
       <div className="article">
         <h3>{title}</h3>
         {articleStatus == ArticleStatus.underReview ||
-          articleStatus == ArticleStatus.verified ? (
-            <div>
-              {reviewResult == 2 ? (
-                <h2
-                  className="reviewResult"
-                  style={{ color: "var(--navy-blue)" }}
-                >
-                  審查者認為本消息是真的
+        articleStatus == ArticleStatus.verified ? (
+          <div>
+            {reviewResult == 2 ? (
+              <h2
+                className="reviewResult"
+                style={{ color: "var(--navy-blue)" }}
+              >
+                審查者認為本消息是真的
               </h2>
-              ) : (
-                  <h2 className="reviewResult" style={{ color: "var(--brown)" }}>
-                    審查者認為本消息是假的
+            ) : (
+              <h2 className="reviewResult" style={{ color: "var(--brown)" }}>
+                審查者認為本消息是假的
               </h2>
-                )}
-              {/* <h2 className="reviewResult">審查者認為本消息是真實的</h2> */}
-              <div className="articleContent">
-                {/*<p> reportedtAccount:{reportedtAccount}</p>
+            )}
+            {/* <h2 className="reviewResult">審查者認為本消息是真實的</h2> */}
+            <div className="articleContent">
+              {/*<p> reportedtAccount:{reportedtAccount}</p>
               <p> evidence:{evidence}</p>{/*檢舉者給的內容*/}
-                {/*<p> decisionReason:{decisionReason}</p>{/*審查者給的內容*/}
-                {/*<p> reviewResult :{reviewResult}</p>{/*2是同意3是不同意*/}
-                <p>{decisionReason}</p>
-                {/*審查者給的內容*/}
-              </div>
+              {/*<p> decisionReason:{decisionReason}</p>{/*審查者給的內容*/}
+              {/*<p> reviewResult :{reviewResult}</p>{/*2是同意3是不同意*/}
+              <p>{decisionReason}</p>
+              {/*審查者給的內容*/}
             </div>
-          ) : null}
+          </div>
+        ) : null}
         <div
           className={
             articleStatus == ArticleStatus.underReview ||
-              articleStatus == ArticleStatus.verified
+            articleStatus == ArticleStatus.verified
               ? "articleContent underReview"
               : "articleContent"
           }
@@ -380,7 +381,7 @@ const NewsCardComment = ({
     setOpenCommentFlag((pre) => {
       return selectArticleId != articleId ? false : true;
     });
-    return () => { };
+    return () => {};
   }, [selectArticleId]);
   useEffect(() => {
     if (openCommentFlag) {
@@ -401,7 +402,7 @@ const NewsCardComment = ({
       const result = openCommentFlag ? articleId : pre;
       return result;
     });
-    return () => { };
+    return () => {};
   }, [openCommentFlag]);
 
   const onClickLike = async () => {

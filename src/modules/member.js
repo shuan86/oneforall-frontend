@@ -22,6 +22,13 @@ export const Education = {
   doctoralProgram: 6,
   other: 7,
 };
+export const LotteryNumber = {
+  snowNormal: 0,
+  snowBad: 1,
+  redBad: 2,
+  redNormal: 3,
+};
+
 export const login = async (account, password) => {
   try {
     const data = { account: account, password: password };
@@ -178,4 +185,40 @@ export const expMappingBadge = (exp) => {
   } else {
     return Gold500;
   }
+};
+export const getLotteryStatus = async () => {
+  try {
+    const { token, memberId } = localStorage.getAllData();
+    const result = await sendRequest.rsaTokenGetRequest(
+      token,
+      memberId,
+      "/lottery",
+      { memberId }
+    );
+    if (result && result.status == 200) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("getLotteryStatus error:", error);
+  }
+
+  return null;
+};
+export const sendLottery = async () => {
+  try {
+    const { token, memberId } = localStorage.getAllData();
+    const result = await sendRequest.rsaTokenPostRequest(
+      token,
+      memberId,
+      "/lottery",
+      { memberId }
+    );
+    if (result && result.status == 200) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("sendLottery error:", error);
+  }
+
+  return null;
 };
