@@ -17,11 +17,7 @@ export const rsaTokenPostRequest = async (
     rsaData: encryptStr,
   };
 
-  const result = await axios.post(
-    getServerUrl(rout),
-    bodyParameters,
-    config
-  );
+  const result = await axios.post(getServerUrl(rout), bodyParameters, config);
   if (result.status == 200) {
     console.log("sendPostRequest sucessful");
   }
@@ -35,11 +31,7 @@ export const tokenFilePostRequest = async (JWTtoken, rout, formData) => {
       "Content-Type": "multipart/form-data",
     },
   };
-  const result = await axios.post(
-    getServerUrl(rout),
-    formData,
-    config
-  );
+  const result = await axios.post(getServerUrl(rout), formData, config);
   if (result.status == 200) {
     console.log("sendPostRequest sucessful");
   }
@@ -60,11 +52,7 @@ export const rsaTokenPutRequest = async (
   const bodyParameters = {
     rsaData: encryptStr,
   };
-  const result = await axios.put(
-    getServerUrl(rout),
-    bodyParameters,
-    config
-  );
+  const result = await axios.put(getServerUrl(rout), bodyParameters, config);
   if (result.status == 200) {
     console.log("sendPostRequest sucessful");
   }
@@ -72,7 +60,6 @@ export const rsaTokenPutRequest = async (
 };
 export const getRequest = async (rout, dataObject) => {
   try {
-
     const result = await axios.get(getServerUrl(rout), {
       params: { ...dataObject },
     });
@@ -115,11 +102,7 @@ export const rsaPostRequest = async (rout, dataObject) => {
     rsaData,
   };
 
-
-  const result = await axios.post(
-    getServerUrl(rout),
-    bodyParameters
-  );
+  const result = await axios.post(getServerUrl(rout), bodyParameters);
   if (result.status == 200) {
     console.log("sendPostRequest sucessful");
   }
@@ -154,6 +137,9 @@ export const rsaTokenDeleteRequest = async (
   return result;
 };
 const getServerUrl = (rout) => {
-  const serverUrl = configData.NODE_ENV == 'development' ? configData.DEVELOPMENT_SERVER_URL + "/api" + rout : configData.PRODUCTION_SERVER_URL + "/api" + rout
+  const serverUrl =
+    configData.NODE_ENV == "development"
+      ? configData.DEVELOPMENT_SERVER_URL + "/api" + rout
+      : configData.PRODUCTION_SERVER_URL + "/api" + rout;
   return serverUrl;
-}
+};
