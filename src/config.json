@@ -6,5 +6,5 @@
     "PRIMARY": "#007bff",
     "SECONDARY": "#fc3"
   },
-  "NODE_ENV": "development1"
+  "NODE_ENV": "development"
 }

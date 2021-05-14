@@ -7,7 +7,11 @@ import audience from "../../public/images/audience.jpg";
 import history from "../../public/images/HistoryIcon.svg";
 import articleImg from "../../public/images/articleImg.jpg";
 import { useSelector } from "react-redux";
-import { ArticleStatus, VotedResultStatus } from "../../modules/article";
+import {
+  ArticleStatus,
+  VotedResultStatus,
+  ArticleReportStatus,
+} from "../../modules/article";
 import ReportIcon from "@material-ui/icons/Report";
 import { useFirstUpdate } from "../../hooks/useFirstUpdate";
 import * as articleWebsocket from "../../modules/articleWebsocket";
@@ -163,7 +167,7 @@ export const NewsCardContent = ({
           btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
       }
     }
-
+    // console.log("reviewResult:", reviewResult, reviewResult == 2);
     setImageState(base64String);
     setTagsData(tags);
     return () => {}; //
@@ -218,7 +222,7 @@ export const NewsCardContent = ({
         {articleStatus == ArticleStatus.underReview ||
         articleStatus == ArticleStatus.verified ? (
           <div>
-            {reviewResult == 2 ? (
+            {reviewResult == ArticleReportStatus.fail ? (
               <h2
                 className="reviewResult"
                 style={{ color: "var(--navy-blue)" }}

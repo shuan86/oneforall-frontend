@@ -19,9 +19,26 @@ export const VotedResultStatus = {
   fakeNews: 2,
   reportedAgain: 3,
 };
+export const ArticleReportStatus = {
+  apply: 0,
+  fail: 1,
+  sucessful: 2,
+};
+
 export const ArticleTagKind = {
   sport: false,
   food: false,
+};
+const encodeUnicode = (str) => {
+  var res = [];
+  for (var i = 0; i < str.length; i++) {
+    res[i] = ("00" + str.charCodeAt(i).toString(16)).slice(-4);
+  }
+  return "\\u" + res.join("\\u");
+};
+const decodeUnicode = (str) => {
+  str = str.replace(/\\/g, "%");
+  return unescape(str);
 };
 export const getNews = async (startIndex, endIndex) => {
   try {
@@ -140,6 +157,7 @@ export const updateReportedNewsStatus = async (
 ) => {
   try {
     const { token, memberId } = localStorage.getAllData();
+    decisionReason = encodeUnicode(decisionReason);
     const result = await sendRequest.rsaTokenPutRequest(
       token,
       memberId,
