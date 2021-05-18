@@ -8,9 +8,13 @@
 
 
 .Leaderboard{
-    padding: 40px 20px;
+    padding: 25px 12px;
     margin: auto;
     max-width: 800px;
+    background-color: rgba(255,255,255,0.7);
+    border-radius: 10px;
+    margin-top: 65px;
+    box-shadow: 1px 1px 8px rgb(180, 180, 180);
 }
 .leader-wrap {
     display: flex;
@@ -97,9 +101,11 @@
     }
 }
 .Leaderboard>h1{
-    font-size: 30px;
+    font-size: 20px;
     padding-left: 16px;
+    padding-bottom: 10px;
 }
 .leader-name{
-    font-size: 26px;
+    margin-top: 10px;
+    font-size: 20px;
 }
