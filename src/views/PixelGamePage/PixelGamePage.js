@@ -56,6 +56,10 @@ const PlaceGamePage = () => {
   const changeColor = (color) => {
     setSelectedColor(color.hex);
   };
+  const onClickClearColor = (params) => {
+    setSelectedColor("#ffffff");
+
+  }
 
   for (let i = 0; i < height; i++) {
     rowArray.push(
@@ -77,6 +81,7 @@ const PlaceGamePage = () => {
     <div className="pixelContainer">
       <div className="colorCountDown">
         <CirclePicker color={selectedColor} onChangeComplete={changeColor} />
+        <Button variant="contained" style={{ margin: "0 45%" }} onClick={onClickClearColor}>Clear</Button>
         <p>本日剩餘次數</p>
         <h1>{clickPixelCount}</h1>
         {loadPixelFlag ? <div className="">{rowArray}</div> : null}
