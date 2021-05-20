@@ -6,6 +6,9 @@ import Logo from "../../Logo.svg";
 import { useSelector, useDispatch } from "react-redux";
 import * as memberModuel from "../../modules/member";
 import { getAllData as getLocalStorageData } from "../../modules/localstorage";
+import NoviceIndexDialog from "../Dialog/NoviceIndexDialog";
+import DailyTaskDialog from "../Dialog/DailyTaskDialog";
+
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
@@ -29,6 +32,8 @@ const NavBar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [phoneNavFlag, setPhoneNavFlag] = useState(false);
   const [isSucessfulLogin, setIsSucessfulLogin] = useState(false);
+  const [noviceIndexDialogFlag, setNoviceIndexDialogFlag] = useState(false);
+  const [dailyTaskDialogFlag, setDailyTaskDialogFlag] = useState(false);
 
   // var offsetWid = document.documentElement.clientWidth; //視窗寬度
 
@@ -59,7 +64,7 @@ const NavBar = () => {
   let memberListFlag = useSelector((s) => s.flag);
   const scrollHiddenNav = () => {
     let f;
-    window.scrollY  > lastScrollY ? (f = false) : (f = true);
+    window.scrollY > lastScrollY ? (f = false) : (f = true);
     lastScrollY === 0 ? f = true : null;
     setLastScrollY(window.scrollY);
     setNavFlag(f);
@@ -97,6 +102,8 @@ const NavBar = () => {
       className={"navBar"}
       style={navFlag ? { top: "0px" } : { top: "-65px" }}
     >
+      <NoviceIndexDialog isOpen={noviceIndexDialogFlag} setIsOpen={setNoviceIndexDialogFlag} />
+      <DailyTaskDialog isOpen={dailyTaskDialogFlag} setIsOpen={setDailyTaskDialogFlag} />
       <div className="container">
         <div className="navContent">
           <div>
@@ -139,6 +146,9 @@ const NavBar = () => {
             <div className="linkList">
               <div onClick={() => onChangeRouter("/index")}>新聞</div>
               <div onClick={() => onChangeRouter("/login")}>討論</div>
+              <div onClick={() => { setDailyTaskDialogFlag(pre => !pre) }}>每日任務</div>
+              <div onClick={() => { setNoviceIndexDialogFlag(pre => !pre) }}>新手教學</div>
+
             </div>
             <div className={"navFeature"}>
               <div className="searchBarContainer">
@@ -149,6 +159,8 @@ const NavBar = () => {
                   placeholder={"搜尋"}
                 />
               </div>
+
+
               <button
                 className={`signupButton ${loginStatus && "navDisplayNone"}`}
                 onClick={() => onChangeRouter("/enroll")}
@@ -156,8 +168,7 @@ const NavBar = () => {
                 註冊
               </button>
               <button
-                className={`${!loginStatus && "signinButton"} ${
-                  loginStatus && "navDisplayNone"
+                className={`${!loginStatus && "signinButton"} ${loginStatus && "navDisplayNone"
                   }`}
                 onClick={() => onChangeRouter("/login")}
               >
@@ -207,8 +218,7 @@ const NavBar = () => {
                 ></div>
               </div>
               <div
-                className={`${
-                  loginStatus && "navDisplayBlock" && "navUserInfo"
+                className={`${loginStatus && "navDisplayBlock" && "navUserInfo"
                   } ${!loginStatus && "navDisplayNone"}`}
                 onClick={onClickMemberListFlag}
               >

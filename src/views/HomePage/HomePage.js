@@ -3,13 +3,21 @@ import Filter from "../../components/NewsCard/Filter";
 import useGetNews from "../../hooks/useGetNews";
 import { ArticleStatus } from "../../modules/article";
 import ArticleList from "../../components/Article/ArticleList";
+import LoadingDialog from "../../components/Dialog/LoadingDialog";
 const HomePage = () => {
   const [selectedArticleStatus, setSelectedArticleStatus] = useState(
     ArticleStatus.unreview
   );
+  const [loadingFlag, setLoadingFlag] = useState(true);
+  useEffect(() => {
 
+    return () => {
+
+    }
+  }, [])
   return (
     <div className='homePageContainer navBarFixed'>
+      <LoadingDialog isOpen={loadingFlag} setIsOpen={setLoadingFlag} />
       <Filter setSelectedArticleStatus={setSelectedArticleStatus} />
       {selectedArticleStatus == ArticleStatus.unreview && (
         <ArticleList

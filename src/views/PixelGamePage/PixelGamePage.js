@@ -6,6 +6,7 @@ import { Row } from "../../components/PixelGame/Row";
 import { putPixelDataArray, putPixelData } from "../../modules/pixelGame";
 import * as pixelGame from "../../modules/pixelGame";
 import { useFirstUpdate } from "../../hooks/useFirstUpdate";
+import NovicePixelDialog from "../../components/Dialog/NovicePixelDialog";
 const PlaceGamePage = () => {
   const height = 40;
   const width = 40;
@@ -20,6 +21,8 @@ const PlaceGamePage = () => {
   ]);
   const [clickPixelCount, setClickPixelCount] = useState(10);
   const [canClickPixelFlag, setCanClickPixelFlag] = useState(true);
+  const [novicePixelDialogFlag, setNovicePixelDialogFlag] = useState(true);
+
   const isNotFirst = useFirstUpdate()
   const joinPixelGameFunc = (data) => {
     console.log('joinPixelGameFunc:', data);
@@ -79,9 +82,10 @@ const PlaceGamePage = () => {
   }
   return (
     <div className="pixelContainer">
+      <NovicePixelDialog isOpen={novicePixelDialogFlag} setIsOpen={setNovicePixelDialogFlag} />
       <div className="colorCountDown">
         <CirclePicker color={selectedColor} onChangeComplete={changeColor} />
-        <Button variant="contained" style={{ margin: "0 45%" }} onClick={onClickClearColor}>Clear</Button>
+        <Button variant="contained" style={{ margin: "0 45%" }} onClick={onClickClearColor}>White</Button>
         <p>本日剩餘次數</p>
         <h1>{clickPixelCount}</h1>
         {loadPixelFlag ? <div className="">{rowArray}</div> : null}
