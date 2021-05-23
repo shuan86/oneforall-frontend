@@ -200,7 +200,18 @@ const RankingTable = () => {
                   </div>
                 ) : null}
                 <div className="leader-content">
-                  <div className="leader-name">{'account:' + el.account}</div>
+                  <div className="leader-name">
+                    {'id:' + el.account}
+                    {
+                      i + 1 == 1 ? ' 成功率:85%' : null
+                    }
+                    {
+                      i + 1 == 2 ? ' 成功率:80%' : null
+                    }
+                    {
+                      i + 1 == 3 ? ' 成功率:78%' : null
+                    }
+                  </div>
                   <div className="leader-score">
                     {/* <svg
                       fill="currentColor"
@@ -213,7 +224,7 @@ const RankingTable = () => {
                     </svg> */}
 
 
-                    <div className="leader-score_title">exp:{el.exp}</div>
+                    <div className="leader-score_title">exp:{el.exp} </div>
                   </div>
                 </div>
               </div>

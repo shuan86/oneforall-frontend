@@ -83,7 +83,7 @@ const DailyTaskDialog = ({ isOpen, setIsOpen }) => {
                 </DialogTitle>
                 <DialogContent>
                     <div style={{
-                        height: "400px",
+                        height: "350px",
                         width: "400px",
                         marginLeft: "5px",
                         borderRadius: "10px",
