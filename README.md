@@ -8,6 +8,8 @@
 合約，協助和驗證新聞審核發布合約的簽訂與執行，並有穩定性高以及交易效率高的優點。
 
 ONE FOR ALL介紹影片
+
+
 [youtube](https://www.youtube.com/watch?v=C08xUTg3xN4)
 
 
