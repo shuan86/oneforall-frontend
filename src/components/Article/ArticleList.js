@@ -9,7 +9,7 @@ import {
   NewsCard,
 } from "../NewsCard/NewsCard";
 import RankingTable from "../NewsCard/RankingTable";
-import {LotteryDrawCardGame as LotteryTable} from "../Lottery/LotteryGames";
+import { LotteryDrawCardGame as LotteryTable } from "../Lottery/LotteryGames";
 import ReportDialog from "../Report/ReportDialog";
 import * as contract from "../../modules/smartcontract";
 import useGetNews from "../../hooks/useGetNews";
@@ -27,7 +27,7 @@ const ArticleList = ({ articleStatus, selectedArticleStatus }) => {
   );
 
   useEffect(() => {
-    return () => {};
+    return () => { };
   }, []);
 
   const observer = useRef();
@@ -40,26 +40,22 @@ const ArticleList = ({ articleStatus, selectedArticleStatus }) => {
           pageNaumber * eveyRequestDataAmount - eveyRequestDataAmount + 1,
           pageNaumber * eveyRequestDataAmount
         );
-        console.log("contractNewsIdArray:", contractNewsIdArray);
         let tmpArray = [];
         for (let i = 0; i < contractNewsIdArray.length; i++) {
           if (newsDatas && newsDatas.length > 0) {
             const noDifferentData = newsDatas.every((item) => {
               return item.id != contractNewsIdArray[i];
             });
-            console.log("noDifferentData:", noDifferentData);
             if (noDifferentData == false) {
               const result = await contract.getNewsByNewsIdEvent(
                 contractNewsIdArray[i]
               );
-              console.log("result:", result);
               if (result) tmpArray.push(contractNewsIdArray[i]);
             }
           } else {
             const result = await contract.getNewsByNewsIdEvent(
               contractNewsIdArray[i]
             );
-            console.log("result:", result);
           }
         }
 
@@ -100,11 +96,8 @@ const ArticleList = ({ articleStatus, selectedArticleStatus }) => {
       <div className="container">
         <div className="homePageContent">
           <div className="NewsCard">
-            {/* {console.log("memberLikeArray:", memberLikeArray)} */}
             {newsDatas.map((value, index) => {
               const { id } = value;
-              // console.log("index:", index);
-
               if (newsDatas.length == index + 1) {
                 return (
                   <NewsCard

@@ -24,29 +24,26 @@ const FormDialog = () => {
   };
   const onClickApplyPublisher = async () => {
     const result = await apply(companyName, co, phone, email);
-    if (result.status == 200) {
-      console.log("apply publisher scuessful");
-    }
     handleClose();
   };
   return (
     <div className={"missionBtn"}>
       <button onClick={handleClickOpen}>我想成為發文者</button>
       <div>
-        <div className={open? "dialog" : "none"} >
+        <div className={open ? "dialog" : "none"} >
           <div className="background" onClick={handleClose}></div>
           <div className="front">
             <h3 id="form-dialog-title">發文者申請表單</h3>
             <div className="formInput">
               <label htmlFor="">請輸入公司名稱</label>
-              <input type="text" 
+              <input type="text"
                 id="companyName"
                 onChange={(v) => setCompanyName(v.target.value)}
               />
             </div>
             <div className="formInput">
               <label htmlFor="">請輸入公司行號</label>
-              <input type="text" 
+              <input type="text"
                 id="co"
                 onChange={(v) => setCO(v.target.value)}
               />
@@ -60,13 +57,13 @@ const FormDialog = () => {
             </div>
             <div className="formInput">
               <label htmlFor="">請輸入公司信箱</label>
-              <input type="email" 
+              <input type="email"
                 id="email"
                 onChange={(v) => setEmail(v.target.value)}
               />
             </div>
             <div className="formInput">
-              <input type="submit" value="確認送出" onClick={onClickApplyPublisher}/>
+              <input type="submit" value="確認送出" onClick={onClickApplyPublisher} />
             </div>
           </div>
         </div>

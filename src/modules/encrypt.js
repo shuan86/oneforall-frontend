@@ -9,7 +9,6 @@ import { JSEncrypt } from "encryptlong";
     const rsaData = encrypt.encrypt(data);
     return rsaData;
   } catch (e) {
-    console.log(e);
   }
 };*/
 export const encrypt = (data) => {
@@ -20,6 +19,6 @@ export const encrypt = (data) => {
     const rsaData = encrypt.encryptLong(data);
     return rsaData;
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }

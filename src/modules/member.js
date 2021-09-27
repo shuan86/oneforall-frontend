@@ -81,7 +81,7 @@ export const logout = async () => {
       token,
     });
   } catch (error) {
-    console.log("logout error:", error);
+    console.error("logout error:", error);
   }
 
   return result;
@@ -114,7 +114,7 @@ export const enroll = async (
     const result = await sendRequest.rsaPostRequest("/enroll", data);
     return result;
   } catch (error) {
-    console.log("enroll error:", error);
+    console.error("enroll error:", error);
   }
   return null;
 };
@@ -127,7 +127,6 @@ export const getMemberInfo = async (getMemberId) => {
       "/member",
       { getMemberId }
     );
-    console.log("getMemberInfo:", memberId, "memberId:", memberId);
     if (result && result.status == 200) {
       return result.data;
     }

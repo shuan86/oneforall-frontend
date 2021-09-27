@@ -56,7 +56,6 @@ export const getNews = async (startIndex, endIndex) => {
 };
 export const getArticleTitles = async (articleIdArray) => {
   try {
-    console.log("getArticleTitles:", articleIdArray);
     const data = { articleIdArray };
     const result = await sendRequest.getRequest("/articleTitles", data);
     if (result && result.status == 200) {
@@ -217,8 +216,6 @@ export const createReportedVote = async (articleId, isAgree) => {
 export const deleteReportedVote = async (articleId, isAgree) => {
   try {
     const { token, memberId } = localStorage.getAllData();
-    console.log("deleteReportedVote memberId:", memberId, "token:", token);
-
     const result = await sendRequest.rsaTokenDeleteRequest(
       token,
       memberId,
@@ -236,8 +233,6 @@ export const deleteReportedVote = async (articleId, isAgree) => {
 export const deleteLike = async (articleId) => {
   try {
     const { token, memberId } = localStorage.getAllData();
-    console.log("deleteLike memberId:", memberId, "token:", token);
-
     const result = await sendRequest.rsaTokenDeleteRequest(
       token,
       memberId,
@@ -279,7 +274,6 @@ export const createComment = (articleId, comment) => {
 export const disconnect = (articleId) => {
   const { token, memberId } = localStorage.getAllData();
   ws.sendData(ws.articleEvent.disconnectServer, { token, memberId, articleId });
-  console.log("disconnect");
 };
 export const postNews = async (
   title,
@@ -306,9 +300,6 @@ export const postNews = async (
       imgUrl,
       tagArray,
     };
-    console.log("postNews:", data);
-    console.log("postNews:", imgArray);
-    // const rsaData = encrypt(JSON.stringify(data));
     const rsaData = JSON.stringify(data);
     formData.append("rsaData", rsaData);
     formData.append("image", imgArray);

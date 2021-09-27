@@ -62,8 +62,8 @@ const initContract = () => {
 };
 let web3 = null;
 let contract = null;
-// web3 = initContract();
-// contract = new web3.eth.Contract(contractABI, contractAddr);
+web3 = initContract();
+contract = new web3.eth.Contract(contractABI, contractAddr);
 if (web3 == null || contract == null) {
   console.error("you need to init we3.js");
 }
@@ -132,16 +132,8 @@ const transactionContract = async (
       } else {
         nonceCount = txCount;
         const dbNonce = await updateNonce();
-        const randomNonce = getRandomInt(900);
         nonceCount = dbNonce;
-        console.log(
-          "nonceCount:",
-          nonceCount,
-          "dbNonce:",
-          dbNonce,
-          "sum:",
-          nonceCount
-        );
+
       }
       txObject = {
         nonce: web3.utils.toHex(nonceCount), //web3.eth.getTransactionCount（）+ 1  web3.utils.toHex(txCount) web3.utils.toHex(nonceCount)
@@ -181,73 +173,42 @@ const subscribeTestEvent = () => {
     .on("data", (event) => console.log("subscribeTestEvent:", event));
 };
 
-export const execute = async () => {
-  subscribeTestEvent();
-  await test();
-  await transactionContract(
-    memberAddr1,
-    contractAddr,
-    "0",
-    contract.methods.setTestEvent(10).encodeABI(),
-    memberPriKey1
-  );
-  await transactionContract(
-    memberAddr2,
-    contractAddr,
-    "0",
-    contract.methods.setTestEvent(15).encodeABI(),
-    memberPriKey2
-  );
-  await getPastEventFilterByNumber("TestEvent", { id: 102 });
-};
 
-export const postNewsToContract = async (data) => {
-  const {
-    m_publicKey,
-    a_id,
-    a_newsId,
-    a_index,
-    a_newsType,
-    a_authorName,
-    a_content,
-    a_time,
-    a_deposit,
-  } = data;
-  try {
-    await transactionContract(
-      ownerAddr,
-      contractAddr,
-      "1",
-      contract.methods
-        .postNewsForOwner(
-          a_id,
-          a_newsId,
-          m_publicKey,
-          a_authorName,
-          a_content,
-          a_time
-        )
-        .encodeABI(),
-      ownerPriKey
-    );
-  } catch (error) {
-    console.log("postNews error:", error);
-  }
-};
-// const getPastEventFilterByNumber = async (eventName, filterData) => {
+
+// export const postNewsToContract = async (data) => {
+//   const {
+//     m_publicKey,
+//     a_id,
+//     a_newsId,
+//     a_index,
+//     a_newsType,
+//     a_authorName,
+//     a_content,
+//     a_time,
+//     a_deposit,
+//   } = data;
 //   try {
-//     const result = await contract.getPastEvents(
-//       eventName,
-//       { filter: { ...filterData } },
-//       { fromBlock: 0, toBlock: "latest" }
+//     await transactionContract(
+//       ownerAddr,
+//       contractAddr,
+//       "1",
+//       contract.methods
+//         .postNewsForOwner(
+//           a_id,
+//           a_newsId,
+//           m_publicKey,
+//           a_authorName,
+//           a_content,
+//           a_time
+//         )
+//         .encodeABI(),
+//       ownerPriKey
 //     );
-//     const tmp = { filter: { ...filterData } };
-//     console.log("getPastEvent filter:", tmp);
-//     return result;
-//   } catch (e) {
-//     console.log(`getPastEvent error ${eventName}:`, e);
+//   } catch (error) {
+//     console.log("postNews error:", error);
 //   }
 // };
+
 const getPastEventFilter = async (eventName, filterData) => {
   try {
     const result = await contract.getPastEvents(
@@ -265,7 +226,7 @@ const getPastEventFilter = async (eventName, filterData) => {
     );
     return result;
   } catch (e) {
-    console.log(`getPastEventFilter error ${eventName}:`, e);
+    console.error(`getPastEventFilter error ${eventName}:`, e);
   }
 };
 
@@ -277,10 +238,8 @@ const getManyPastEvent = async (eventName, filterData) => {
       toBlock: "latest",
     });
     return result;
-    /*console.log(`getPastEvent ${eventName}:`, result);
-    console.log(`getPastEvent ${eventName}:`, result.returnValues);*/
   } catch (e) {
-    console.log(`getManyPastEvent error ${eventName}:`, e);
+    console.error(`getManyPastEvent error ${eventName}:`, e);
   }
 };
 const testPastEvent = async (eventName, filterData) => {
@@ -301,12 +260,11 @@ const testPastEvent = async (eventName, filterData) => {
     }
     return result;
   } catch (e) {
-    console.log(`getPastEvent error ${eventName}:`, e);
+    console.error(`getPastEvent error ${eventName}:`, e);
   }
 };
 export const getAllNewsId = async () => {
   const result = await contract.methods.getAllNewsId().call();
-  console.log("getAllNewsId:", result);
 };
 export const getRangeNewsId = async (startIndex, endIndex) => {
   const result = await contract.methods
@@ -338,9 +296,7 @@ export const getNewsByNewsIdEvent = async (newsId) => {
     if (result.length > 0) {
       const lastestDataIndex = result.length - 1;
       let data = { ...INewEvent };
-      ICompleteNewsData;
       data.id = result[lastestDataIndex].returnValues[0];
-
       data.memberId = result[lastestDataIndex].returnValues[1];
       data.authorAddr = result[lastestDataIndex].returnValues[2];
       data.articleType = result[lastestDataIndex].returnValues[3];
@@ -361,7 +317,7 @@ export const getNewsByNewsIdEvent = async (newsId) => {
       return data;
     }
   } catch (e) {
-    console.log(`getNewsContractByNewsId error ${eventName}:`, e);
+    console.error(`getNewsContractByNewsId error ${eventName}:`, e);
     return null;
   }
   return null;
@@ -380,10 +336,9 @@ export const getNewsImageByNewsIdEvent = async (newsId, index) => {
     data.index = data.index = result[lastestDataIndex].returnValues[1];
     data.imgContent1 = data.index = result[lastestDataIndex].returnValues[2];
     data.imgContent2 = data.index = result[lastestDataIndex].returnValues[3];
-    //console.log("getNewsImageByNewsId:", data);
     return data;
   } catch (e) {
-    console.log(`getNewsContractByNewsId error ${eventName}:`, e);
+    console.error(`getNewsContractByNewsId error ${eventName}:`, e);
   }
 };
 export const getNewsCompleteData = async (startIndex, endIndex) => {
@@ -411,9 +366,7 @@ export const getNewsCompleteData = async (startIndex, endIndex) => {
       tmp.imgContent2 = tmpNewsImg.imgContent2;
     }
     allData.push(tmp);
-    console.log("getNewsCompleteData tmp:", tmp);
   }
-  console.log("getNewsCompleteData:", allData);
   return allData;
 };
 
@@ -424,7 +377,7 @@ export const getAllNewsEvent = async () => {
 
     let allData = []; //{ ...INewEvent }
     let i = 0;
-    for (result of results) {
+    for (const result of results) {
       let data = { ...INewEvent }; //
       data.newsId = result.returnValues[0];
       data.index = result.returnValues[1];
@@ -437,7 +390,7 @@ export const getAllNewsEvent = async () => {
     }
     return allData;
   } catch (e) {
-    console.log(`getNewsContractByNewsId error ${eventName}:`, e);
+    console.error(`getNewsContractByNewsId error ${eventName}:`, e);
   }
 };
 export const isMember = async (addr) => {
@@ -445,7 +398,7 @@ export const isMember = async (addr) => {
     const result = await contract.methods.isMember(addr).call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
     return result;
   } catch (error) {
-    console.log("isMember error:", error);
+    console.error("isMember error:", error);
   }
 };
 export const isReviewer = async (addr) => {
@@ -453,7 +406,7 @@ export const isReviewer = async (addr) => {
     const result = await contract.methods.isReviewer(addr).call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
     return result;
   } catch (error) {
-    console.log("isReviewer error:", error);
+    console.error("isReviewer error:", error);
   }
 };
 export const isPublisher = async (addr) => {
@@ -461,7 +414,7 @@ export const isPublisher = async (addr) => {
     const result = await contract.methods.isPublisher(addr).call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
     return result;
   } catch (error) {
-    console.log("isPublisher error:", error);
+    console.error("isPublisher error:", error);
   }
 };
 export const getApplyPublishersAddr = async () => {
@@ -469,7 +422,7 @@ export const getApplyPublishersAddr = async () => {
     const result = await contract.methods.getApplyPublishers().call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
     return result;
   } catch (error) {
-    console.log("getApplyPublisher error:", error);
+    console.error("getApplyPublisher error:", error);
   }
 };
 export const getApplyPublisherEvent = async (filterAddr) => {
@@ -498,29 +451,29 @@ export const getApplyPublisherEvent = async (filterAddr) => {
     };
     return tmpData;
   } catch (e) {
-    console.log(`getApplyPublisherEvent error ${eventName}:`, e);
+    console.error(`getApplyPublisherEvent error ${eventName}:`, e);
   }
 };
-export const applyPublisher = async (
-  publisherId,
-  memberId,
-  addr,
-  personalInformation
-) => {
-  try {
-    await transactionContract(
-      ownerAddr,
-      contractAddr,
-      "0",
-      contract.methods
-        .applyPublisher(publisherId, memberId, addr, personalInformation)
-        .encodeABI(),
-      ownerPriKey
-    );
-  } catch (error) {
-    console.log("enrollVistor error:", error);
-  }
-};
+// export const applyPublisher = async (
+//   publisherId,
+//   memberId,
+//   addr,
+//   personalInformation
+// ) => {
+//   try {
+//     await transactionContract(
+//       ownerAddr,
+//       contractAddr,
+//       "0",
+//       contract.methods
+//         .applyPublisher(publisherId, memberId, addr, personalInformation)
+//         .encodeABI(),
+//       ownerPriKey
+//     );
+//   } catch (error) {
+//     console.log("enrollVistor error:", error);
+//   }
+// };
 export const subscribeEnrollPublisherEvent = (handleFunc) => {
   contract.events
     .enrollPublisherEvent({ from: 0 })
@@ -539,7 +492,6 @@ export const getApplyReviewersAddr = async () => {
     const result = await contract.methods.getApplyReviewers().call(); //transactionContract(ownerAddr, contractAddr,"0", contract.methods.getVistors().encodeABI(), ownerPriKey)
     return result;
   } catch (error) {
-    console.log("getApplyPublisher error:", error);
   }
 };
 export const getApplyReviewerEvent = async (filterAddr) => {
@@ -567,7 +519,7 @@ export const getApplyReviewerEvent = async (filterAddr) => {
     };
     return tmpData;
   } catch (e) {
-    console.log(`getApplyPublisherEvent error ${eventName}:`, e);
+    console.error(`getApplyPublisherEvent error ${eventName}:`, e);
   }
 };
 export const subscribeEnrollReviewerEvent = async (handleFunc) => {

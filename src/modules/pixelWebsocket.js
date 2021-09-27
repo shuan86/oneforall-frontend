@@ -24,7 +24,6 @@ export const startPixelGameWebSocket = (
   }
   if (ws) {
     sendData(pixelGameEvent.joinPixelGame, { token, memberId });
-    console.log("websocket success connect!");
     ws.on(pixelGameEvent.joinPixelGame, (msg) => {
       joinPixelGameFunc(msg);
     });

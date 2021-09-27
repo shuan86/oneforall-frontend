@@ -54,7 +54,7 @@ export const useAfterLoginLoadData = (needLoadData) => {
       );
     };
     asyncFunc();
-    return () => {};
+    return () => { };
   }, [needLoadData]);
   return isSucessfulGetData;
 };
@@ -71,14 +71,13 @@ export const useFirstTimeLoadData = () => {
         loginData,
         loginStatusData,
       } = await loadData();
-      console.log("loginData:", loginData);
       dispatch(loginStatusData);
       dispatch(loginData);
       dispatch(memberStatusData);
       setIsSucessfulGetData(isSucessfulFlg);
     };
     asyncFunc();
-    return () => {};
+    return () => { };
   }, []);
   return isSucessfulGetData;
 };

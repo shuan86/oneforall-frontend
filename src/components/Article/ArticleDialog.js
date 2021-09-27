@@ -27,10 +27,8 @@ const FormDialog = ({ isOpen, setOpen, articleId }) => {
         if (result) {
           articleData = result;
           if (result.imagesUrl) {
-            console.log("imagesUrl:");
-          } else {
-            console.log("images:");
 
+          } else {
             result.images[0] = await getBase64Str(result.images[0]);
             base64String = result.images[0];
           }
@@ -47,7 +45,7 @@ const FormDialog = ({ isOpen, setOpen, articleId }) => {
       setImageUrlState(isOpen && tmpImgUrlData ? tmpImgUrlData : "");
     };
     asyncFunc();
-    return () => {};
+    return () => { };
   }, [selectedData]);
 
   return (

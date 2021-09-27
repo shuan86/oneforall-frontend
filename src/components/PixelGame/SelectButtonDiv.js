@@ -37,7 +37,6 @@ export const SelectButtonDiv = ({
   const onClickBtn = () => {
     setSelectedColor(color);
     setSelectedIndex(-1);
-    console.log("selectedColor:", color);
   };
   return (
     <div style={selectArea} onClick={onClickBtn}>

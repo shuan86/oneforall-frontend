@@ -3,7 +3,7 @@ import {
   NewsCardTop,
   NewsCardContent,
 } from "../../components/NewsCard/NewsCard";
-import { getArticle } from "../../modules/article";
+import { getArticle, getBase64Str } from "../../modules/article";
 import { useGetParams } from "../../hooks/useGetParams";
 const ArticlePage = () => {
   const [articleDataState, setArticleDataState] = useState({});
@@ -18,7 +18,6 @@ const ArticlePage = () => {
       let result;
       if (articleId != undefined) result = await getArticle(articleId);
       if (result) {
-        articleData = result;
         if (result.imagesUrl) {
         } else {
           result.images[0] = await getBase64Str(result.images[0]);
@@ -34,15 +33,12 @@ const ArticlePage = () => {
       setArticleDataState((pre) => (result ? result : pre));
       setImageState(base64String);
       setImageUrlState(tmpImgUrlData ? tmpImgUrlData : "");
-      console.log("result:", result);
     };
     asyncFunc();
-    return () => {};
+    return () => { };
   }, []);
 
-  console.log(`articleDataState:${articleDataState}`);
-  console.log(`imageUrtlState:${imageUrtlState}`);
-  console.log(`imageState:${imageState}`);
+
 
   return (
     <div className="container navBarFixed">

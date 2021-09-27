@@ -15,7 +15,6 @@ export const findIndexByMemberId = (array, mId) => {
       // removeData = d;
       index = count;
     }
-    console.log("memberId:", memberId, "mId:", mId, "index:", index);
     count++;
   }
   return index;

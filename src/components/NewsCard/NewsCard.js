@@ -69,7 +69,6 @@ const NewsCardUnderReview = ({
   );
 };
 const NewsCardReviewed = ({ likeAmount, commentAmount, isMemberLike }) => {
-  //  console.log('NewsCard');
   return (
     <div className="card">
       <div className="status">審核後</div>
@@ -104,7 +103,7 @@ export const NewsCardTop = ({ articleStatus, voteResult }) => {
     }
 
     setStatus(s);
-    return () => {};
+    return () => { };
   }, [articleStatus, voteResult]);
   return (
     <div className="cardTop">
@@ -167,14 +166,13 @@ export const NewsCardContent = ({
           btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
       }
     }
-    // console.log("reviewResult:", reviewResult, reviewResult == 2);
     setImageState(base64String);
     setTagsData(tags);
-    return () => {}; //
+    return () => { }; //
   }, []);
   useEffect(() => {
     setNeedReadMoreFlag(content.length > shortMaxStrLength ? true : false);
-    return () => {};
+    return () => { };
   }, [content]);
 
   const onClickReadMore = () => {
@@ -220,7 +218,7 @@ export const NewsCardContent = ({
       <div className="article">
         <h3>{title}</h3>
         {articleStatus == ArticleStatus.underReview ||
-        articleStatus == ArticleStatus.verified ? (
+          articleStatus == ArticleStatus.verified ? (
           <div>
             {reviewResult == ArticleReportStatus.fail ? (
               <h2
@@ -248,7 +246,7 @@ export const NewsCardContent = ({
         <div
           className={
             articleStatus == ArticleStatus.underReview ||
-            articleStatus == ArticleStatus.verified
+              articleStatus == ArticleStatus.verified
               ? "articleContent underReview"
               : "articleContent"
           }
@@ -385,7 +383,7 @@ const NewsCardComment = ({
     setOpenCommentFlag((pre) => {
       return selectArticleId != articleId ? false : true;
     });
-    return () => {};
+    return () => { };
   }, [selectArticleId]);
   useEffect(() => {
     if (openCommentFlag) {
@@ -406,7 +404,7 @@ const NewsCardComment = ({
       const result = openCommentFlag ? articleId : pre;
       return result;
     });
-    return () => {};
+    return () => { };
   }, [openCommentFlag]);
 
   const onClickLike = async () => {
@@ -453,7 +451,6 @@ const NewsCardComment = ({
       reportedDisagreeAmount,
       isSucessfulRemoveVote,
     } = result;
-    console.log("result:", result);
     setReportedAgreeAmount((pre) => (result ? reportedAgreeAmount : pre));
     setReportedDisagreeAmount((pre) => (result ? reportedDisagreeAmount : pre));
     setReportedAgreeVoteState((pre) => (result && isAgree ? !pre : false));

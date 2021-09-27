@@ -51,14 +51,12 @@ const FormDialog = () => {
   };
   const onSelectNewsTagChange = (event) => {
     const value = event.target.value;
-    console.log("onSelectNewsTagChange:", value);
-    console.log("tag:", value);
     setTag(value);
   };
   const onClickApplyReviewer = async () => {
     const result = await apply(email, tag, applyContent);
     if (result.status == 200) {
-      console.log("apply reviewer scuessful");
+      alert('申請成功')
     }
     handleClose();
   };

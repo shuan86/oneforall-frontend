@@ -20,7 +20,7 @@ export const apply = async (companyName, co, phone, email) => {
     );
     return result;
   } catch (error) {
-    console.log("publisher apply error:", error);
+    console.error("publisher apply error:", error);
   }
 };
 
@@ -57,7 +57,7 @@ export const getApplyPublishers = async () => {
       return array;
     }
   } catch (error) {
-    console.log("logout error:", error);
+    console.error("logout error:", error);
   }
 
   return null;

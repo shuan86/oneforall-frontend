@@ -18,7 +18,7 @@ export const apply = async (email, tag, applyContent) => {
     );
     return result;
   } catch (error) {
-    console.log("publisher apply error:", error);
+    console.error("publisher apply error:", error);
   }
 };
 
@@ -36,7 +36,7 @@ export const RootReviewerDecision = async (reviewerId, decision, reason) => {
       return { ...result.data };
     }
   } catch (error) {
-    console.log("reviewer RootReviewerDecision error:", error);
+    console.error("reviewer RootReviewerDecision error:", error);
   }
   return null;
 };
@@ -59,7 +59,7 @@ export const getApplyReviewers = async () => {
       return array;
     }
   } catch (error) {
-    console.log("logout error:", error);
+    console.error("logout error:", error);
   }
 
   return null;

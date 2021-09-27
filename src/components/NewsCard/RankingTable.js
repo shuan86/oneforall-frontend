@@ -22,7 +22,6 @@ import Gold500 from "../../public/images/medals/gold500.png";
 //       }
 //       setRankingDataArray((pre) => (result ? result : pre));
 
-//       console.log("RankingTable:", result);
 //     };
 //     asyncFunc();
 //     return () => { };
@@ -148,11 +147,7 @@ const RankingTable = () => {
   useEffect(() => {
     const asyncFunc = async () => {
       const result = await getTopMember();
-      if (result) {
-      }
-      // setRankingDataArray((pre) => (result ? result : pre));
       setLeaders((pre) => (result ? result : pre));
-      console.log("RankingTable:", result);
     };
     asyncFunc();
     return () => { };

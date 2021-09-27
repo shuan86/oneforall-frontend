@@ -25,8 +25,6 @@ const PlaceGamePage = () => {
 
   const isNotFirst = useFirstUpdate()
   const joinPixelGameFunc = (data) => {
-    console.log('joinPixelGameFunc:', data);
-
     setLoadPixelFlag((pre) => {
       if (data) {
         setLoadPixelFlag(true);
@@ -36,12 +34,9 @@ const PlaceGamePage = () => {
     setLoadPixelData(data);
   };
   const initMemberFunc = (clickPixelCountData) => {
-    console.log("initMemberFunc:", clickPixelCountData);
-    console.log("clickPixelCountData:", clickPixelCountData);
     setClickPixelCount(clickPixelCountData);
   };
   const pixelGameFunc = (pos, color) => {
-    console.log("pixelGameFunc:", { pos, color });
     setLoadPixelData([{ pos, color }]);
   };
   useEffect(() => {
@@ -49,9 +44,7 @@ const PlaceGamePage = () => {
     return () => { };
   }, []);
   useEffect(() => {
-    // if (isNotFirst && clickPixelCount > 0) putPixelData(selectedPos, selectedColor);
     setCanClickPixelFlag((pre) => (clickPixelCount > 0 ? true : false));
-    // console.log('selectedPos, selectedColor:', selectedPos, selectedColor);
     if (isNotFirst && clickPixelCount > 0) putPixelData(selectedPos, selectedColor);
 
     return () => { };

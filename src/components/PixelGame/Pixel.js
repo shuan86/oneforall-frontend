@@ -70,13 +70,7 @@ export const Pixel = React.memo(
     );
   },
   (pre, next) => {
-    if (next.pos == 2) {
-      console.log('next.selectedPos:', next.selectedPos);
-      console.log('next.pos:', next.pos);
-      console.log('pre.pos:', pre.pos);
-      console.log('next.selectedColor:', next.selectedColor);
-      console.log('pre.selectedColor:', pre.selectedColor);
-    }
+
     if (next.loadPixelData != undefined) {
       for (let i = 0; i < next.loadPixelData.length; i++) {
         if (next.loadPixelData[i].pos == next.pos) {

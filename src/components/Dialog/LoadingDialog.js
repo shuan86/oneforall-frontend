@@ -30,19 +30,9 @@ const LoadingDialog = ({ isOpen, setIsOpen }) => {
             setSloganOpacityCount(0.1)
             opacityTimerId.current = setInterval(() => {
                 setSloganOpacityCount(pre => {
-                    console.log("pre:", pre)
                     if (pre >= 1) {
-
                         setOpenLoadingAnim(true)
                     }
-                    // else if (pre <= 0)
-                    //     isAdd = true;
-                    // if (isAdd) {
-                    //     return pre + 0.1
-                    // }
-                    // else {
-                    //     return pre - 0.1
-                    // }
                     return pre + 0.1
                 })
             }, 100);

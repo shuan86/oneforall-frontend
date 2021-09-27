@@ -32,12 +32,10 @@ const EnrollForm = () => {
   });
   const onGenderChange = (e) => {
     const value = e.target.value
-    console.log('onGenderChange:', value);
     setGender(value)
   }
   const onEducationChange = (e) => {
     const value = e.target.value
-    console.log('onEducationChange:', value);
     setEducation(value)
   }
 
@@ -50,7 +48,7 @@ const EnrollForm = () => {
       email,
       publicKey
     );
-    if (result.status == 200) {
+    if (result && result.status == 200) {
       history.push("/login");
     } else {
       alert("enroll fail");

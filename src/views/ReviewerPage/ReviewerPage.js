@@ -23,7 +23,6 @@ const ReviewerPage = () => {
   const onSelected = (sel) => {
     const { data, isSelected } = sel;
     setDialogSwitch(true);
-    console.log("onSelected:", data);
     setSelectedData(data);
   };
   const onReasonChange = (event) => {
@@ -36,7 +35,6 @@ const ReviewerPage = () => {
       decision,
       decisionReason
     );
-    console.log("onClickFinalDecision:", result);
     setReportNewsState((pre) =>
       result ? pre.filter((item) => item.articleId !== result.articleId) : pre
     );
@@ -46,7 +44,6 @@ const ReviewerPage = () => {
   useEffect(() => {
     const loadData = async () => {
       const dbReportNewsArrayData = await article.getAllApplyReportedNews();
-      console.log("dbReviewerArrayData:", dbReportNewsArrayData);
       if (dbReportNewsArrayData != null) {
         for (let i = 0; i < dbReportNewsArrayData.length; i++) {
           const tmp = dbReportNewsArrayData[i];
@@ -74,7 +71,7 @@ const ReviewerPage = () => {
   // useEffect(() => {
   //   const excuteContract = async () => {
   //     const contractPublisherAddrArray = await contract.getApplyPublishersAddr();
-  //     console.log("publisherAddrArray:", contractPublisherAddrArray);
+  //     ("publisherAddrArray:", contractPublisherAddrArray);
   //     if (contractPublisherAddrArray != null) {
   //       for (const addr of contractPublisherAddrArray) {
   //         const tmp = await contract.getApplyPublisherEvent(addr);
@@ -83,7 +80,6 @@ const ReviewerPage = () => {
   //         );
   //         if (notSame) {
   //           publisherList.push({ ...tmp, id: num });
-  //           console.log("publisherList contract data:", { ...tmp, id: num });
   //           num++;
   //         }
   //       }

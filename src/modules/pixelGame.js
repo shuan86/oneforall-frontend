@@ -24,7 +24,6 @@ export const initPixelGame = async (
 export const joinPixelGame = (data) => {
   try {
     const { token, memberId } = localStorage.getAllData();
-    console.log("pixelDataArray:", data);
     ws.sendData(ws.pixelGameEvent.joinPixelGame, { token, memberId });
   } catch (error) {
     console.error("joinPixelGame error:", error);
@@ -43,7 +42,6 @@ export const putPixelData = async (pos, color) => {
 export const putPixelDataArray = async (data) => {
   try {
     const { token, memberId } = localStorage.getAllData();
-    console.log("pixelDataArray:", data);
     const dataObject = {
       pixelDataArray: data,
     };
@@ -65,7 +63,6 @@ export const putPixelDataArray = async (data) => {
 // export const putPixelData = async (data) => {
 //   try {
 //     const { token, memberId } = localStorage.getAllData();
-//     console.log("putPixelData:", data);
 //     const dataObject = {
 //       pixelData: data,
 //     };

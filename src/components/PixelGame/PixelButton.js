@@ -5,7 +5,6 @@ import { withStyles } from "@material-ui/core/styles";
 
 // export const PixelButtonDiv = React.memo(
 //   ({ color, index, selectedIndex, setSelectedIndex }) => {
-//     // console.log("PixelButtonDiv:", index);
 //     const selectArea = {
 //       display: "inline-block",
 //       boxShadow: "none",
@@ -66,5 +65,5 @@ export const Pixel = React.memo(
     const [pixelColor, setPixelColor] = useState("#fff");
     const [oldColor, setOldColor] = useState(pixelColor);
   },
-  (pre, next) => {}
+  (pre, next) => { }
 );

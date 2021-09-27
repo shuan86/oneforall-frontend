@@ -44,15 +44,17 @@ const MemberInformation = ({ memberInfoFlag, memberId }) => {
   useEffect(() => {
     const asyncFunc = async () => {
       let result;
+
       if (memberInfoFlag) {
         result = await getMemberInfo(memberId);
+
       }
       setmemberInfoState((pre) => (memberInfoFlag && result ? result : pre));
       setOpenFlag(memberInfoFlag);
     };
     asyncFunc();
 
-    return () => {};
+    return () => { };
   }, [memberInfoFlag]);
 
   return (
@@ -110,7 +112,7 @@ const VistorRight = ({
           {/* <button>我要發文</button> */}
           <button
             onClick={() => {
-              console.log("發文");
+
             }}
           >
             我要發文討論

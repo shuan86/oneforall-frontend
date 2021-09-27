@@ -34,8 +34,7 @@ const MemberPage = () => {
   const [memberFilter, setMemberFliter] = useState([true, false, false]);
   const member = useSelector((state) => state.member);
   useEffect(() => {
-    console.log("useEffectxxx");
-    return () => {};
+    return () => { };
   }, []);
   useEffect(() => {
     const asyncFunc = async () => {
@@ -49,10 +48,6 @@ const MemberPage = () => {
       let reviewerCanReviewArticleArray;
       let reviewerVerifiedArticleArray;
       let publishArticleArray;
-      console.log(
-        "reportedVoteArticleIdArray:",
-        member.reportedVoteArticleIdArray
-      );
       if (memberFilter[0]) {
         if (
           reportedVoteArticleIdArray &&
@@ -61,13 +56,8 @@ const MemberPage = () => {
           reportedVoteArticleArray = await getArticleTitles(
             reportedVoteArticleIdArray
           );
-          console.log("reportedVoteArticles:", reportedVoteArticleArray);
         }
       } else if (memberFilter[1]) {
-        console.log(
-          " reviewerCanReviewArticleIdArray:",
-          reviewerCanReviewArticleIdArray
-        );
         if (
           reviewerCanReviewArticleIdArray &&
           reviewerCanReviewArticleIdArray.length > 0
@@ -103,7 +93,7 @@ const MemberPage = () => {
       );
     };
     asyncFunc();
-    return () => {};
+    return () => { };
   }, [member, memberFilter]);
 
   const onClickArticle = (articleId) => {

@@ -32,7 +32,7 @@ const PublisherPage = () => {
   const tagsNameArray = Object.keys(ArticleTagKind);
   const history = useHistory();
   useEffect(() => {
-    return () => {};
+    return () => { };
   }, []);
 
   const onClickPostNews = async (e) => {
@@ -160,7 +160,6 @@ const PublisherPage = () => {
             accept=".png"
             onChange={(e) => {
               let file = e.target.files[0];
-              console.log("file size:", file.size);
               if (file.size > 120000) {
                 alert("圖片太大(最大100k)");
                 return;

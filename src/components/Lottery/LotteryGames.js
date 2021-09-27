@@ -90,15 +90,13 @@ export const LotteryDrawCardGame = () => {
       });
     };
     asyncFunc();
-    return () => {};
+    return () => { };
   }, []);
   const onClickShuffleCard = async () => {
     setShuffle(!shuffle);
     setFlipped([false, false, false]);
     setFlippedFlag(false);
-    console.log("onclick sendLottery");
     const lotteryNumber = await sendLottery();
-    console.log("sendLottery:", lotteryNumber);
     setCardResult((pre) => {
       let result = {
         lotteryCardImg: snowNormal,
@@ -144,7 +142,6 @@ export const LotteryDrawCardGame = () => {
   const onClickRecesive = async () => {
     onClickShuffleCard();
     setCanJoinLottery(false);
-    console.log("onClickRecesive:", canJoinLottery);
   };
 
   const onClickLotteryTableFlag = () => {

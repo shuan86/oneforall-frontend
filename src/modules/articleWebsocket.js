@@ -13,17 +13,12 @@ export const connectArticleServer = () => {
   if (config.NODE_ENV == "development") {
     // ws = webSocket(`http://127.0.0.1:${port}`);
     ws = webSocket(config.DEVELOPMENT_SERVER_URL);
-    console.log("development url:", config.DEVELOPMENT_SERVER_URL);
   } else {
     ws = webSocket(config.PRODUCTION_SERVER_URL);
-    console.log("production url:", config.PRODUCTION_SERVER_URL);
   }
 };
 export const startArticleWebsocket = (getCommentsRangeFunc, newCommentFunc) => {
   if (ws) {
-    console.log("websocket success connect!");
-    console.log("ws:", ws);
-
     ws.on(articleEvent.getCommentsRange, (msg) => {
       getCommentsRangeFunc(msg);
     });

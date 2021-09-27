@@ -27,7 +27,6 @@ const PublisherPage = () => {
   const onSelected = (sel) => {
     const { data, isSelected } = sel;
     setDialogSwitch(true);
-    console.log("onSelected:", data);
     setSelectedData(data);
   };
   const onReasonChange = (event) => {
@@ -81,7 +80,6 @@ const PublisherPage = () => {
   useEffect(() => {
     const excuteContract = async () => {
       const contractPublisherAddrArray = await contract.getApplyPublishersAddr();
-      console.log("publisherAddrArray:", contractPublisherAddrArray);
       if (contractPublisherAddrArray != null) {
         for (const addr of contractPublisherAddrArray) {
           const tmp = await contract.getApplyPublisherEvent(addr);
@@ -90,7 +88,6 @@ const PublisherPage = () => {
           );
           if (notSame) {
             publisherList.push({ ...tmp, id: num });
-            console.log("publisherList contract data:", { ...tmp, id: num });
             num++;
           }
         }

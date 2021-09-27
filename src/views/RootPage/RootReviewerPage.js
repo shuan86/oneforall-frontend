@@ -70,7 +70,6 @@ const ReviewerPage = () => {
       });
     };
     loadData();
-    console.log("load");
     const handleSubScribeFunc = (memberId, isAgree) => {
       setApplyReviewerState((pre) =>
         pre.filter((item) => item.memberId !== memberId)
@@ -82,8 +81,6 @@ const ReviewerPage = () => {
   useEffect(() => {
     const excuteContract = async () => {
       const reviewerAddrArray = await contract.getApplyReviewersAddr();
-      console.log("reviewerAddrArray:", reviewerAddrArray);
-
       if (reviewerAddrArray != null) {
         for (const addr of reviewerAddrArray) {
           const tmp = await contract.getApplyReviewerEvent(addr);
@@ -92,7 +89,6 @@ const ReviewerPage = () => {
           );
           if (notSame) {
             reviewerList.push({ ...tmp, id: num });
-            console.log("reviewer contract data:", { ...tmp, id: num });
             num++;
           }
         }

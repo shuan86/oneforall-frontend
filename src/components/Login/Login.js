@@ -18,8 +18,6 @@ const LoginForm = () => {
   // const isNotFirst = useFirstUpdate();
   const onClickSubmit = async () => {
     const memberData = await memberMoudel.login(account, password);
-    console.log("memberData:", memberData);
-
     if (!memberData) {
       alert("login fail");
     } else {
@@ -30,7 +28,7 @@ const LoginForm = () => {
   const isSucessfulGetData = useAfterLoginLoadData(isSucessfulLogin);
   useEffect(() => {
     if (isSucessfulGetData) history.push("/index");
-    return () => {};
+    return () => { };
   }, [isSucessfulGetData]);
   return (
     <div className="enrollInfo">
