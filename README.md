@@ -49,11 +49,11 @@ http://localhost:3000/#/root/publisher
 ### Web Structure
 ![image](https://github.com/shuan86/oneforall-frontend/blob/main/readme-image/%E7%B6%B2%E6%9E%B6%E6%9E%B6%E6%A7%8B%E5%9C%96.png)
 ## User Interface
-* /註冊頁: 註冊頁為蒐集使用者之背景資訊，提供帳號、密碼、真實姓名、工作職稱、年齡、性別、教育程度和科系等，給受試者填寫基本資料。
+* /註冊頁: 註冊頁為蒐集使用者之背景資訊，提供帳號、密碼、真實姓名、工作職稱、年齡、性別、教育程度和科系等，給使用者填寫基本資料。
 
 ![image](https://github.com/shuan86/oneforall-frontend/blob/main/readme-image/%E8%A8%BB%E5%86%8A%E9%A0%81.png)
 
-* /登入頁: 登入頁提供帳號、密碼，給受試者登入，經由帳號辨識受測者身分。
+* /登入頁: 登入頁提供帳號、密碼，給使用者登入，經由帳號辨識受測者身分。
 
 ![image](https://github.com/shuan86/oneforall-frontend/blob/main/readme-image/%E7%99%BB%E5%85%A5%E9%A0%81.png)
 
